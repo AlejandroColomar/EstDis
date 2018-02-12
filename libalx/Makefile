@@ -18,7 +18,7 @@ endif
 
 
 LIBALX_DIR = ./
-HDR_DIR = $(LIBALX_DIR)/hdr/
+INC_DIR = $(LIBALX_DIR)/inc/
 OBJ_DIR = $(LIBALX_DIR)/obj/
 SRC_DIR = $(LIBALX_DIR)/src/
 

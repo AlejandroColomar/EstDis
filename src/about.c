@@ -33,6 +33,10 @@
 	#include "macros.h"
 
 
+void	w_help_switch			(void)
+{
+}
+
 void	print_help		(void)
 {
 	printf(PROG_NAME "\n\n");
