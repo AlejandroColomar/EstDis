@@ -9,16 +9,16 @@ ifeq ($(OS), linux)
 	CFLAGS = -std=c11 -O3 -march=native
 	LIBS = -l ncurses -l pthread -l m
 else
-	ifeq ($(OS), win)
-		CC = gcc.exe
-		CFLAGS = -std=c11 -O3
-		LIBS = -l pdcurses -l m
-	endif
+ ifeq ($(OS), win)
+	CC = gcc.exe
+	CFLAGS = -std=c11 -O3
+	LIBS = -l pdcurses -l m
+ endif
 endif
 
 
 LIBALX_DIR = ./
-HDR_DIR = $(LIBALX_DIR)/hdr/
+INC_DIR = $(LIBALX_DIR)/inc/
 OBJ_DIR = $(LIBALX_DIR)/obj/
 SRC_DIR = $(LIBALX_DIR)/src/
 

@@ -25,40 +25,89 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-# ifndef		ABOUT_H
-	# define	ABOUT_H
+//	#include <getopt.h>
+//	#include <inttypes.h>
+	#include <curses.h>
+//	#include <pthread.h>
+//	#include <stdarg.h>
+//	#include <stdbool.h>
+//	#include <stdint.h>
+	#include <stdio.h>
+//	#include <stdlib.h>
+//	#include <string.h>
+//	#include <sys/types.h>
+//	#include <threads.h>
+//	#include <time.h>
+//	#include <unistd.h>
+//	#include <wchar.h>
 
-	#include <stdbool.h>
-
-//	#include "alx_about.h"
-	#include "alx_file.h"
+//	#include "alx_file.h"
 //	#include "alx_getnum.h"
 //	#include "alx_math.h"
-//	#include "alx_ncur.h"
+	#include "alx_ncur.h"
 //	#include "alx_seed.h"
 
+	#include "desc.h"
+	#include "dist.h"
+	#include "start.h"
+
+	#include "global_ext.h"
 	#include "macros.h"
 
-	void	w_help_switch			(void);
-	void	print_help			(void);
-	void	print_version			(void);
-	void	print_usage			(void);
 
-	void	print_cpright			(void);
-	void	print_disclaim			(void);
+void	start_switch	(void)
+{
+	switch (flag_s) {
+	case START_FOO:
+		break;
 
-	void	w_print_cpright			(bool nul);
-	void	w_print_disclaim		(void);
+	case START_DESC_1VAR:
+		desc_1var();
+		break;
 
-	# define	print_license()		alx_prn_file(LICENSE_PATH)
+	case START_DESC_2VAR:
+		desc_2var();
+		break;
 
-	# define	w_print_license()	alx_w_prn_file(LICENSE_PATH)
+	case START_BINOMIAL:
+		dist_binomial();
+		break;
 
-	void	dist_binomial_help		(void);
-	void	dist_poisson_help		(void);
-	void	dist_geometric_help		(void);
-	void	dist_hypergeometric_help	(void);
-	void	dist_uniform_help		(void);
-	void	dist_exponential_help		(void);
+	case START_POISSON:
+		dist_poisson();
+		break;
 
-# endif			/* about.h */
+	case START_GEOMETRIC:
+		dist_geometric();
+		break;
+
+	case START_HYPERGEOMETRIC:
+		break;
+
+	case START_UNIFORM:
+		dist_uniform();
+		break;
+
+	case START_EXPONENTIAL:
+		dist_exponential();
+		break;
+
+	case START_NORMAL:
+		dist_normal();
+		break;
+	}
+
+	fflush(stdout);
+}
+
+
+void	w_start_switch	(void)
+{
+	def_prog_mode();
+	endwin();
+
+	start_switch();
+
+	getchar();
+	reset_prog_mode();
+}

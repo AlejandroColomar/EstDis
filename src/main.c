@@ -27,6 +27,7 @@
 
 	#include "alx_ncur.h"
 
+	#include "global.h"
 	#include "menu.h"
 
 int	main	(void)
