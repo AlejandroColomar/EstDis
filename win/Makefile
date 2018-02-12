@@ -2,11 +2,11 @@
 
 # MACRO = substitute with this
 
-OS = linux
+OS = win
 
-CC = gcc
-CFLAGS = -std=c11 -O3 -march=native
-LIBS = -l ncurses -l pthread -l m
+CC = gcc.exe
+CFLAGS = -std=c11 -O3
+LIBS = -l pdcurses -l m
 
 
 ROOT_DIR = ../
@@ -18,7 +18,7 @@ SRC_DIR = $(ROOT_DIR)/src/
 LIBALX_DIR = $(ROOT_DIR)/libalx/
 LIBALX_OBJ_DIR = $(LIBALX_DIR)/obj/
 
-ALL = estdis
+ALL = estdis.exe
 
 # dependencies
 
@@ -33,7 +33,7 @@ OBJ = $(patsubst %,$(OBJ_DIR)/%,$(OBJ_OBJ)) $(patsubst %,$(LIBALX_OBJ_DIR)/%,$(L
 all: $(ALL)
 
 
-estdis: $(OBJ)
+estdis.exe: $(OBJ)
 	$(CC) $(CFLAGS) $^ -o $@ $(LIBS)
 
 
