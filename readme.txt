@@ -6,6 +6,6 @@ compiling on linux:
 	$ make
 
 running on linux:
-	.../estdis/ $ ./bin/estdis
+	EstDis/ $ ./bin/estdis
 running on windows:
-	run 'estdis.exe' which is in .../win/
+	run 'estdis.exe' which is in EstDis\win\
