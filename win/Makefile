@@ -22,7 +22,7 @@ ALL = estdis.exe
 
 # dependencies
 
-OBJ_OBJ = main.o about.o desc.o dist.o menu.o
+OBJ_OBJ = main.o about.o desc.o dist.o menu.o start.o
 LIBALX_OBJ = alx_file.o alx_getnum.o alx_math.o alx_ncur.o
 OBJ = $(patsubst %,$(OBJ_DIR)/%,$(OBJ_OBJ)) $(patsubst %,$(LIBALX_OBJ_DIR)/%,$(LIBALX_OBJ))
 
