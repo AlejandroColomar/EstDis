@@ -6,6 +6,8 @@ OS = linux
 TST = false
 DBG = false
 
+MAKE_ARGS = OS=$(OS) TST=$(TST) DGB=$(DBG)
+
 # directories
 
 ROOT_DIR = ../../
@@ -19,7 +21,7 @@ TST_DIR = $(TUI_DIR)/tst/
 #	action
 
 all:
-	cd $(OBJ_DIR) && $(MAKE) OS=$(OS) && cd ..
+	cd $(OBJ_DIR) && $(MAKE) $(MAKE_ARGS) && cd ..
 
 clean:
 	cd $(OBJ_DIR) && $(MAKE) clean && cd ..

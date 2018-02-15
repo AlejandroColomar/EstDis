@@ -30,7 +30,7 @@
 	#include "global.h"
 	#include "menu.h"
 
-int	main	(void)
+int	main	(int argc, char *argv[], char *envp[])
 {
 	alx_start_curses();
 //	init_values();
