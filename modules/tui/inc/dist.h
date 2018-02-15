@@ -25,12 +25,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-# ifndef		DESC_H
-	# define	DESC_H
+# ifndef		DIST_H
+	# define	DIST_H
 
 	#include <inttypes.h>
 
 void		desc_1var		(void);
 void		desc_2var		(void);
+void		dist_binomial		(void);
+void		dist_poisson		(void);
+void		dist_geometric		(void);
+void		dist_uniform		(void);
+void		dist_exponential	(void);
+void		dist_normal		(void);
 
 # endif			/* dist.h */

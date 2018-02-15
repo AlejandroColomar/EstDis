@@ -6,18 +6,20 @@ OS = linux
 TST = false
 DBG = false
 
+# directories
 
-LIBALX_DIR = ./
+ROOT_DIR = ../../
 
-OBJ_DIR = $(LIBALX_DIR)/obj/
-
+MODULES_DIR = $(ROOT_DIR)/modules/
+ABOUT_DIR = $(MODULES_DIR)/about/
+OBJ_DIR = $(ABOUT_DIR)/obj/
+TST_DIR = $(ABOUT_DIR)/tst/
 
 # target: dependencies
 #	action
 
 all:
 	cd $(OBJ_DIR) && $(MAKE) OS=$(OS) && cd ..
-
 
 clean:
 	cd $(OBJ_DIR) && $(MAKE) clean && cd ..

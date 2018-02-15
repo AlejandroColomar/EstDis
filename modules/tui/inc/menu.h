@@ -59,8 +59,5 @@
 /*----------------------------------------------------------------------------*/
 
 void	menu_main	(void);
-void	menu_continue	(void);
-//void	menu_select	(void);
-void	menu_verbose	(void);
 
 # endif			/* menu.h */
