@@ -29,7 +29,7 @@
 	# define	CALC_H
 
 	#include <inttypes.h>
-	#include <tgmath.h>
+	#include <math.h>
 
 	#include "alx_math.h"
 
