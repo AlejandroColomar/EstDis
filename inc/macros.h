@@ -42,7 +42,9 @@
 	# define		PROG_YEAR	"2015"
 	# define		PROG_VERS	"2.A"
 	# define		OPT_LIST	"a:b:c:f:hi:j:k:lo:p:r:s:V:vx"
-	# define		LICENSE_PATH	"../LICENSE.txt"
+
+	# define		ESTDIS_PATH	"./"
+	# define		LICENSE_RPATH	"./LICENSE.txt"
 
 	# define		CORES_MAX	1
 	# define		THREADS_MAX	(2 * CORES_MAX - 1)

@@ -6,6 +6,10 @@ OS = linux
 TST = false
 DBG = false
 
+MAKE_ARGS = OS=$(OS) TST=$(TST) DGB=$(DBG)
+
+# directories
+
 ROOT_DIR = ../
 
 MODULES_DIR = $(ROOT_DIR)/modules/
@@ -22,10 +26,10 @@ TUI_DIR = $(MODULES_DIR)/tui/
 #	action
 
 all:
-	cd $(ABOUT_DIR) && $(MAKE) OS=$(OS) && cd ..
-	cd $(CALC_DIR) && $(MAKE) OS=$(OS) && cd ..
-	cd $(CTRL_DIR) && $(MAKE) OS=$(OS) && cd ..
-	cd $(TUI_DIR) && $(MAKE) OS=$(OS) && cd ..
+	cd $(ABOUT_DIR) && $(MAKE) $(MAKE_ARGS) && cd ..
+	cd $(CALC_DIR) && $(MAKE) $(MAKE_ARGS) && cd ..
+	cd $(CTRL_DIR) && $(MAKE) $(MAKE_ARGS) && cd ..
+	cd $(TUI_DIR) && $(MAKE) $(MAKE_ARGS) && cd ..
 
 
 clean:

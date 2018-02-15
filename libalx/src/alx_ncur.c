@@ -42,7 +42,7 @@
 	#include "alx_ncur.h"
 
 
-void	alx_start_curses(void)
+void	alx_start_curses	(void)
 {
 	initscr();
 	nonl();
@@ -54,7 +54,24 @@ void	alx_start_curses(void)
 }
 
 
-uint8_t	alx_menu	(const uint8_t len, const struct alx_option mnu[len], WINDOW *win)
+void	alx_pause_curses	(void)
+{
+	def_prog_mode();
+	endwin();
+}
+
+
+void	alx_resume_curses	(void)
+{
+	fflush(stdout);
+	getchar();
+	reset_prog_mode();
+}
+
+
+uint8_t	alx_menu		(const uint8_t len,
+				const struct alx_option mnu[len],
+				WINDOW *win)
 {
 	bool	wh;
 	wchar_t	ch;
@@ -94,7 +111,7 @@ uint8_t	alx_menu	(const uint8_t len, const struct alx_option mnu[len], WINDOW *w
 }
 
 
-void	alx_w_title	(WINDOW *win, const char *str)
+void	alx_w_title		(WINDOW *win, const char *str)
 {
 	uint8_t	h;
 	uint8_t	w;
@@ -111,8 +128,9 @@ void	alx_w_title	(WINDOW *win, const char *str)
 }
 
 
-double	alx_w_getdbl_mM	(int16_t m, int16_t M, double def,
-			WINDOW *win_i, WINDOW *win_o, const char *format, ...)
+double	alx_w_getdbl_mM		(int16_t m, int16_t M, double def,
+				WINDOW *win_i, WINDOW *win_o,
+				const char *format, ...)
 {
 	va_list	args;
 	va_start(args, format);
@@ -163,8 +181,9 @@ double	alx_w_getdbl_mM	(int16_t m, int16_t M, double def,
 }
 
 
-int16_t	alx_w_getint	(int16_t def,
-			WINDOW *win_i, WINDOW *win_o, const char *format, ...)
+int16_t	alx_w_getint		(int16_t def,
+				WINDOW *win_i, WINDOW *win_o,
+				const char *format, ...)
 {
 	va_list	args;
 	va_start(args, format);
@@ -221,8 +240,9 @@ int16_t	alx_w_getint	(int16_t def,
 }
 
 
-int16_t	alx_w_getint_mM	(int16_t m, int16_t M, int16_t def,
-			WINDOW *win_i, WINDOW *win_o, const char *format, ...)
+int16_t	alx_w_getint_mM		(int16_t m, int16_t M, int16_t def,
+				WINDOW *win_i, WINDOW *win_o,
+				const char *format, ...)
 {
 	va_list	args;
 	va_start(args, format);
@@ -275,8 +295,9 @@ int16_t	alx_w_getint_mM	(int16_t m, int16_t M, int16_t def,
 }
 
 
-void	alx_w_getstr	(char *str, const char *def,
-			WINDOW *win_i, WINDOW *win_o, const char *format, ...)
+void	alx_w_getstr		(char *str, const char *def,
+				WINDOW *win_i, WINDOW *win_o,
+				const char *format, ...)
 {
 	va_list	args;
 	va_start(args, format);
@@ -325,8 +346,9 @@ void	alx_w_getstr	(char *str, const char *def,
 }
 
 
-void	alx_w_getfpath	(char *fpath, const char *def,
-			WINDOW *win_i, WINDOW *win_o, const char *format, ...)
+void	alx_w_getfpath		(char *fpath, const char *def,
+				WINDOW *win_i, WINDOW *win_o,
+				const char *format, ...)
 {
 	va_list	args;
 	va_start(args, format);

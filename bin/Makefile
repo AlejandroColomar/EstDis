@@ -2,8 +2,6 @@
 
 # MACRO = substitute with this
 
-OS = linux
-
 CC = gcc
 CFLAGS = -std=c11 -O3 -march=native
 LIBS = -l ncurses -l pthread -l m

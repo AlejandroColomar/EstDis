@@ -50,9 +50,9 @@
 	void	w_print_cpright			(bool nul);
 	void	w_print_disclaim		(void);
 
-	# define	print_license()		alx_prn_file(LICENSE_PATH)
+	# define	print_license()		alx_prn_file(ESTDIS_PATH LICENSE_RPATH)
 
-	# define	w_print_license()	alx_w_prn_file(LICENSE_PATH)
+	# define	w_print_license()	alx_w_prn_file(ESTDIS_PATH LICENSE_RPATH)
 
 	void	dist_binomial_help		(void);
 	void	dist_poisson_help		(void);

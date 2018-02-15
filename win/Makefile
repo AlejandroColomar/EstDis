@@ -2,8 +2,6 @@
 
 # MACRO = substitute with this
 
-OS = win
-
 CC = gcc.exe
 CFLAGS = -std=c11 -O3
 LIBS = -l pdcurses
