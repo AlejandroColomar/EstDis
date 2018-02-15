@@ -30,13 +30,17 @@
 
 	#include <inttypes.h>
 
-void		desc_1var		(void);
-void		desc_2var		(void);
+long double	dist_binomial_P		(int64_t n, long double p, int64_t c);
 void		dist_binomial		(void);
+long double	dist_poisson_P		(long double l, int64_t c);
 void		dist_poisson		(void);
+long double	dist_geometric_P	(long double p, int64_t c);
 void		dist_geometric		(void);
 void		dist_uniform		(void);
 void		dist_exponential	(void);
+void		dist_normal_m_1		(long double a, long double b);
+void		dist_normal_m_2		(long double a, long double b);
+void		dist_normal_m		(long double a, long double b);
 void		dist_normal		(void);
 
 # endif			/* dist.h */

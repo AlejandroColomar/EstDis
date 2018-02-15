@@ -47,6 +47,7 @@
 	#include "alx_ncur.h"
 //	#include "alx_seed.h"
 
+	#include "desc.h"
 	#include "dist.h"
 	#include "start.h"
 
@@ -95,6 +96,8 @@ void	start_switch	(void)
 		dist_normal();
 		break;
 	}
+
+	fflush(stdout);
 }
 
 
@@ -105,7 +108,6 @@ void	w_start_switch	(void)
 
 	start_switch();
 
-	fflush(stdout);
 	getchar();
 	reset_prog_mode();
 }
