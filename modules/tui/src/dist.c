@@ -92,7 +92,7 @@ void		desc_1var	(void)
 
 	for (i = 1; i <= N; i++) {
 		printf("x_%"PRIi64":\t", i);
-		xi =	alx_getdbl(NULL, NULL);
+		xi =	alx_getdbl(1, NULL, NULL);
 		printf("n_%"PRIi64":\t", i);
 		ni =	alx_getdbl_m(0, 1, NULL, NULL);
 
@@ -166,12 +166,12 @@ void		desc_2var	(void){
 
 	for (i = 1; i <= n; i++) {
 		printf("x_%"PRIi64":\t", i);
-		x[i] =		alx_getdbl(NULL, NULL);
+		x[i] =		alx_getdbl(1, NULL, NULL);
 		Exi +=		descrip_Exi(1, x[i]);
 		Exi2 +=		descrip_Exi2(1, x[i]);
 
 		printf("y_%"PRIi64":\t", i);
-		y[i] =		alx_getdbl(NULL, NULL);
+		y[i] =		alx_getdbl(1, NULL, NULL);
 		Eyi +=		descrip_Exi(1, y[i]);
 		Eyi2 +=		descrip_Exi2(1, y[i]);
 
@@ -342,7 +342,7 @@ void		dist_uniform		(void)
 	printf("x1 = limite inferior de interes.\n");
 	printf("x2 = limite superior de interes.\n\n");
 
-	a =	alx_getdbl("a:\t", NULL);
+	a =	alx_getdbl(0, "a:\t", NULL);
 	b =	alx_getdbl_m(a, a+1, "b:\t", NULL);
 	x1 =	alx_getdbl_mM(a, b, a, "x1:\t", NULL);
 	x2 =	alx_getdbl_mM(x1, b, b, "x2:\t", NULL);
@@ -408,7 +408,7 @@ void		dist_normal		(void)
 	printf("a\t= 1/o\n");
 	printf("b\t= -u/o\n\n");
 
-	u =	alx_getdbl("u:\t", NULL);
+	u =	alx_getdbl(0, "u:\t", NULL);
 	o2 =	alx_getdbl_m(0, 1, "o2:\t", NULL);
 
 	o =	normal_o(o2);
@@ -457,7 +457,7 @@ static	void		dist_normal_m_1		(long double a, long double b)
 
 	printf("Z = %Lf * X + %Lf\n", a, b);
 
-	x =	alx_getdbl("x:\t", NULL);
+	x =	alx_getdbl(0, "x:\t", NULL);
 
 	z =	normal_Z(a, b, x);
 
@@ -471,7 +471,7 @@ static	void		dist_normal_m_2		(long double a, long double b)
 
 	printf("X = (Z - %Lf) / %Lf\n", b, a);
 
-	z =	alx_getdbl("z:\t", NULL);
+	z =	alx_getdbl(0, "z:\t", NULL);
 
 	x =	normal_X(a, b, z);
 

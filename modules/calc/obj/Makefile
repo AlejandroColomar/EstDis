@@ -24,8 +24,6 @@ ROOT_DIR = ../../../
 LIBALX_DIR = $(ROOT_DIR)/libalx/
 LIBALX_INC_DIR = $(LIBALX_DIR)/inc/
 
-GLOBAL_INC_DIR = $(ROOT_DIR)/inc/
-
 MODULES_DIR = $(ROOT_DIR)/modules/
 
 CALC_DIR = $(MODULES_DIR)/calc/
@@ -35,12 +33,21 @@ TST_DIR = $(CALC_DIR)/tst/
 
 # dependencies
 
-ALL =
+ALL = calc.o
+
+CALC_INC_LIBALX = alx_math.h
+CALC_DEPS = $(SRC_DIR)/calc.c \
+			$(patsubst %,$(LIBALX_INC_DIR)/%,$(CALC_INC_LIBALX))
+CALC_INC_DIRS = -I $(LIBALX_INC_DIR)
 
 # target: dependencies
 #	action
 
 all: $(ALL)
+	
+
+calc.o: $(CALC_DEPS)
+	$(CC) $(CFLAGS) $(CALC_INC_DIRS) -c $< -o $@ $(LIBS)
 
 
 clean:
