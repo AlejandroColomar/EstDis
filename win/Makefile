@@ -8,21 +8,41 @@ LIBS = -l pdcurses
 
 
 ROOT_DIR = ../
-BIN_DIR = $(ROOT_DIR)/bin/
-INC_DIR = $(ROOT_DIR)/inc/
-OBJ_DIR = $(ROOT_DIR)/obj/
-SRC_DIR = $(ROOT_DIR)/src/
 
 LIBALX_DIR = $(ROOT_DIR)/libalx/
 LIBALX_OBJ_DIR = $(LIBALX_DIR)/obj/
 
-ALL = estdis.exe
+MODULES_DIR = $(ROOT_DIR)/modules/
+
+ABOUT_DIR = $(MODULES_DIR)/about/
+ABOUT_OBJ_DIR = $(ABOUT_DIR)/obj/
+
+CALC_DIR = $(MODULES_DIR)/calc/
+CALC_OBJ_DIR = $(CALC_DIR)/obj/
+
+CTRL_DIR = $(MODULES_DIR)/ctrl/
+CTRL_OBJ_DIR = $(CTRL_DIR)/obj/
+
+TUI_DIR = $(MODULES_DIR)/tui/
+TUI_OBJ_DIR = $(TUI_DIR)/obj/
+
+OBJ_DIR = $(ROOT_DIR)/obj/
 
 # dependencies
 
-OBJ_OBJ = main.o about.o desc.o dist.o menu.o start.o
-LIBALX_OBJ = alx_file.o alx_getnum.o alx_math.o alx_ncur.o
-OBJ = $(patsubst %,$(OBJ_DIR)/%,$(OBJ_OBJ)) $(patsubst %,$(LIBALX_OBJ_DIR)/%,$(LIBALX_OBJ))
+ALL = estdis.exe
+
+ESTDIS_OBJ_LIBALX = alx_file.o alx_getnum.o alx_math.o alx_ncur.o
+ESTDIS_OBJ_ABOUT = about.o
+ESTDIS_OBJ_CALC = calc.o
+ESTDIS_OBJ_CTRL = start.o
+ESTDIS_OBJ_TUI = dist.o menu.o
+ESTDIS_OBJS = $(OBJ_DIR)/main.o \
+			$(patsubst %,$(LIBALX_OBJ_DIR)/%,$(ESTDIS_OBJ_LIBALX)) \
+			$(patsubst %,$(ABOUT_OBJ_DIR)/%,$(ESTDIS_OBJ_ABOUT)) \
+			$(patsubst %,$(CALC_OBJ_DIR)/%,$(ESTDIS_OBJ_CALC)) \
+			$(patsubst %,$(CTRL_OBJ_DIR)/%,$(ESTDIS_OBJ_CTRL)) \
+			$(patsubst %,$(TUI_OBJ_DIR)/%,$(ESTDIS_OBJ_TUI))
 
 
 # target: dependencies
@@ -31,7 +51,7 @@ OBJ = $(patsubst %,$(OBJ_DIR)/%,$(OBJ_OBJ)) $(patsubst %,$(LIBALX_OBJ_DIR)/%,$(L
 all: $(ALL)
 
 
-estdis.exe: $(OBJ)
+estdis.exe: $(ESTDIS_OBJS)
 	$(CC) $(CFLAGS) $^ -o $@ $(LIBS)
 
 

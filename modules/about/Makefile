@@ -28,3 +28,4 @@ all:
 
 clean:
 	cd $(OBJ_DIR) && $(MAKE) clean && cd ..
+	cd $(TST_DIR) && $(MAKE) clean && cd ..
