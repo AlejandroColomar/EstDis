@@ -34,7 +34,7 @@ ALL = estdis
 
 ESTDIS_OBJ_LIBALX = alx_file.o alx_getnum.o alx_math.o alx_ncur.o
 ESTDIS_OBJ_ABOUT = about.o
-ESTDIS_OBJ_CALC =
+ESTDIS_OBJ_CALC = calc.o
 ESTDIS_OBJ_CTRL = start.o
 ESTDIS_OBJ_TUI = dist.o menu.o
 ESTDIS_OBJS = $(OBJ_DIR)/main.o \

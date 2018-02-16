@@ -28,69 +28,62 @@
 # ifndef		CALC_H
 	# define	CALC_H
 
-	#include <inttypes.h>
-	#include <math.h>
-
-	#include "alx_math.h"
-
-
 
 // distributions:
 	// Binomial dist.	X -> B(n, p)
-# define	binomial_P(n, p, x)		(alx_bin_coef(n, x) * pow(p, x) * pow(1-p, n-x))
-# define	binomial_E(n, p)		(n * p)
-# define	binomial_Var(n, p)		(n * p * (1 - p))
+long double	binomial_P	(long double n, long double p, long double x);
+long double	binomial_E	(long double n, long double p);
+long double	binomial_Var	(long double n, long double p);
 
 	// Poisson dist.	X -> P(l)
-# define	poisson_P(l, x)			(exp(-l) * pow(l, x) / alx_fact(x))
-# define	poisson_E(l)			(l)
-# define	poisson_Var(l)			(l)
+long double	poisson_P	(long double l, long double x);
+long double	poisson_E	(long double l);
+long double	poisson_Var	(long double l);
 
 	// Geometric dist.	X -> G(p)
-# define	geometric_P(p, x)		(p * pow(1-p, x-1))
-# define	geometric_E(p)			(1 / p)
-# define	geometric_Var(p)		((1 - p) / (p * p))
+long double	geometric_P	(long double p, long double x);
+long double	geometric_E	(long double p);
+long double	geometric_Var	(long double p);
 
 	// Uniform dist.	X -> U(a, b)
-# define	uniform_P(a, b, x1, x2)		((x2 - x1) / (b - a))
-# define	uniform_E(a, b)			((a + b) / 2)
-# define	uniform_Var(a, b)		((b - a) * (b - a) / 12)
+long double	uniform_P	(long double a, long double b, long double x1, long double x2);
+long double	uniform_E	(long double a, long double b);
+long double	uniform_Var	(long double a, long double b);
 
 	// Exponential dist.	X -> exp(b)
-# define	exponential_P(b, x1, x2)	(exp(-b * x1) - exp(-b * x2))
-# define	exponential_E(b)		(1 / b)
-# define	exponential_Var(b)		(1 / (b * b))
+long double	exponential_P	(long double b, long double x1, long double x2);
+long double	exponential_E	(long double b);
+long double	exponential_Var	(long double b);
 
 	// Normal (Gauss) dist.	X -> N(u, o2);	Z -> N(0, 1)
-# define	normal_o(o2)			(sqrt(o2))
-# define	normal_A(o)			(1 / o)
-# define	normal_B(u, o)			(-u / o)
-# define	normal_Z(a, b, x)		(a * x + b)
-# define	normal_X(a, b, z)		((z - b) / a)
+long double	normal_o	(long double o2);
+long double	normal_A	(long double o);
+long double	normal_B	(long double u, long double o);
+long double	normal_Z	(long double a, long double b, long double x);
+long double	normal_X	(long double a, long double b, long double z);
 
 // descriptive statistics:
-# define	descrip_Eni(ni)			(ni)
-# define	descrip_Exi(ni, xi)		(ni * xi)
-# define	descrip_Exi2(ni, xi)		(ni * xi * xi)
-# define	descrip_Exiyi(xi, yi)		(xi * yi)
+long double	descrip_Eni	(long double ni);
+long double	descrip_Exi	(long double ni, long double xi);
+long double	descrip_Exi2	(long double ni, long double xi);
+long double	descrip_Exiyi	(long double xi, long double yi);
 
-# define	descrip_u(Exi, Eni)		(Exi / Eni)
-# define	descrip_o2(Exi2, Eni, u)	(Exi2 / Eni - u * u)
-# define	descrip_o(o2)			(sqrt(o2))
-# define	descrip_s2(o2, Eni)		(o2 * Eni / (Eni - 1))
-# define	descrip_s(s2)			(sqrt(s2))
-# define	descrip_CV(o, u)		(o / u)
+long double	descrip_u	(long double Exi, long double Eni);
+long double	descrip_o2	(long double Exi2, long double Eni, long double u);
+long double	descrip_o	(long double o2);
+long double	descrip_s2	(long double o2, long double Eni);
+long double	descrip_s	(long double s2);
+long double	descrip_CV	(long double o, long double u);
 
-# define	descrip_oxy(n, Exiyi, ux, uy)	(Exiyi / n - ux * uy)
-# define	descrip_a(ox2, oxy)		(oxy / ox2)
-# define	descrip_b(ux, uy, a)		(uy - a * ux)
-# define	descrip_r(ox, oy, oxy)		(oxy / (ox * oy))
+long double	descrip_oxy	(long double n, long double Exiyi, long double ux, long double uy);
+long double	descrip_a	(long double ox2, long double oxy);
+long double	descrip_b	(long double ux, long double uy, long double a);
+long double	descrip_r	(long double ox, long double oy, long double oxy);
+long double	descrip_Eyiy2	(long double xi, long double yi, long double a, long double b);
 
-# define	descrip_Eyiy2(xi, yi, a, b)	(pow(yi-a*xi-b, 2))
-
-# define	descrip_Aa(n, Exi, Exi2, Eyiy2)	(sqrt(Eyiy2 / ((n - 2) * (Exi2 - Exi * Exi / n))))
-# define	descrip_Ab(n, Exi2, Aa)		(Aa * sqrt(Exi2 / n))
-# define	descrip_Vr(n, Eyiy2)		(Eyiy2 / n)
-# define	descrip_R2(oy2, Vr)		(1 - Vr / oy2)
+long double	descrip_Aa	(long double n, long double Exi, long double Exi2, long double Eyiy2);
+long double	descrip_Ab	(long double n, long double Exi2, long double Aa);
+long double	descrip_Vr	(long double n, long double Eyiy2);
+long double	descrip_R2	(long double oy2, long double Vr);
 
 # endif			/* calc.h */

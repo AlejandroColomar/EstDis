@@ -199,7 +199,9 @@ static	void	menu_continue	(void)
 			break;
 
 		case 1:
-			w_start_switch();
+			alx_pause_curses();
+			start_switch();
+			alx_resume_curses();
 			break;
 
 		case 2:

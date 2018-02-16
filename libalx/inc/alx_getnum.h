@@ -56,7 +56,8 @@
 					const char	*formatB,
 							...);
 
-	long double	alx_getdbl	(const char	*formatA,
+	long double	alx_getdbl	(long double	def,
+					const char	*formatA,
 					const char	*formatB,
 							...);
 
