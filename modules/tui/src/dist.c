@@ -105,12 +105,12 @@ void		desc_1var		(void)
 	s =	descrip_s(s2);
 	CV =	descrip_CV(o, u);
 
-	printf("\nu\t= %f", u);
-	printf("\no2\t= %f", o2);
-	printf("\no\t= %f", o);
-	printf("\ns2\t= %f", s2);
-	printf("\ns\t= %f", s);
-	printf("\nCV\t= %f\n", CV);
+	printf("\nu\t= %lf", u);
+	printf("\no2\t= %lf", o2);
+	printf("\no\t= %lf", o);
+	printf("\ns2\t= %lf", s2);
+	printf("\ns\t= %lf", s);
+	printf("\nCV\t= %lf\n", CV);
 }
 
 void		desc_2var		(void){
@@ -203,24 +203,24 @@ void		desc_2var		(void){
 	Vr =	descrip_Vr(n, Eyiy2);
 	R2 =	descrip_R2(oy2, Vr);
 
-	printf("\nux\t= %f", ux);
-	printf("\nox2\t= %f", ox2);
-	printf("\nox\t= %f\n", ox);
-	printf("\nuy\t= %f", uy);
-	printf("\noy2\t= %f", oy2);
-	printf("\noy\t= %f\n", oy);
-	printf("\noxy\t= %f", oxy);
-	printf("\na\t= %f", a);
-	printf("\nAa\t= %f", Aa);
-	printf("\nb\t= %f", b);
-	printf("\nAb\t= %f", Ab);
-	printf("\nc\t= %f", c);
-	printf("\nAc\t= %f", Ac);
-	printf("\nd\t= %f", d);
-	printf("\nAd\t= %f", Ad);
-	printf("\nr\t= %f", r);
-	printf("\nVr\t= %f", Vr);
-	printf("\nR2\t= %f\n", R2);
+	printf("\nux\t= %lf", ux);
+	printf("\nox2\t= %lf", ox2);
+	printf("\nox\t= %lf\n", ox);
+	printf("\nuy\t= %lf", uy);
+	printf("\noy2\t= %lf", oy2);
+	printf("\noy\t= %lf\n", oy);
+	printf("\noxy\t= %lf", oxy);
+	printf("\na\t= %lf", a);
+	printf("\nAa\t= %lf", Aa);
+	printf("\nb\t= %lf", b);
+	printf("\nAb\t= %lf", Ab);
+	printf("\nc\t= %lf", c);
+	printf("\nAc\t= %lf", Ac);
+	printf("\nd\t= %lf", d);
+	printf("\nAd\t= %lf", Ad);
+	printf("\nr\t= %lf", r);
+	printf("\nVr\t= %lf", Vr);
+	printf("\nR2\t= %lf\n", R2);
 }
 
 
@@ -254,14 +254,14 @@ void		dist_binomial		(void)
 	E =	binomial_E(n, p);
 	Var =	binomial_Var(n, p);
 
-	printf("\nP{X}\t= %f", P);
-	printf("\nE(X)\t= %f", E);
-	printf("\nVar(X)\t= %f\n", Var);
+	printf("\nP{X}\t= %lf", P);
+	printf("\nE(X)\t= %lf", E);
+	printf("\nVar(X)\t= %lf\n", Var);
 
 	if ((n*p > 5) && (n*(1-p) > 5)) {
 		printf("\nAproximacion a Distribucion Normal N(u = np, o2 = np(1-p))");
-		printf("\nu\t= %f", E);
-		printf("\no2\t= %f\n", Var);
+		printf("\nu\t= %lf", E);
+		printf("\no2\t= %lf\n", Var);
 	}
 }
 
@@ -287,9 +287,9 @@ void		dist_poisson		(void)
 	E =	poisson_E(l);
 	Var =	poisson_Var(l);
 
-	printf("\nP{X}\t= %f", P);
-	printf("\nE(X)\t= %f", E);
-	printf("\nVar(X)\t= %f\n", Var);
+	printf("\nP{X}\t= %lf", P);
+	printf("\nE(X)\t= %lf", E);
+	printf("\nVar(X)\t= %lf\n", Var);
 }
 
 void		dist_geometric		(void)
@@ -315,9 +315,9 @@ void		dist_geometric		(void)
 	E =	geometric_E(p);
 	Var =	geometric_Var(p);
 
-	printf("\nP{X=x}\t= %f", P);
-	printf("\nE(X)\t= %f", E);
-	printf("\nVar(X)\t= %f\n", Var);
+	printf("\nP{X=x}\t= %lf", P);
+	printf("\nE(X)\t= %lf", E);
+	printf("\nVar(X)\t= %lf\n", Var);
 }
 
 
@@ -348,9 +348,9 @@ void		dist_uniform		(void)
 	E =	uniform_E(a, b);
 	Var =	uniform_Var(a, b);
 
-	printf("\nP{x1<X<x2}\t= %f", P);
-	printf("\nE(X)\t\t= %f", E);
-	printf("\nVar(X)\t\t= %f\n", Var);
+	printf("\nP{x1<X<x2}\t= %lf", P);
+	printf("\nE(X)\t\t= %lf", E);
+	printf("\nVar(X)\t\t= %lf\n", Var);
 }
 
 
@@ -379,9 +379,9 @@ void		dist_exponential	(void)
 	E =	exponential_E(b);
 	Var =	exponential_Var(b);
 
-	printf("\nP{x1<X<x2}\t= %f\n", P);
-	printf("\nE(X)\t= %f", E);
-	printf("\nVar(X)\t= %f\n", Var);
+	printf("\nP{x1<X<x2}\t= %lf\n", P);
+	printf("\nE(X)\t= %lf", E);
+	printf("\nVar(X)\t= %lf\n", Var);
 }
 
 void		dist_normal		(void)
@@ -412,7 +412,7 @@ void		dist_normal		(void)
 	a =	normal_A(o);
 	b =	normal_B(u, o);
 
-	printf	("\na\t= %f\nb\t= %f\n", a, b);
+	printf	("\na\t= %lf\nb\t= %lf\n", a, b);
 
 	dist_normal_m	(a, b);
 }
@@ -452,13 +452,13 @@ static	void	dist_normal_m_1		(double a, double b)
 	double	x;
 	double	z;
 
-	printf("Z = %f * X + %f\n", a, b);
+	printf("Z = %lf * X + %lf\n", a, b);
 
 	x =	alx_getdbl(0, "x:\t", NULL);
 
 	z =	normal_Z(a, b, x);
 
-	printf("\nz = %f\n", z);
+	printf("\nz = %lf\n", z);
 }
 
 static	void	dist_normal_m_2		(double a, double b)
@@ -466,13 +466,13 @@ static	void	dist_normal_m_2		(double a, double b)
 	double	x;
 	double	z;
 
-	printf("X = (Z - %f) / %f\n", b, a);
+	printf("X = (Z - %lf) / %lf\n", b, a);
 
 	z =	alx_getdbl(0, "z:\t", NULL);
 
 	x =	normal_X(a, b, z);
 
-	printf("\nx = %f\n", x);
+	printf("\nx = %lf\n", x);
 }
 
 static	double	dist_binomial_P		(int64_t n, double p, int64_t c)
@@ -490,7 +490,7 @@ static	double	dist_binomial_P		(int64_t n, double p, int64_t c)
 			x =	alx_getint_mM(0, n, 0, NULL, NULL);
 
 			Pi =	binomial_P(n, p, x);
-			printf("P_%"PRIi64"\t= %f\n", i, Pi);
+			printf("P_%"PRIi64"\t= %lf\n", i, Pi);
 			P +=	Pi;
 		}
 	} else {
@@ -499,7 +499,7 @@ static	double	dist_binomial_P		(int64_t n, double p, int64_t c)
 
 		for (; a <= b; a++) {
 			Pi =	binomial_P(n, p, a);
-			printf("P_%"PRIi64"\t= %f\n", a, Pi);
+			printf("P_%"PRIi64"\t= %lf\n", a, Pi);
 			P +=	Pi;
 		}
 	}
@@ -523,7 +523,7 @@ static	double	dist_poisson_P		(double l, int64_t c)
 			x =	alx_getint_m(0, 1, NULL, NULL);
 
 			Pi =	poisson_P(l, x);
-			printf("P_%"PRIi64"\t= %f\n", i, Pi);
+			printf("P_%"PRIi64"\t= %lf\n", i, Pi);
 			P +=	Pi;
 		}
 	} else {
@@ -532,7 +532,7 @@ static	double	dist_poisson_P		(double l, int64_t c)
 
 		for	(; a <= b; a++) {
 			Pi =	poisson_P(l, a);
-			printf("P_%"PRIi64"\t= %f\n", a, Pi);
+			printf("P_%"PRIi64"\t= %lf\n", a, Pi);
 			P +=	Pi;
 		}
 	}
@@ -555,7 +555,7 @@ static	double	dist_geometric_P	(double p, int64_t c)
 			x =	alx_getint_m(0, 1, NULL, NULL);
 
 			Pi =	geometric_P(p, x);
-			printf("P_%"PRIi64"\t= %f\n", i, Pi);
+			printf("P_%"PRIi64"\t= %lf\n", i, Pi);
 			P +=	Pi;
 		}
 	} else {
@@ -564,7 +564,7 @@ static	double	dist_geometric_P	(double p, int64_t c)
 
 		for	(; a <= b; a++) {
 			Pi =	geometric_P(p, a);
-			printf("P_%"PRIi64"\t= %f\n", a, Pi);
+			printf("P_%"PRIi64"\t= %lf\n", a, Pi);
 			P +=	Pi;
 		}
 	}

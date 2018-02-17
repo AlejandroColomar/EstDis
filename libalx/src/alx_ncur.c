@@ -158,7 +158,7 @@ double	alx_w_getdbl_mM		(double m, double M, double def,
 	getbegyx(win_o, ro, co);
 	wmove(win_o, ri-ro +2, ci-co +1);
 	if (format == NULL) {
-		wprintw(win_o, "Introduce a real number [%f U %f]", m, M);
+		wprintw(win_o, "Introduce a real number [%lf U %lf]", m, M);
 	} else {
 		vw_printw(win_o, format, args);
 	}
@@ -174,7 +174,7 @@ double	alx_w_getdbl_mM		(double m, double M, double def,
 		wrefresh(win_i);
 
 		if (x) {
-			if (1 == sscanf(buff, "%f", &R)) {
+			if (1 == sscanf(buff, "%lf", &R)) {
 				if (R < m || R > M) {
 					wh = 1;
 				} else {

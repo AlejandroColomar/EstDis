@@ -62,7 +62,7 @@ double	alx_getdbl_mM	(double m, double M, double def,
 		puts(formatA);
 	}
 	if (formatB == NULL) {
-		printf("Introduce a real number [%f U %f] (default %f):...\t", m, M, def);
+		printf("Introduce a real number [%lf U %lf] (default %lf):...\t", m, M, def);
 	} else {
 		vprintf(formatB, args);
 	}
@@ -70,7 +70,7 @@ double	alx_getdbl_mM	(double m, double M, double def,
 	wh = 1;
 	for (i = 0; i < 2 && wh; i++) {
 		if (fgets(buff, BUFF_SIZE, stdin)) {
-			if (1 == sscanf(buff, "%f", &R)) {
+			if (1 == sscanf(buff, "%lf", &R)) {
 				if (R < m || R > M) {
 					wh = 1;
 				} else {
@@ -118,7 +118,7 @@ double	alx_getdbl_m	(double m, double def,
 		puts(formatA);
 	}
 	if (formatB == NULL) {
-		printf("Introduce a real number [%f U inf) (default %f):...\t", m, def);
+		printf("Introduce a real number [%lf U inf) (default %lf):...\t", m, def);
 	} else {
 		vprintf(formatB, args);
 	}
@@ -126,7 +126,7 @@ double	alx_getdbl_m	(double m, double def,
 	wh = 1;
 	for (i = 0; i < 2 && wh; i++) {
 		if (fgets(buff, BUFF_SIZE, stdin)) {
-			if (1 == sscanf(buff, "%f", &R)) {
+			if (1 == sscanf(buff, "%lf", &R)) {
 				if (R < m) {
 					wh = 1;
 				} else {
@@ -174,7 +174,7 @@ double	alx_getdbl	(double def,
 		puts(formatA);
 	}
 	if (formatB == NULL) {
-		printf("Introduce a real number (-inf U inf) (default %f):...\t", def);
+		printf("Introduce a real number (-inf U inf) (default %lf):...\t", def);
 	} else {
 		vprintf(formatB, args);
 	}
@@ -182,7 +182,7 @@ double	alx_getdbl	(double def,
 	wh = 1;
 	for (i = 0; i < 2 && wh; i++) {
 		if (fgets(buff, BUFF_SIZE, stdin)) {
-			if (1 == sscanf(buff, "%f", &R)) {
+			if (1 == sscanf(buff, "%lf", &R)) {
 				wh = 0;
 			} else {
 				wh = 2;
