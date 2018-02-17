@@ -40,19 +40,19 @@
 //--| suboptions |--------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-	static	void	dist_normal_m		(float_t a, float_t b);
+	static	void	dist_normal_m		(double a, double b);
 
-	static	void	dist_normal_m_1		(float_t a, float_t b);
+	static	void	dist_normal_m_1		(double a, double b);
 
-	static	void	dist_normal_m_2		(float_t a, float_t b);
+	static	void	dist_normal_m_2		(double a, double b);
 
-	static	float_t	dist_binomial_P		(int64_t n, float_t p,
+	static	double	dist_binomial_P		(int64_t n, double p,
 							int64_t c);
 
-	static	float_t	dist_poisson_P		(float_t l,
+	static	double	dist_poisson_P		(double l,
 							int64_t c);
 
-	static	float_t	dist_geometric_P	(float_t p,
+	static	double	dist_geometric_P	(double p,
 							int64_t c);
 
 
@@ -65,17 +65,17 @@ void		desc_1var		(void)
 {
 	int64_t		N;
 	int64_t		i;
-	float_t	xi;
-	float_t	ni;
-	float_t	Eni = 0;
-	float_t	Exi = 0;
-	float_t	Exi2 = 0;
-	float_t	u;
-	float_t	o2;
-	float_t	o;
-	float_t	s2;
-	float_t	s;
-	float_t	CV;
+	double	xi;
+	double	ni;
+	double	Eni = 0;
+	double	Exi = 0;
+	double	Exi2 = 0;
+	double	u;
+	double	o2;
+	double	o;
+	double	s2;
+	double	s;
+	double	CV;
 
 	printf("\n________________________________________________________________________________\n");
 	printf("u\t= E(ni*xi)/n\t--Media.\n");
@@ -116,33 +116,33 @@ void		desc_1var		(void)
 void		desc_2var		(void){
 	int64_t		n;
 	int64_t		i;
-	float_t	Exi = 0;
-	float_t	Exi2 = 0;
-	float_t	ux;
-	float_t	ox2;
-	float_t	ox;
-	float_t	a;
-	float_t	Aa;
-	float_t	b;
-	float_t	Ab;
-	float_t	Eyi = 0;
-	float_t	Eyi2 = 0;
-	float_t	uy;
-	float_t	oy2;
-	float_t	oy;
-	float_t	c;
-	float_t	Ac;
-	float_t	d;
-	float_t	Ad;
-	float_t	Exiyi = 0;
-	float_t	oxy;
-	float_t	r;
-	float_t	yiy2;
-	float_t	xix2;
-	float_t	Eyiy2 = 0;
-	float_t	Exix2 = 0;
-	float_t	Vr;
-	float_t	R2;
+	double	Exi = 0;
+	double	Exi2 = 0;
+	double	ux;
+	double	ox2;
+	double	ox;
+	double	a;
+	double	Aa;
+	double	b;
+	double	Ab;
+	double	Eyi = 0;
+	double	Eyi2 = 0;
+	double	uy;
+	double	oy2;
+	double	oy;
+	double	c;
+	double	Ac;
+	double	d;
+	double	Ad;
+	double	Exiyi = 0;
+	double	oxy;
+	double	r;
+	double	yiy2;
+	double	xix2;
+	double	Eyiy2 = 0;
+	double	Exix2 = 0;
+	double	Vr;
+	double	R2;
 
 	printf("\n________________________________________________________________________________\n");
 	printf("u\t= E(xi)/n\t\t--Media.\n");
@@ -158,8 +158,8 @@ void		desc_2var		(void){
 
 	n =	alx_getint_m(1, 2, "n:\t", NULL);
 
-	float_t	x[n + 1];
-	float_t	y[n + 1];
+	double	x[n + 1];
+	double	y[n + 1];
 
 	for (i = 1; i <= n; i++) {
 		printf("x_%"PRIi64":\t", i);
@@ -233,10 +233,10 @@ void		dist_binomial		(void)
 {
 	int64_t		n;
 	int64_t		c;
-	float_t	p;
-	float_t	P = 0;
-	float_t	E;
-	float_t	Var;
+	double	p;
+	double	P = 0;
+	double	E;
+	double	Var;
 
 	printf("\n________________________________________________________________________________\n");
 	printf("\nESTADISTICA/Distribuciones:\tDistribucion Binomial: B(n,p)\n\n");
@@ -268,10 +268,10 @@ void		dist_binomial		(void)
 void		dist_poisson		(void)
 {
 	int64_t		c;
-	float_t	l;
-	float_t	P;
-	float_t	E;
-	float_t	Var;
+	double	l;
+	double	P;
+	double	E;
+	double	Var;
 
 	printf("\n________________________________________________________________________________\n");
 	printf("\nESTADISTICA/Distribuciones:\tDistribucion de Poisson: P(l)\n\n");
@@ -296,10 +296,10 @@ void		dist_geometric		(void)
 {
 	int64_t		x;
 	int64_t		c;
-	float_t	p;
-	float_t	P;
-	float_t	E;
-	float_t	Var;
+	double	p;
+	double	P;
+	double	E;
+	double	Var;
 
 	printf("\n________________________________________________________________________________\n");
 	printf("\nESTADISTICA/Distribuciones:\tDistribucion Geometrica: G(p)\n\n");
@@ -323,13 +323,13 @@ void		dist_geometric		(void)
 
 void		dist_uniform		(void)
 {
-	float_t	a;
-	float_t	b;
-	float_t	x1;
-	float_t	x2;
-	float_t	P;
-	float_t	E;
-	float_t	Var;
+	double	a;
+	double	b;
+	double	x1;
+	double	x2;
+	double	P;
+	double	E;
+	double	Var;
 
 	printf("\n________________________________________________________________________________\n");
 	printf("\nESTADISTICA/Distribuciones:\tDistribucion Uniforme: U(a, b)\n\n");
@@ -356,12 +356,12 @@ void		dist_uniform		(void)
 
 void		dist_exponential	(void)
 {
-	float_t	b;
-	float_t	x1;
-	float_t	x2;
-	float_t	P;
-	float_t	E;
-	float_t	Var;
+	double	b;
+	double	x1;
+	double	x2;
+	double	P;
+	double	E;
+	double	Var;
 
 	printf("\n________________________________________________________________________________\n");
 	printf("\nESTADISTICA/Distribuciones:\tDistribucion Exponencial: exp(b)\n\n");
@@ -386,11 +386,11 @@ void		dist_exponential	(void)
 
 void		dist_normal		(void)
 {
-	float_t	u;
-	float_t	o2;
-	float_t	o;
-	float_t	a;
-	float_t	b;
+	double	u;
+	double	o2;
+	double	o;
+	double	a;
+	double	b;
 
 	printf("\n________________________________________________________________________________\n");
 	printf("\nESTADISTICA/Distribuciones:\tDistribucion Normal (Gauss): N(u,o2)\n\n");
@@ -423,7 +423,7 @@ void		dist_normal		(void)
 //--| suboptions |--------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-static	void	dist_normal_m		(float_t a, float_t b)
+static	void	dist_normal_m		(double a, double b)
 {
 	int64_t		i;
 	int64_t		wh = 1;
@@ -447,10 +447,10 @@ static	void	dist_normal_m		(float_t a, float_t b)
 	}
 }
 
-static	void	dist_normal_m_1		(float_t a, float_t b)
+static	void	dist_normal_m_1		(double a, double b)
 {
-	float_t	x;
-	float_t	z;
+	double	x;
+	double	z;
 
 	printf("Z = %f * X + %f\n", a, b);
 
@@ -461,10 +461,10 @@ static	void	dist_normal_m_1		(float_t a, float_t b)
 	printf("\nz = %f\n", z);
 }
 
-static	void	dist_normal_m_2		(float_t a, float_t b)
+static	void	dist_normal_m_2		(double a, double b)
 {
-	float_t	x;
-	float_t	z;
+	double	x;
+	double	z;
 
 	printf("X = (Z - %f) / %f\n", b, a);
 
@@ -475,14 +475,14 @@ static	void	dist_normal_m_2		(float_t a, float_t b)
 	printf("\nx = %f\n", x);
 }
 
-static	float_t	dist_binomial_P		(int64_t n, float_t p, int64_t c)
+static	double	dist_binomial_P		(int64_t n, double p, int64_t c)
 {
 	int64_t		x;
 	int64_t		a;
 	int64_t		b;
 	int64_t		i;
-	float_t	Pi;
-	float_t	P = 0;
+	double	Pi;
+	double	P = 0;
 
 	if (c) {
 		for (i = 1; i <= c; i++) {
@@ -508,14 +508,14 @@ static	float_t	dist_binomial_P		(int64_t n, float_t p, int64_t c)
 }
 
 
-static	float_t	dist_poisson_P		(float_t l, int64_t c)
+static	double	dist_poisson_P		(double l, int64_t c)
 {
 	int64_t		x;
 	int64_t		a;
 	int64_t		b;
 	int64_t		i;
-	float_t	Pi;
-	float_t	P = 0;
+	double	Pi;
+	double	P = 0;
 
 	if (c) {
 		for	(i = 1; i <= c; i++) {
@@ -540,14 +540,14 @@ static	float_t	dist_poisson_P		(float_t l, int64_t c)
 	return	P;
 }
 
-static	float_t	dist_geometric_P	(float_t p, int64_t c)
+static	double	dist_geometric_P	(double p, int64_t c)
 {
 	int64_t		x;
 	int64_t		a;
 	int64_t		b;
 	int64_t		i;
-	float_t	Pi;
-	float_t	P = 0;
+	double	Pi;
+	double	P = 0;
 
 	if (c) {
 		for	(i = 1; i <= c; i++) {

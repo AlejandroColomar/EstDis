@@ -220,7 +220,7 @@ static	void	menu_continue	(void)
 
 static	void	menu_select	(void)
 {
-	int16_t	buff;
+	int64_t	buff;
 	bool	wh;
 	WINDOW		*win;
 	const int64_t	h =	16;

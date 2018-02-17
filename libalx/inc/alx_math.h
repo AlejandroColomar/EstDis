@@ -37,12 +37,12 @@
 	/*
 	 * Factorial
 	 */
-float_t	alx_fact	(int64_t n);
+double	alx_fact	(int64_t n);
 
 	/*
 	 * Binomial coefficient (a b):				--!!!  a > b  !!!--
 	 * - Bugs: If !(a > b), returns 1.
 	 */
-float_t	alx_bin_coef	(int64_t a, int64_t b);
+double	alx_bin_coef	(int64_t a, int64_t b);
 
 # endif			/* alx_math.h */

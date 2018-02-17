@@ -47,7 +47,7 @@
 	 * There is a bug I don't know how to solve: if the user
 	 * introduces a char, it does strange things forever.
 	 */
-float_t	alx_getdbl_mM	(float_t m, float_t M, float_t def,
+double	alx_getdbl_mM	(double m, double M, double def,
 			const char *formatA, const char *formatB, ...)
 {
 	va_list	args;
@@ -55,7 +55,7 @@ float_t	alx_getdbl_mM	(float_t m, float_t M, float_t def,
 
 	int64_t	i;
 	char	buff [BUFF_SIZE];
-	float_t	R;
+	double	R;
 	int64_t	wh;
 
 	if (formatA != NULL) {
@@ -103,7 +103,7 @@ float_t	alx_getdbl_mM	(float_t m, float_t M, float_t def,
 	return	R;
 }
 
-float_t	alx_getdbl_m	(float_t m, float_t def,
+double	alx_getdbl_m	(double m, double def,
 			const char *formatA, const char *formatB, ...)
 {
 	va_list	args;
@@ -111,7 +111,7 @@ float_t	alx_getdbl_m	(float_t m, float_t def,
 
 	int64_t	i;
 	char	buff [BUFF_SIZE];
-	float_t	R;
+	double	R;
 	int64_t	wh;
 
 	if (formatA != NULL) {
@@ -159,7 +159,7 @@ float_t	alx_getdbl_m	(float_t m, float_t def,
 	return	R;
 }
 
-float_t	alx_getdbl	(float_t def,
+double	alx_getdbl	(double def,
 			const char *formatA, const char *formatB, ...)
 {
 	va_list	args;
@@ -167,7 +167,7 @@ float_t	alx_getdbl	(float_t def,
 
 	int64_t	i;
 	char	buff [BUFF_SIZE];
-	float_t	R;
+	double	R;
 	int64_t	wh;
 
 	if (formatA != NULL) {

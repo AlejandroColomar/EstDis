@@ -137,7 +137,7 @@ void	alx_w_title		(WINDOW *win, const char *str)
 }
 
 
-float_t	alx_w_getdbl_mM		(float_t m, float_t M, float_t def,
+double	alx_w_getdbl_mM		(double m, double M, double def,
 				WINDOW *win_i, WINDOW *win_o,
 				const char *format, ...)
 {
@@ -148,7 +148,7 @@ float_t	alx_w_getdbl_mM		(float_t m, float_t M, float_t def,
 	int64_t	wh;
 	char	buff [BUFF_SIZE];
 	int64_t	x;
-	float_t	R;
+	double	R;
 	int64_t	ri;
 	int64_t	ci;
 	int64_t	ro;

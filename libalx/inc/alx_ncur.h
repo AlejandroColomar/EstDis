@@ -53,9 +53,9 @@
 	void	alx_w_title		(WINDOW			*win,
 					const char		*str);
 
-	float_t	alx_w_getdbl_mM		(float_t		m,
-					float_t			M,
-					float_t			def,
+	double	alx_w_getdbl_mM		(double		m,
+					double			M,
+					double			def,
 					WINDOW			*win_i,
 					WINDOW			*win_o,
 					const char		*format,

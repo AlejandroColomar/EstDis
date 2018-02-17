@@ -36,213 +36,213 @@
 
 // distributions:
 	// Binomial dist.	X -> B(n, p)
-float_t	binomial_P	(float_t n, float_t p, float_t x)
+double	binomial_P	(double n, double p, double x)
 {
 	return	(alx_bin_coef(n, x) * pow(p, x) * pow(1-p, n-x));
 }
 
-float_t	binomial_E	(float_t n, float_t p)
+double	binomial_E	(double n, double p)
 {
 	return	(n * p);
 }
 
-float_t	binomial_Var	(float_t n, float_t p)
+double	binomial_Var	(double n, double p)
 {
 	return	(n * p * (1 - p));
 }
 
 
 	// Poisson dist.	X -> P(l)
-float_t	poisson_P	(float_t l, float_t x)
+double	poisson_P	(double l, double x)
 {
 	return	(exp(-l) * pow(l, x) / alx_fact(x));
 }
 
-float_t	poisson_E	(float_t l)
+double	poisson_E	(double l)
 {
 	return	(l);
 }
 
-float_t	poisson_Var	(float_t l)
+double	poisson_Var	(double l)
 {
 	return	(l);
 }
 
 
 	// Geometric dist.	X -> G(p)
-float_t	geometric_P	(float_t p, float_t x)
+double	geometric_P	(double p, double x)
 {
 	return	(p * pow(1-p, x-1));
 }
 
-float_t	geometric_E	(float_t p)
+double	geometric_E	(double p)
 {
 	return	(1 / p);
 }
 
-float_t	geometric_Var	(float_t p)
+double	geometric_Var	(double p)
 {
 	return	((1 - p) / (p * p));
 }
 
 
 	// Uniform dist.	X -> U(a, b)
-float_t	uniform_P	(float_t a, float_t b, float_t x1, float_t x2)
+double	uniform_P	(double a, double b, double x1, double x2)
 {
 	return	((x2 - x1) / (b - a));
 }
 
-float_t	uniform_E	(float_t a, float_t b)
+double	uniform_E	(double a, double b)
 {
 	return	((a + b) / 2);
 }
 
-float_t	uniform_Var	(float_t a, float_t b)
+double	uniform_Var	(double a, double b)
 {
 	return	((b - a) * (b - a) / 12);
 }
 
 
 	// Exponential dist.	X -> exp(b)
-float_t	exponential_P	(float_t b, float_t x1, float_t x2)
+double	exponential_P	(double b, double x1, double x2)
 {
 	return	(exp(-b * x1) - exp(-b * x2));
 }
 
-float_t	exponential_E	(float_t b)
+double	exponential_E	(double b)
 {
 	return	(1 / b);
 }
 
-float_t	exponential_Var	(float_t b)
+double	exponential_Var	(double b)
 {
 	return	(1 / (b * b));
 }
 
 
 	// Normal (Gauss) dist.	X -> N(u, o2);	Z -> N(0, 1)
-float_t	normal_o	(float_t o2)
+double	normal_o	(double o2)
 {
 	return	(sqrt(o2));
 }
 
-float_t	normal_A	(float_t o)
+double	normal_A	(double o)
 {
 	return	(1 / o);
 }
 
-float_t	normal_B	(float_t u, float_t o)
+double	normal_B	(double u, double o)
 {
 	return	(-u / o);
 }
 
-float_t	normal_Z	(float_t a, float_t b, float_t x)
+double	normal_Z	(double a, double b, double x)
 {
 	return	(a * x + b);
 }
 
-float_t	normal_X	(float_t a, float_t b, float_t z)
+double	normal_X	(double a, double b, double z)
 {
 	return	((z - b) / a);
 }
 
 
 // descriptive statistics:
-float_t	descrip_Eni	(float_t ni)
+double	descrip_Eni	(double ni)
 {
 	return	(ni);
 }
 
-float_t	descrip_Exi	(float_t ni, float_t xi)
+double	descrip_Exi	(double ni, double xi)
 {
 	return	(ni * xi);
 }
 
-float_t	descrip_Exi2	(float_t ni, float_t xi)
+double	descrip_Exi2	(double ni, double xi)
 {
 	return	(ni * xi * xi);
 }
 
-float_t	descrip_Exiyi	(float_t xi, float_t yi)
+double	descrip_Exiyi	(double xi, double yi)
 {
 	return	(xi * yi);
 }
 
 
-float_t	descrip_u	(float_t Exi, float_t Eni)
+double	descrip_u	(double Exi, double Eni)
 {
 	return	(Exi / Eni);
 }
 
-float_t	descrip_o2	(float_t Exi2, float_t Eni, float_t u)
+double	descrip_o2	(double Exi2, double Eni, double u)
 {
 	return	(Exi2 / Eni - u * u);
 }
 
-float_t	descrip_o	(float_t o2)
+double	descrip_o	(double o2)
 {
 	return	(sqrt(o2));
 }
 
-float_t	descrip_s2	(float_t o2, float_t Eni)
+double	descrip_s2	(double o2, double Eni)
 {
 	return	(o2 * Eni / (Eni - 1));
 }
 
-float_t	descrip_s	(float_t s2)
+double	descrip_s	(double s2)
 {
 	return	(sqrt(s2));
 }
 
-float_t	descrip_CV	(float_t o, float_t u)
+double	descrip_CV	(double o, double u)
 {
 	return	(o / u);
 }
 
 
-float_t	descrip_oxy	(float_t n, float_t Exiyi, float_t ux, float_t uy)
+double	descrip_oxy	(double n, double Exiyi, double ux, double uy)
 {
 	return	(Exiyi / n - ux * uy);
 }
 
-float_t	descrip_a	(float_t ox2, float_t oxy)
+double	descrip_a	(double ox2, double oxy)
 {
 	return	(oxy / ox2);
 }
 
-float_t	descrip_b	(float_t ux, float_t uy, float_t a)
+double	descrip_b	(double ux, double uy, double a)
 {
 	return	(uy - a * ux);
 }
 
-float_t	descrip_r	(float_t ox, float_t oy, float_t oxy)
+double	descrip_r	(double ox, double oy, double oxy)
 {
 	return	(oxy / (ox * oy));
 }
 
 
-float_t	descrip_Eyiy2	(float_t xi, float_t yi, float_t a, float_t b)
+double	descrip_Eyiy2	(double xi, double yi, double a, double b)
 {
 	return	(pow(yi-a*xi-b, 2));
 }
 
 
-float_t	descrip_Aa	(float_t n, float_t Exi, float_t Exi2, float_t Eyiy2)
+double	descrip_Aa	(double n, double Exi, double Exi2, double Eyiy2)
 {
 	return	(sqrt(Eyiy2 / ((n - 2) * (Exi2 - Exi * Exi / n))));
 }
 
-float_t	descrip_Ab	(float_t n, float_t Exi2, float_t Aa)
+double	descrip_Ab	(double n, double Exi2, double Aa)
 {
 	return	(Aa * sqrt(Exi2 / n));
 }
 
-float_t	descrip_Vr	(float_t n, float_t Eyiy2)
+double	descrip_Vr	(double n, double Eyiy2)
 {
 	return	(Eyiy2 / n);
 }
 
-float_t	descrip_R2	(float_t oy2, float_t Vr)
+double	descrip_R2	(double oy2, double Vr)
 {
 	return	(1 - Vr / oy2);
 }
