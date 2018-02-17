@@ -25,12 +25,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+//	#include <curses.h>
 	#include <inttypes.h>
-//	#include <ncurses.h>
+	#include <math.h>
 	#include <stdarg.h>
 	#include <stdbool.h>
 	#include <stdio.h>
 //	#include <string.h>
+
+	# define	BUFF_SIZE	1024
 
 
 	/*
@@ -44,37 +47,55 @@
 	 * There is a bug I don't know how to solve: if the user
 	 * introduces a char, it does strange things forever.
 	 */
-long double	alx_getdbl_mM	(long double m, long double M, long double def,
-				const char *formatA, const char *formatB, ...)
+double	alx_getdbl_mM	(double m, double M, double def,
+			const char *formatA, const char *formatB, ...)
 {
 	va_list	args;
 	va_start(args, formatB);
 
 	int64_t	i;
-	long double	R;
-	bool	wh;
+	char	buff [BUFF_SIZE];
+	double	R;
+	int64_t	wh;
 
 	if (formatA != NULL) {
 		puts(formatA);
 	}
 	if (formatB == NULL) {
-		printf("Introduce a real number [%Lf U %Lf]:...(default %Lf)...\t", m, M, def);
+		printf("Introduce a real number [%lf U %lf] (default %lf):...\t", m, M, def);
 	} else {
 		vprintf(formatB, args);
 	}
 
-	wh = true;
-	for (i = 0; i < 3 && wh; i++) {
-
-		fflush(stdin);
-		scanf	(" %Lf", &R);
-
-		if (R < m || R > M) {
-			puts("Not valid...");
-			R =	def;
-
+	wh = 1;
+	for (i = 0; i < 2 && wh; i++) {
+		if (fgets(buff, BUFF_SIZE, stdin)) {
+			if (1 == sscanf(buff, "%lf", &R)) {
+				if (R < m || R > M) {
+					wh = 1;
+				} else {
+					wh = 0;
+				}
+			} else {
+				wh = 2;
+			}
 		} else {
-			wh = false;
+			wh = 3;
+		}
+
+		if (wh) {
+			switch (wh) {
+			case 1:
+				puts("Not valid");
+					break;
+			case 2:
+				puts("Not valid!");
+					break;
+			case 3:
+				puts("Not valid!!!");
+					break;
+			}
+			R =	def;
 		}
 	}
 
@@ -82,37 +103,55 @@ long double	alx_getdbl_mM	(long double m, long double M, long double def,
 	return	R;
 }
 
-long double	alx_getdbl_m	(long double m, long double def,
-				const char *formatA, const char *formatB, ...)
+double	alx_getdbl_m	(double m, double def,
+			const char *formatA, const char *formatB, ...)
 {
 	va_list	args;
 	va_start(args, formatB);
 
 	int64_t	i;
-	long double	R;
-	bool	wh;
+	char	buff [BUFF_SIZE];
+	double	R;
+	int64_t	wh;
 
 	if (formatA != NULL) {
 		puts(formatA);
 	}
 	if (formatB == NULL) {
-		printf("Introduce a real number [%Lf U inf):...(default %Lf)...\t", m, def);
+		printf("Introduce a real number [%lf U inf) (default %lf):...\t", m, def);
 	} else {
 		vprintf(formatB, args);
 	}
 
-	wh = true;
-	for (i = 0; i < 3 && wh; i++) {
-
-		fflush(stdin);
-		scanf	(" %Lf", &R);
-
-		if (R < m) {
-			puts("Not valid...");
-			R =	def;
-
+	wh = 1;
+	for (i = 0; i < 2 && wh; i++) {
+		if (fgets(buff, BUFF_SIZE, stdin)) {
+			if (1 == sscanf(buff, "%lf", &R)) {
+				if (R < m) {
+					wh = 1;
+				} else {
+					wh = 0;
+				}
+			} else {
+				wh = 2;
+			}
 		} else {
-			wh = false;
+			wh = 3;
+		}
+
+		if (wh) {
+			switch (wh) {
+			case 1:
+				puts("Not valid");
+					break;
+			case 2:
+				puts("Not valid!");
+					break;
+			case 3:
+				puts("Not valid!!!");
+					break;
+			}
+			R =	def;
 		}
 	}
 
@@ -120,23 +159,50 @@ long double	alx_getdbl_m	(long double m, long double def,
 	return	R;
 }
 
-long double	alx_getdbl	(const char *formatA, const char *formatB, ...)
+double	alx_getdbl	(double def,
+			const char *formatA, const char *formatB, ...)
 {
 	va_list	args;
 	va_start(args, formatB);
 
-	long double	R;
+	int64_t	i;
+	char	buff [BUFF_SIZE];
+	double	R;
+	int64_t	wh;
 
 	if (formatA != NULL) {
 		puts(formatA);
 	}
 	if (formatB == NULL) {
-		printf("Introduce a real number (-inf U inf):...\t");
+		printf("Introduce a real number (-inf U inf) (default %lf):...\t", def);
 	} else {
 		vprintf(formatB, args);
 	}
 
-	scanf	(" %Lf", &R);
+	wh = 1;
+	for (i = 0; i < 2 && wh; i++) {
+		if (fgets(buff, BUFF_SIZE, stdin)) {
+			if (1 == sscanf(buff, "%lf", &R)) {
+				wh = 0;
+			} else {
+				wh = 2;
+			}
+		} else {
+			wh = 3;
+		}
+
+		if (wh) {
+			switch (wh) {
+			case 2:
+				puts("Not valid!");
+					break;
+			case 3:
+				puts("Not valid!!!");
+					break;
+			}
+			R =	def;
+		}
+	}
 
 	va_end(args);
 	return	R;
@@ -152,39 +218,55 @@ long double	alx_getdbl	(const char *formatA, const char *formatB, ...)
 	 * There is a bug I don't know how to solve: if the user
 	 * introduces a char, it does strange things forever.
 	 */
-int64_t	alx_getint_mM		(int64_t m, int64_t M, int64_t def,
-				const char *formatA, const char *formatB, ...)
+int64_t	alx_getint_mM	(int64_t m, int64_t M, int64_t def,
+			const char *formatA, const char *formatB, ...)
 {
 	va_list	args;
 	va_start(args, formatB);
 
-	float	sf;
 	int64_t	i;
+	char	buff [BUFF_SIZE];
 	int64_t	Z;
-	bool	wh;
+	int64_t	wh;
 
 	if (formatA != NULL) {
 		puts(formatA);
 	}
 	if (formatB == NULL) {
-		printf("Introduce an integer number [%"PRIi64" U %"PRIi64"]:...(default %lf)...\t", m, M, def);
+		printf("Introduce an integer number [%"PRIi64" U %"PRIi64"] (default %"PRIi64"):...\t", m, M, def);
 	} else {
 		vprintf(formatB, args);
 	}
 
-	wh = true;
-	for (i = 0; i < 3 && wh; i++) {
-
-		fflush(stdin);
-		scanf	(" %f", &sf);
-		Z =	sf;
-
-		if (Z < m || Z > M) {
-			puts("Not valid...");
-			Z =	def;
-
+	wh = 1;
+	for (i = 0; i < 2 && wh; i++) {
+		if (fgets(buff, BUFF_SIZE, stdin)) {
+			if (1 == sscanf(buff, "%"SCNi64"", &Z)) {
+				if (Z < m || Z > M) {
+					wh = 1;
+				} else {
+					wh = 0;
+				}
+			} else {
+				wh = 2;
+			}
 		} else {
-			wh = false;
+			wh = 3;
+		}
+
+		if (wh) {
+			switch (wh) {
+			case 1:
+				puts("Not valid");
+					break;
+			case 2:
+				puts("Not valid!");
+					break;
+			case 3:
+				puts("Not valid!!!");
+					break;
+			}
+			Z =	def;
 		}
 	}
 
@@ -192,39 +274,55 @@ int64_t	alx_getint_mM		(int64_t m, int64_t M, int64_t def,
 	return	Z;
 }
 
-int64_t	alx_getint_m		(int64_t m, int64_t def,
-				const char *formatA, const char *formatB, ...)
+int64_t	alx_getint_m	(int64_t m, int64_t def,
+			const char *formatA, const char *formatB, ...)
 {
 	va_list	args;
 	va_start(args, formatB);
 
-	float	sf;
 	int64_t	i;
+	char	buff [BUFF_SIZE];
 	int64_t	Z;
-	bool	wh;
+	int64_t	wh;
 
 	if (formatA != NULL) {
 		puts(formatA);
 	}
 	if (formatB == NULL) {
-		printf("Introduce an integer number [%"PRIi64" U inf):...(default %lf)...\t", m, def);
+		printf("Introduce an integer number [%"PRIi64" U inf) (default %"PRIi64"):...\t", m, def);
 	} else {
 		vprintf(formatB, args);
 	}
 
-	wh = true;
-	for (i = 0; i < 3 && wh; i++) {
-
-		fflush(stdin);
-		scanf	(" %f", &sf);
-		Z =	sf;
-
-		if (Z < m) {
-			puts("Not valid...");
-			Z =	def;
-
+	wh = 1;
+	for (i = 0; i < 2 && wh; i++) {
+		if (fgets(buff, BUFF_SIZE, stdin)) {
+			if (1 == sscanf(buff, "%"SCNi64"", &Z)) {
+				if (Z < m) {
+					wh = 1;
+				} else {
+					wh = 0;
+				}
+			} else {
+				wh = 2;
+			}
 		} else {
-			wh = false;
+			wh = 3;
+		}
+
+		if (wh) {
+			switch (wh) {
+			case 1:
+				puts("Not valid");
+					break;
+			case 2:
+				puts("Not valid!");
+					break;
+			case 3:
+				puts("Not valid!!!");
+					break;
+			}
+			Z =	def;
 		}
 	}
 

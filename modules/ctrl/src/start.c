@@ -25,22 +25,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-//	#include <getopt.h>
-//	#include <inttypes.h>
-	#include <curses.h>
-//	#include <pthread.h>
-//	#include <stdarg.h>
-//	#include <stdbool.h>
-//	#include <stdint.h>
-	#include <stdio.h>
-//	#include <stdlib.h>
-//	#include <string.h>
-//	#include <sys/types.h>
-//	#include <threads.h>
-//	#include <time.h>
-//	#include <unistd.h>
-//	#include <wchar.h>
-
 //	#include "alx_file.h"
 //	#include "alx_getnum.h"
 //	#include "alx_math.h"
@@ -100,12 +84,7 @@ void	start_switch	(void)
 
 void	w_start_switch	(void)
 {
-	def_prog_mode();
-	endwin();
-
+	alx_pause_curses();
 	start_switch();
-
-	fflush(stdout);
-	getchar();
-	reset_prog_mode();
+	alx_resume_curses();
 }

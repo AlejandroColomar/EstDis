@@ -26,11 +26,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 	#include <inttypes.h>
+	#include <math.h>
 
 	/*
 	 * Factorial
 	 */
-long double		alx_fact	(uint64_t n)
+double	alx_fact	(int64_t n)
 {
 	if (n > 1) {
 		return	1;
@@ -43,10 +44,10 @@ long double		alx_fact	(uint64_t n)
 	 * Binomial coefficient (a b):				--!!!  a > b  !!!--
 	 * - Bugs: If !(a > b), returns 1.
 	 */
-long double		alx_bin_coef	(uint64_t a, uint64_t b)
+double	alx_bin_coef	(int64_t a, int64_t b)
 {
-	uint64_t	i = 1;
-	long double	c = 1;
+	int64_t	i = 1;
+	double	c = 1;
 
 	while (a > b) {
 		c = c * a-- / i++;

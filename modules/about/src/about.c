@@ -39,17 +39,17 @@ void	w_help_switch			(void)
 {
 }
 
-void	print_help		(void)
+void	print_help			(void)
 {
 	printf(PROG_NAME "\n\n");
 }
 
-void	print_version	(void)
+void	print_version			(void)
 {
 	printf("Version:\t" PROG_VERS "\n\n");
 }
 
-void	print_usage		(void)
+void	print_usage			(void)
 {
 	printf("Usage: TO BE WRITTEN\n");
 	printf("Help:\n");
@@ -58,7 +58,7 @@ void	print_usage		(void)
 	printf("$ ./exe -h\n\n");
 }
 
-void	print_cpright	(void)
+void	print_cpright			(void)
 {
 	printf("\n________________________________________________________________________________");
 	printf("\n");
@@ -71,7 +71,7 @@ void	print_cpright	(void)
 	printf("\n\n");
 }
 
-void	w_print_cpright	(bool nul)
+void	w_print_cpright			(bool nul)
 {
 	WINDOW *win;
 
@@ -94,7 +94,7 @@ void	w_print_cpright	(bool nul)
 	delwin(win);
 }
 
-void	print_disclaim	(void)
+void	print_disclaim			(void)
 {
 	printf("\n________________________________________________________________________________");
 	printf("\n");
@@ -112,7 +112,7 @@ void	print_disclaim	(void)
 	printf("\n\n");
 }
 
-void	w_print_disclaim	(void)
+void	w_print_disclaim		(void)
 {
 	WINDOW *win;
 

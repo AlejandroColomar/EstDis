@@ -98,15 +98,15 @@ static	void	menu_verbose	(void);
 
 void	menu_main		(void)
 {
-	int8_t	sw;
+	int64_t	sw;
 	bool	wh;
 	WINDOW		*win;
-	const uint8_t	h =	10;
-	const uint8_t	w =	34;
-	const uint8_t	r =	1;
-	const uint8_t	c =	(80 - w) / 2;
+	const int64_t	h =	10;
+	const int64_t	w =	34;
+	const int64_t	r =	1;
+	const int64_t	c =	(80 - w) / 2;
 
-	const uint8_t		len = 4;
+	const int64_t		len = 4;
 	const struct alx_option	mnu[4] =	{{7, 4, "[0]	Exit program"},
 						{2, 4, "[1]	Continue"},
 						{4, 4, "[2]	Disclaimer of warranty"},
@@ -148,7 +148,6 @@ void	menu_main		(void)
 			break;
 		}
 	}
-	endwin();
 }
 
 
@@ -159,15 +158,15 @@ void	menu_main		(void)
 
 static	void	menu_continue	(void)
 {
-	int8_t	sw;
+	int64_t	sw;
 	bool	wh;
 	WINDOW		*win;
-	const uint8_t	h =	10;
-	const uint8_t	w =	35;
-	const uint8_t	r =	1;
-	const uint8_t	c =	(80 - w) / 2;
+	const int64_t	h =	10;
+	const int64_t	w =	35;
+	const int64_t	r =	1;
+	const int64_t	c =	(80 - w) / 2;
 
-	const uint8_t		len = 5;
+	const int64_t		len = 5;
 	const struct alx_option	mnu[5] =	{{7, 4, "[0]	Back"},
 						{2, 4, "[1]	Run"},
 						{3, 4, "[2]	Help"},
@@ -199,7 +198,9 @@ static	void	menu_continue	(void)
 			break;
 
 		case 1:
-			w_start_switch();
+			alx_pause_curses();
+			start_switch();
+			alx_resume_curses();
 			break;
 
 		case 2:
@@ -219,15 +220,15 @@ static	void	menu_continue	(void)
 
 static	void	menu_select	(void)
 {
-	int16_t	buff;
+	int64_t	buff;
 	bool	wh;
 	WINDOW		*win;
-	const uint8_t	h =	16;
-	const uint8_t	w =	50;
-	const uint8_t	r =	1;
-	const uint8_t	c =	(80 - w) / 2;
+	const int64_t	h =	16;
+	const int64_t	w =	50;
+	const int64_t	r =	1;
+	const int64_t	c =	(80 - w) / 2;
 
-	const uint8_t		len = 10;
+	const int64_t		len = 10;
 	const struct alx_option	mnu[10] =	{{13, 4, "[0]	Back"},
 						{2, 4, "[1]	1 Variable"},
 						{3, 4, "[2]	2 Variables"},
@@ -268,12 +269,12 @@ static	void	menu_select	(void)
 static	void	menu_verbose	(void)
 {
 	WINDOW		*win;
-	const uint8_t	h =	10;
-	const uint8_t	w =	51;
-	const uint8_t	r =	1;
-	const uint8_t	c =	(80 - w) / 2;
+	const int64_t	h =	10;
+	const int64_t	w =	51;
+	const int64_t	r =	1;
+	const int64_t	c =	(80 - w) / 2;
 
-	const uint8_t		len = 5;
+	const int64_t		len = 5;
 	const struct alx_option	mnu[5] =	{{7, 4, "[0]	Show NOTHING"},
 						{2, 4, "[1]	Show only solution"},
 						{3, 4, "[2]	Show short help"},

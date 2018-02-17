@@ -29,13 +29,14 @@
 	# define	LIBALX_NCUR_H
 
 	#include <curses.h>
+	#include <math.h>
 //	#include <stdbool.h>
 	#include <stdarg.h>
 	#include <stdint.h>
 
 	struct	alx_option {
-		int8_t	r;
-		int8_t	c;
+		int64_t	r;
+		int64_t	c;
 		char	*t;
 	};
 
@@ -43,31 +44,32 @@
 	void	alx_start_curses	(void);
 	void	alx_pause_curses	(void);
 	void	alx_resume_curses	(void);
+	void	alx_end_curses		(void);
 
-	uint8_t	alx_menu		(const uint8_t		len,
+	int64_t	alx_menu		(const int64_t		len,
 					const struct alx_option	mnu[len],
 					WINDOW			*win);
 
 	void	alx_w_title		(WINDOW			*win,
 					const char		*str);
 
-	double	alx_w_getdbl_mM		(int16_t		m,
-					int16_t			M,
+	double	alx_w_getdbl_mM		(double		m,
+					double			M,
 					double			def,
 					WINDOW			*win_i,
 					WINDOW			*win_o,
 					const char		*format,
 								...);
 
-	int16_t	alx_w_getint		(int16_t		def,
+	int64_t	alx_w_getint		(int64_t		def,
 					WINDOW			*win_i,
 					WINDOW			*win_o,
 					const char		*format,
 								...);
 
-	int16_t	alx_w_getint_mM		(int16_t		m,
-					int16_t			M,
-					int16_t			def,
+	int64_t	alx_w_getint_mM		(int64_t		m,
+					int64_t			M,
+					int64_t			def,
 					WINDOW			*win_i,
 					WINDOW			*win_o,
 					const char		*format,
@@ -91,7 +93,7 @@
 /*
 
 
-	const uint8_t		len = TST_FUNCTIONS;
+	const int64_t		len = TST_FUNCTIONS;
 	const struct alx_option	mnu[TST_FUNCTIONS] =	{{7, 4, "[0]	Exit program"},
 						{2, 4, "[1]	Continue"},
 						{3, 4, "[2]	Disclaimer of warranty"},

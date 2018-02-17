@@ -28,8 +28,6 @@
 # ifndef			MACROS
 	# define		MACROS
 
-	#include	<math.h>
-
 	# define		DBG	true
 	# define		DBG_th	thr_num
 	# if (DBG)

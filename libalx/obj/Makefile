@@ -28,17 +28,17 @@ SRC_DIR = $(LIBALX_DIR)/src/
 
 ALL = alx_file.o alx_getnum.o alx_math.o alx_ncur.o alx_seed.o
 
-FILE_INC = alx_file.h
+FILE_INC = alx_file.h alx_ncur.h
 FILE_DEPS = $(SRC_DIR)/alx_file.c $(patsubst %,$(INC_DIR)/%,$(FILE_INC))
-FILE_INC_DIRS =
+FILE_INC_DIRS = -I $(INC_DIR)
 
 GETN_INC = alx_getnum.h
 GETN_DEPS = $(SRC_DIR)/alx_getnum.c $(patsubst %,$(INC_DIR)/%,$(GETN_INC))
-GETN_INC_DIRS =
+GETN_INC_DIRS = -I $(INC_DIR)
 
 MATH_INC = alx_math.h
 MATH_DEPS = $(SRC_DIR)/alx_math.c $(patsubst %,$(INC_DIR)/%,$(MATH_INC))
-MATH_INC_DIRS =
+MATH_INC_DIRS = -I $(INC_DIR)
 
 NCUR_INC = alx_ncur.h
 NCUR_DEPS = $(SRC_DIR)/alx_ncur.c $(patsubst %,$(INC_DIR)/%,$(NCUR_INC))
@@ -46,7 +46,7 @@ NCUR_INC_DIRS = -I $(INC_DIR)
 
 SEED_INC = alx_seed.h
 SEED_DEPS = $(SRC_DIR)/alx_seed.c $(patsubst %,$(INC_DIR)/%,$(SEED_INC))
-SEED_INC_DIRS =
+SEED_INC_DIRS = -I $(INC_DIR)
 
 # target: dependencies
 #	action
