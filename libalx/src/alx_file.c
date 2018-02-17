@@ -40,13 +40,16 @@
 //	#include <unistd.h>
 //	#include <wchar.h>
 
+	#include "alx_file.h"
+	#include "alx_ncur.h"
+
 
 
 
 void	alx_prn_file		(const char *filepath)
 {
 
-	int16_t	c;
+	int64_t	c;
 	FILE	*fp;
 
 	fp =	fopen(filepath, "r");
@@ -65,25 +68,7 @@ void	alx_prn_file		(const char *filepath)
 
 void	alx_w_prn_file	(const char *filepath)
 {
-	def_prog_mode();
-	endwin();
-
-	int16_t	c;
-	FILE	*fp;
-
-	fp =	fopen(filepath, "r");
-	printf("\n________________________________________________________________________________");
-	printf("\n\n");
-	if (fp) {
-		while ((c = getc(fp)) != EOF){
-			putchar(c);
-		}
-		fclose(fp);
-	}
-	printf("\n________________________________________________________________________________");
-	printf("\n\n");
-
-	fflush(stdout);
-	getch();
-	reset_prog_mode();
+	alx_pause_curses();
+	alx_prn_file(filepath);
+	alx_resume_curses();
 }

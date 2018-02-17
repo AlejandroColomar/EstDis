@@ -1,4 +1,6 @@
-int	seedf		(int a, int b, int c)
+	#include <stdint.h>
+
+int64_t	seedf		(int64_t a, int64_t b, int64_t c)
 {
 	a -=	b + c;
 	a =	a ^ (c >> 13);

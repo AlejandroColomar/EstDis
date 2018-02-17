@@ -56,9 +56,9 @@
 	#include "macros.h"
 
 
-	int16_t		flag_s;
-	int16_t		flag_r;
-	int16_t		flag_V;
+	int64_t		flag_s;
+	int64_t		flag_r;
+	int64_t		flag_V;
 	bool		flag_x;
 
 	char		file_path [FILENAME_MAX];

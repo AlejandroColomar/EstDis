@@ -6,6 +6,8 @@ OS = linux
 TST = false
 DBG = false
 
+MAKE_ARGS = OS=$(OS) TST=$(TST) DGB=$(DBG)
+
 
 LIBALX_DIR = ./
 
@@ -16,7 +18,7 @@ OBJ_DIR = $(LIBALX_DIR)/obj/
 #	action
 
 all:
-	cd $(OBJ_DIR) && $(MAKE) OS=$(OS) && cd ..
+	cd $(OBJ_DIR) && $(MAKE) $(MAKE_ARGS) && cd ..
 
 
 clean:

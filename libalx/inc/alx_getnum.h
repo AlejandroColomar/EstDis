@@ -28,7 +28,8 @@
 # ifndef		ALX_GETNUM_H
 	# define	ALX_GETNUM_H
 
-//	#include <ncurses.h>
+//	#include <curses.h>
+	#include <math.h>
 //	#include <stdbool.h>
 	#include <stdarg.h>
 	#include <stdint.h>
@@ -43,35 +44,35 @@
 	 */
 
 
-	long double	alx_getdbl_mM	(long double	m,
-					long double	M,
-					long double	def,
-					const char	*formatA,
-					const char	*formatB,
-							...);
+	float_t	alx_getdbl_mM	(float_t	m,
+				float_t		M,
+				float_t		def,
+				const char	*formatA,
+				const char	*formatB,
+						...);
 
-	long double	alx_getdbl_m	(long double	m,
-					long double	def,
-					const char	*formatA,
-					const char	*formatB,
-							...);
+	float_t	alx_getdbl_m	(float_t	m,
+				float_t		def,
+				const char	*formatA,
+				const char	*formatB,
+						...);
 
-	long double	alx_getdbl	(long double	def,
-					const char	*formatA,
-					const char	*formatB,
-							...);
+	float_t	alx_getdbl	(float_t	def,
+				const char	*formatA,
+				const char	*formatB,
+						...);
 
-	int64_t		alx_getint_mM	(int64_t	m,
-					int64_t		M,
-					int64_t		def,
-					const char	*formatA,
-					const char	*formatB,
-							...);
+	int64_t	alx_getint_mM	(int64_t	m,
+				int64_t		M,
+				int64_t		def,
+				const char	*formatA,
+				const char	*formatB,
+						...);
 
-	int64_t		alx_getint_m	(int64_t	m,
-					int64_t		def,
-					const char	*formatA,
-					const char	*formatB,
-							...);
+	int64_t	alx_getint_m	(int64_t	m,
+				int64_t		def,
+				const char	*formatA,
+				const char	*formatB,
+						...);
 
 # endif			/* alx_getnum.h */

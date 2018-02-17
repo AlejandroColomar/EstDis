@@ -56,9 +56,9 @@
 	#include "macros.h"
 
 
-	extern	int16_t		flag_s;
-	extern	int16_t		flag_r;
-	extern	int16_t		flag_V;
+	extern	int64_t		flag_s;
+	extern	int64_t		flag_r;
+	extern	int64_t		flag_V;
 	extern	bool		flag_x;
 
 	enum	Start_Switch {

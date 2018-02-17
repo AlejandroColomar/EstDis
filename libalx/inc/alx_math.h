@@ -27,7 +27,9 @@
 
 # ifndef		ALX_MATH_H
 	# define	ALX_MATH_H
-//	#include <ncurses.h>
+
+//	#include <curses.h>
+	#include <math.h>
 //	#include <stdbool.h>
 //	#include <stdarg.h>
 	#include <stdint.h>
@@ -35,12 +37,12 @@
 	/*
 	 * Factorial
 	 */
-long double		alx_fact	(uint64_t n);
+float_t	alx_fact	(int64_t n);
 
 	/*
 	 * Binomial coefficient (a b):				--!!!  a > b  !!!--
 	 * - Bugs: If !(a > b), returns 1.
 	 */
-long double		alx_bin_coef	(uint64_t a, uint64_t b);
+float_t	alx_bin_coef	(int64_t a, int64_t b);
 
 # endif			/* alx_math.h */

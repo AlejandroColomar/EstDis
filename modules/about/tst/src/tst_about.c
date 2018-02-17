@@ -67,15 +67,15 @@ int	main	()
 {
 	alx_start_curses();
 
-	int8_t	sw;
+	int64_t	sw;
 	bool	wh;
 	WINDOW		*win;
-	const uint8_t	h =	30;
-	const uint8_t	w =	34;
-	const uint8_t	r =	1;
-	const uint8_t	c =	(80 - w) / 2;
+	const int64_t	h =	30;
+	const int64_t	w =	34;
+	const int64_t	r =	1;
+	const int64_t	c =	(80 - w) / 2;
 
-	const uint8_t		len = TST_FUNCTIONS;
+	const int64_t		len = TST_FUNCTIONS;
 	const struct alx_option	mnu[TST_FUNCTIONS] =	{{19, 4, "[0]  END TEST"},
 						{2, 4, "[1]  w_help_switch"},
 						{3, 4, "[2]  print_help"},

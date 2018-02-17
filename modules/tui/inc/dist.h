@@ -28,8 +28,6 @@
 # ifndef		DIST_H
 	# define	DIST_H
 
-	#include <inttypes.h>
-
 void		desc_1var		(void);
 void		desc_2var		(void);
 void		dist_binomial		(void);

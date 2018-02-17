@@ -40,5 +40,6 @@ int	main	(int argc, char *argv[], char *envp[])
 //	if (!flag_x) {
 		menu_main();
 //	}
+	alx_end_curses();
 	return	0;
 }
