@@ -2,17 +2,11 @@
 
 # MACRO = substitute with this
 
-OS = linux
-TST = false
-DBG = false
-
-MAKE_ARGS = OS=$(OS) TST=$(TST) DGB=$(DBG)
-
 # directories
 
-ROOT_DIR = ../
+ESTDIS_DIR = ../
 
-MODULES_DIR = $(ROOT_DIR)/modules/
+MODULES_DIR = $(ESTDIS_DIR)/modules/
 
 ABOUT_DIR = $(MODULES_DIR)/about/
 CALC_DIR = $(MODULES_DIR)/calc/
@@ -26,10 +20,10 @@ TUI_DIR = $(MODULES_DIR)/tui/
 #	action
 
 all:
-	cd $(ABOUT_DIR) && $(MAKE) $(MAKE_ARGS) && cd ..
-	cd $(CALC_DIR) && $(MAKE) $(MAKE_ARGS) && cd ..
-	cd $(CTRL_DIR) && $(MAKE) $(MAKE_ARGS) && cd ..
-	cd $(TUI_DIR) && $(MAKE) $(MAKE_ARGS) && cd ..
+	cd $(ABOUT_DIR) && $(MAKE) && cd ..
+	cd $(CALC_DIR) && $(MAKE) && cd ..
+	cd $(CTRL_DIR) && $(MAKE) && cd ..
+	cd $(TUI_DIR) && $(MAKE) && cd ..
 
 
 clean:

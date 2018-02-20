@@ -2,17 +2,11 @@
 
 # MACRO = substitute with this
 
-OS = linux
-TST = false
-DBG = false
-
-MAKE_ARGS = OS=$(OS) TST=$(TST) DGB=$(DBG)
-
 # directories
 
-ROOT_DIR = ../../
+ESTDIS_DIR = ../../
 
-MODULES_DIR = $(ROOT_DIR)/modules/
+MODULES_DIR = $(ESTDIS_DIR)/modules/
 ABOUT_DIR = $(MODULES_DIR)/about/
 OBJ_DIR = $(ABOUT_DIR)/obj/
 TST_DIR = $(ABOUT_DIR)/tst/
@@ -21,9 +15,9 @@ TST_DIR = $(ABOUT_DIR)/tst/
 #	action
 
 all:
-	cd $(OBJ_DIR) && $(MAKE) $(MAKE_ARGS) && cd ..
+	cd $(OBJ_DIR) && $(MAKE) && cd ..
  ifeq ($(TST), true)
-	cd $(TST_DIR) && $(MAKE) $(MAKE_ARGS) && cd ..
+	cd $(TST_DIR) && $(MAKE) && cd ..
  endif
 
 clean:

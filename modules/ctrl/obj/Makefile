@@ -2,32 +2,16 @@
 
 # MACRO = substitute with this
 
-OS = linux
-TST = false
-DBG = false
-
-ifeq ($(OS), linux)
-	CC = gcc
-	CFLAGS = -std=c11 -O3 -march=native
-	LIBS = -l ncurses -l pthread -l m
-else
- ifeq ($(OS), win)
-	CC = gcc.exe
-	CFLAGS = -std=c11 -O3
-	LIBS = -l pdcurses -l m
- endif
-endif
-
 # directories
 
-ROOT_DIR = ../../../
+ESTDIS_DIR = ../../../
 
-LIBALX_DIR = $(ROOT_DIR)/libalx/
+LIBALX_DIR = $(ESTDIS_DIR)/libalx/
 LIBALX_INC_DIR = $(LIBALX_DIR)/inc/
 
-GLOBAL_INC_DIR = $(ROOT_DIR)/inc/
+GLOBAL_INC_DIR = $(ESTDIS_DIR)/inc/
 
-MODULES_DIR = $(ROOT_DIR)/modules/
+MODULES_DIR = $(ESTDIS_DIR)/modules/
 
 TUI_DIR = $(MODULES_DIR)/tui/
 TUI_INC_DIR = $(TUI_DIR)/inc/
