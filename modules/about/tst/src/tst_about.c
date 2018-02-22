@@ -1,29 +1,19 @@
-////////////////----------------------------------------////////////////
-////////////////        EstDis                          ////////////////
-////////////////----------------------------------------////////////////
 
-	/*
-	 * EstDis	This is a solver of statistics problems.
-	 * Copyright (C) 2016 Alejandro Colomar Andrés
-	 *
-	 * This program is free software: you can redistribute it and/or
-	 * modify it under the terms of the GNU General Public License
-	 * as published by the Free Software Foundation, either version
-	 * 3 of the License, or (at your option) any later version.
-
-	 * This program is distributed in the hope that it will be
-	 * useful, but WITHOUT ANY WARRANTY; without even the implied
-	 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-	 * PURPOSE.  See the GNU General Public License for more
-	 * details.
-	 *
-	 * You should have received a copy of the GNU General Public
-	 * License along with this program.
-	 * If not, see <http://www.gnu.org/licenses/>.
-	 */
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
+/******************************************************************************
+ * This program is free software; you can redistribute it and/or modify	      *
+ * it under the terms of the GNU General Public License as published by	      *
+ * the Free Software Foundation; either version 2 of the License, or          *
+ * (at your option) any later version.					      *
+ *									      *
+ * This program is distributed in the hope that it will be useful,	      *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of	      *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the	      *
+ * GNU General Public License for more details.				      *
+ *									      *
+ * You should have received a copy of the GNU General Public License	      *
+ * along with this program; if not, see the file COPYING, or write	      *
+ * to the Free Software Foundation, Inc.				      *
+ ******************************************************************************/
 
 	#include <curses.h>
 	#include <stdbool.h>
@@ -75,7 +65,7 @@ int	main	()
 	const int64_t	r =	1;
 	const int64_t	c =	(80 - w) / 2;
 
-	const int64_t		len = TST_FUNCTIONS;
+	const int64_t		N = TST_FUNCTIONS;
 	const struct alx_option	mnu[TST_FUNCTIONS] =	{{19, 4, "[0]  END TEST"},
 						{2, 4, "[1]  w_help_switch"},
 						{3, 4, "[2]  print_help"},
@@ -96,34 +86,7 @@ int	main	()
 
 	wh = true;
 	while (wh) {
-		win =	newwin(h, w, r, c);
-		keypad(win, true);
-
-		alx_w_title(win, "MENU:");
-		mvwaddstr(win, mnu[1].r, mnu[1].c, mnu[1].t);
-		mvwaddstr(win, mnu[2].r, mnu[2].c, mnu[2].t);
-		mvwaddstr(win, mnu[3].r, mnu[3].c, mnu[3].t);
-		mvwaddstr(win, mnu[4].r, mnu[4].c, mnu[4].t);
-		mvwaddstr(win, mnu[5].r, mnu[5].c, mnu[5].t);
-		mvwaddstr(win, mnu[6].r, mnu[6].c, mnu[6].t);
-		mvwaddstr(win, mnu[7].r, mnu[7].c, mnu[7].t);
-		mvwaddstr(win, mnu[8].r, mnu[8].c, mnu[8].t);
-		mvwaddstr(win, mnu[9].r, mnu[9].c, mnu[9].t);
-		mvwaddstr(win, mnu[10].r, mnu[10].c, mnu[10].t);
-		mvwaddstr(win, mnu[11].r, mnu[11].c, mnu[11].t);
-		mvwaddstr(win, mnu[12].r, mnu[12].c, mnu[12].t);
-		mvwaddstr(win, mnu[13].r, mnu[13].c, mnu[13].t);
-		mvwaddstr(win, mnu[14].r, mnu[14].c, mnu[14].t);
-		mvwaddstr(win, mnu[15].r, mnu[15].c, mnu[15].t);
-		mvwaddstr(win, mnu[16].r, mnu[16].c, mnu[16].t);
-		mvwaddstr(win, mnu[0].r, mnu[0].c, mnu[0].t);
-		wrefresh(win);
-
-		sw =	alx_menu(len, mnu, win);
-
-		wclear(win);
-		wrefresh(win);
-		delwin(win);
+		sw =	alx_menu(h, w, N, mnu, "TEST:");
 
 		switch (sw) {
 		case TST_END:

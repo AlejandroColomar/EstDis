@@ -21,7 +21,7 @@ SRC_DIR = $(ESTDIS_DIR)/src/
 ALL = main.o
 
 MAIN_INC_LIBALX = alx_ncur.h
-MAIN_INC_TUI = menu.h
+MAIN_INC_TUI = menus.h
 MAIN_INC = global.h
 MAIN_DEPS = $(SRC_DIR)/main.c \
 			$(patsubst %,$(LIBALX_INC_DIR)/%,$(MAIN_INC_LIBALX)) \

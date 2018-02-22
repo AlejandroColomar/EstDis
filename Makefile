@@ -17,7 +17,7 @@ export	LIBS = -l ncurses -l pthread -l m
   ifeq ($(OS), win)
 export	CC = gcc.exe
 export	CFLAGS = -std=c11 -O3
-export	LIBS = -l pdcurses -l m
+export	LIBS = -l ncurses -l m
   endif
  endif
 
