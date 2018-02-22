@@ -2,17 +2,14 @@
 
 # MACRO = substitute with this
 
-CC = gcc.exe
-CFLAGS = -std=c11 -O3
-LIBS = -l pdcurses
+# directories
 
+ESTDIS_DIR = ../
 
-ROOT_DIR = ../
-
-LIBALX_DIR = $(ROOT_DIR)/libalx/
+LIBALX_DIR = $(ESTDIS_DIR)/libalx/
 LIBALX_OBJ_DIR = $(LIBALX_DIR)/obj/
 
-MODULES_DIR = $(ROOT_DIR)/modules/
+MODULES_DIR = $(ESTDIS_DIR)/modules/
 
 ABOUT_DIR = $(MODULES_DIR)/about/
 ABOUT_OBJ_DIR = $(ABOUT_DIR)/obj/
@@ -26,7 +23,7 @@ CTRL_OBJ_DIR = $(CTRL_DIR)/obj/
 TUI_DIR = $(MODULES_DIR)/tui/
 TUI_OBJ_DIR = $(TUI_DIR)/obj/
 
-OBJ_DIR = $(ROOT_DIR)/obj/
+OBJ_DIR = $(ESTDIS_DIR)/obj/
 
 # dependencies
 
@@ -36,7 +33,7 @@ ESTDIS_OBJ_LIBALX = alx_file.o alx_getnum.o alx_math.o alx_ncur.o
 ESTDIS_OBJ_ABOUT = about.o
 ESTDIS_OBJ_CALC = calc.o
 ESTDIS_OBJ_CTRL = start.o
-ESTDIS_OBJ_TUI = dist.o menu.o
+ESTDIS_OBJ_TUI = dist.o menus.o
 ESTDIS_OBJS = $(OBJ_DIR)/main.o \
 			$(patsubst %,$(LIBALX_OBJ_DIR)/%,$(ESTDIS_OBJ_LIBALX)) \
 			$(patsubst %,$(ABOUT_OBJ_DIR)/%,$(ESTDIS_OBJ_ABOUT)) \

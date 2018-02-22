@@ -1,29 +1,19 @@
-////////////////----------------------------------------////////////////
-////////////////        libalx                          ////////////////
-////////////////----------------------------------------////////////////
 
-	/*
-	 * This is part of a library of functions (libalx).
-	 * Copyright (C) 2016 Alejandro Colomar Andrés
-	 *
-	 * libalx is free software: you can redistribute it and/or
-	 * modify it under the terms of the GNU General Public License
-	 * as published by the Free Software Foundation, either version
-	 * 3 of the License, or (at your option) any later version.
-
-	 * libalx is distributed in the hope that it will be
-	 * useful, but WITHOUT ANY WARRANTY; without even the implied
-	 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-	 * PURPOSE.  See the GNU General Public License for more
-	 * details.
-	 *
-	 * You should have received a copy of the GNU General Public
-	 * License along with libalx.
-	 * If not, see <http://www.gnu.org/licenses/>.
-	 */
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
+/******************************************************************************
+ * This program is free software; you can redistribute it and/or modify	      *
+ * it under the terms of the GNU General Public License as published by	      *
+ * the Free Software Foundation; either version 2 of the License, or          *
+ * (at your option) any later version.					      *
+ *									      *
+ * This program is distributed in the hope that it will be useful,	      *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of	      *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the	      *
+ * GNU General Public License for more details.				      *
+ *									      *
+ * You should have received a copy of the GNU General Public License	      *
+ * along with this program; if not, see the file COPYING, or write	      *
+ * to the Free Software Foundation, Inc.				      *
+ ******************************************************************************/
 
 	#include <curses.h>
 //	#include <getopt.h>
@@ -43,6 +33,17 @@
 	#include "alx_ncur.h"
 
 	# define	BUFF_SIZE	1024
+
+static	void	alx_ncur_prn_title	(WINDOW			*win,
+					const char		*str);
+
+static	void	alx_ncur_prn_menu	(WINDOW			*win,
+					const int64_t		N,
+					const struct alx_option	mnu[N]);
+
+static	int64_t	alx_ncur_usr_sel	(WINDOW			*win,
+					const int64_t		N,
+					const struct alx_option	mnu[N]);
 
 
 void	alx_start_curses	(void)
@@ -78,62 +79,40 @@ void	alx_end_curses	(void)
 }
 
 
-int64_t	alx_menu		(const int64_t len,
-				const struct alx_option mnu[len],
-				WINDOW *win)
+int64_t	alx_menu		(const int64_t		h,
+				const int64_t		w,
+				const int64_t		N,
+				const struct alx_option	mnu[N],
+				const char		*str)
 {
-	bool	wh;
-	wchar_t	ch;
-	int64_t	i;
 
+	/* Create a window of size h*w and position (r,c)
+	 *	r	start at the top
+	 *	c	center in terminal (80 cols)
+	 */
+	WINDOW		*win;
+	const int64_t	r =	1;
+	const int64_t	c =	(80 - w) / 2;
+	win =	newwin(h, w, r, c);
+
+	/* Activate keypad, and don't echo input */
+	keypad(win, true);
 	noecho();
 
-	i =	1;
-	wmove(win, mnu[i].r, mnu[i].c + 1);
-	wh = true;
-	while (wh) {
-		ch = wgetch(win);
+	/* Print title and menu items */
+	alx_ncur_prn_title(win, str);
+	alx_ncur_prn_menu(win, N, mnu);
 
-		if ((ch >= '0') && (ch < len + '0')) {
-			i = ch - '0';
-			wmove(win, mnu[i].r, mnu[i].c + 1);
-		} else if (ch == KEY_UP) {
-			if (i != 0) {
-				i--;
-			} else {
-				i = len - 1;
-			}
-			wmove(win, mnu[i].r, mnu[i].c + 1);
-		} else if (ch == KEY_DOWN) {
-			if (i != len - 1) {
-				i++;
-			} else {
-				i = 0;
-			}
-			wmove(win, mnu[i].r, mnu[i].c + 1);
-		} else if (ch == '\r') {
-			wh = false;
-		}
-	}
+	/* User input */
+	int64_t	i;
+	i =	alx_ncur_usr_sel(win, N, mnu);
+
+	/* Delete window */
+	wclear(win);
+	wrefresh(win);
+	delwin(win);
 
 	return	i;
-}
-
-
-void	alx_w_title		(WINDOW *win, const char *str)
-{
-	int64_t	h;
-	int64_t	w;
-	int64_t len;
-
-	getmaxyx(win, h, w);
-	len =	strlen(str);
-
-	box(win, 0, 0);
-	mvwaddch(win, 0, (w - len)/2 - 1, ACS_RTEE);
-	wprintw(win, " %s ", str);
-	waddch(win, ACS_LTEE);
-	wrefresh(win);
 }
 
 
@@ -463,4 +442,100 @@ void	alx_w_getfpath		(char *fpath, const char *def,
 	}
 
 	va_end(args);
+}
+
+/******************************************************************************/
+/******* Static functions *****************************************************/
+/******************************************************************************/
+
+
+static	void	alx_ncur_prn_title	(WINDOW			*win,
+					const char		*str)
+{
+	/* Print window borders */
+	box(win, 0, 0);
+
+	/* Find size of window */
+	int64_t	h;
+	int64_t	w;
+	getmaxyx(win, h, w);
+
+	/* Find length of title */
+	int64_t len;
+	len =	strlen(str);
+
+	/* Print title centered */
+	mvwaddch(win, 0, (w - len)/2 - 1, ACS_RTEE);
+	wprintw(win, " %s ", str);
+	waddch(win, ACS_LTEE);
+
+	wrefresh(win);
+}
+
+
+static	void	alx_ncur_prn_menu	(WINDOW			*win,
+					const int64_t		N,
+					const struct alx_option	mnu[N])
+{
+	/* Find size of window */
+	int64_t	h;
+	int64_t	w;
+	getmaxyx(win, h, w);
+
+	/* Print all menu items */
+	int64_t	i;
+	for (i = 0; i < N; i++) {
+		mvwaddstr(win, mnu[i].r, mnu[i].c, mnu[i].t);
+	}
+
+	wrefresh(win);
+}
+
+
+static	int64_t	alx_ncur_usr_sel	(WINDOW			*win,
+					const int64_t		N,
+					const struct alx_option	mnu[N])
+{
+	/* default item */
+	int64_t	i =	1;
+	wmove(win, mnu[i].r, mnu[i].c + 1);
+
+	/* Receive input until ENTER key */
+	bool	wh;
+	wchar_t	ch;
+	wh = true;
+	while (wh) {
+		/* Input */
+		ch = wgetch(win);
+
+		if ((ch >= '0') && (ch < N + '0')) {
+			/* Input is a number, move to that item */
+			i = ch - '0';
+			wmove(win, mnu[i].r, mnu[i].c + 1);
+
+		} else if (ch == KEY_UP) {
+			/* KEY_UP, move one item up */
+			if (i != 0) {
+				i--;
+			} else {
+				i = N - 1;
+			}
+			wmove(win, mnu[i].r, mnu[i].c + 1);
+
+		} else if (ch == KEY_DOWN) {
+			/* KEY_DOWN, move one item down */
+			if (i != N - 1) {
+				i++;
+			} else {
+				i = 0;
+			}
+			wmove(win, mnu[i].r, mnu[i].c + 1);
+
+		} else if (ch == '\r') {
+			/* ENTER, end menu */
+			wh = false;
+		}
+	}
+
+	return	i;
 }

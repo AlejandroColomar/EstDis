@@ -2,32 +2,16 @@
 
 # MACRO = substitute with this
 
-OS = linux
-TST = false
-DBG = false
-
-ifeq ($(OS), linux)
-	CC = gcc
-	CFLAGS = -std=c11 -O3 -march=native
-	LIBS = -l ncurses -l pthread -l m
-else
- ifeq ($(OS), win)
-	CC = gcc.exe
-	CFLAGS = -std=c11 -O3
-	LIBS = -l pdcurses -l m
- endif
-endif
-
 # directories
 
-ROOT_DIR = ../../../
+ESTDIS_DIR = ../../../
 
-LIBALX_DIR = $(ROOT_DIR)/libalx/
+LIBALX_DIR = $(ESTDIS_DIR)/libalx/
 LIBALX_INC_DIR = $(LIBALX_DIR)/inc/
 
-GLOBAL_INC_DIR = $(ROOT_DIR)/inc/
+GLOBAL_INC_DIR = $(ESTDIS_DIR)/inc/
 
-MODULES_DIR = $(ROOT_DIR)/modules/
+MODULES_DIR = $(ESTDIS_DIR)/modules/
 
 ABOUT_DIR = $(MODULES_DIR)/about/
 ABOUT_INC_DIR = $(ABOUT_DIR)/inc/
@@ -45,7 +29,7 @@ TST_DIR = $(TUI_DIR)/tst/
 
 # dependencies
 
-ALL = dist.o menu.o
+ALL = dist.o menus.o
 
 DIST_INC_LIBALX = alx_getnum.h
 DIST_INC_CALC = calc.h
@@ -62,8 +46,8 @@ MENU_INC_LIBALX = alx_ncur.h
 MENU_INC_GLOBAL = global_ext.h macros.h
 MENU_INC_ABOUT = about.h
 MENU_INC_CTRL = start.h
-MENU_INC = menu.h
-MENU_DEPS = $(SRC_DIR)/menu.c \
+MENU_INC = menus.h
+MENU_DEPS = $(SRC_DIR)/menus.c \
 			$(patsubst %,$(LIBALX_INC_DIR)/%,$(MENU_INC_LIBALX)) \
 			$(patsubst %,$(GLOBAL_INC_DIR)/%,$(MENU_INC_GLOBAL)) \
 			$(patsubst %,$(ABOUT_INC_DIR)/%,$(MENU_INC_ABOUT)) \
@@ -84,7 +68,7 @@ all: $(ALL)
 dist.o: $(DIST_DEPS)
 	$(CC) $(CFLAGS) $(DIST_INC_DIRS) -c $< -o $@ $(LIBS)
 
-menu.o: $(MENU_DEPS)
+menus.o: $(MENU_DEPS)
 	$(CC) $(CFLAGS) $(MENU_INC_DIRS) -c $< -o $@ $(LIBS)
 
 

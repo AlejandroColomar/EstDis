@@ -2,42 +2,55 @@
 
 # MACRO = substitute with this
 
-OS = linux
-TST = false
-DBG = false
+# export
 
-MAKE_ARGS = OS=$(OS) TST=$(TST) DGB=$(DBG)
+export	OS = linux
+export	TST = false
+export	DBG = false
+
+ ifeq ($(OS), linux)
+export	CC = gcc
+export	CFLAGS = -std=c11 -O3 -march=native
+export	LIBS = -l ncurses -l pthread -l m
+
+ else
+  ifeq ($(OS), win)
+export	CC = gcc.exe
+export	CFLAGS = -std=c11 -O3
+export	LIBS = -l ncurses -l m
+  endif
+ endif
 
 # directories
 
-ROOT_DIR = ./
+ESTDIS_DIR = ./
 
-LIBALX_DIR = $(ROOT_DIR)/libalx/
-MODULES_DIR = $(ROOT_DIR)/modules/
-OBJ_DIR = $(ROOT_DIR)/obj/
-BIN_DIR = $(ROOT_DIR)/bin/
-WIN_DIR = $(ROOT_DIR)/win/
-TST_DIR = $(ROOT_DIR)/tst/
+LIBALX_DIR = $(ESTDIS_DIR)/libalx/
+MODULES_DIR = $(ESTDIS_DIR)/modules/
+OBJ_DIR = $(ESTDIS_DIR)/obj/
+BIN_DIR = $(ESTDIS_DIR)/bin/
+WIN_DIR = $(ESTDIS_DIR)/win/
+TST_DIR = $(ESTDIS_DIR)/tst/
 
 
 # target: dependencies
 #	action
 
 all:
-	cd $(LIBALX_DIR) && $(MAKE) $(MAKE_ARGS) && cd ..
-	cd $(MODULES_DIR) && $(MAKE) $(MAKE_ARGS) && cd ..
-	cd $(OBJ_DIR) && $(MAKE) $(MAKE_ARGS) && cd ..
+	cd $(LIBALX_DIR) && $(MAKE) && cd ..
+	cd $(MODULES_DIR) && $(MAKE) && cd ..
+	cd $(OBJ_DIR) && $(MAKE) && cd ..
 
  ifeq ($(OS), linux)
-	cd $(BIN_DIR) && $(MAKE) $(MAKE_ARGS) && cd ..
+	cd $(BIN_DIR) && $(MAKE) && cd ..
  else
   ifeq ($(OS), win)
-	cd $(WIN_DIR) && $(MAKE) $(MAKE_ARGS) && cd ..
+	cd $(WIN_DIR) && $(MAKE) && cd ..
   endif
  endif
 
  ifeq ($(TST), true)
-	cd $(TST_DIR) && $(MAKE) $(MAKE_ARGS) && cd ..
+	cd $(TST_DIR) && $(MAKE) && cd ..
  endif
 
 del: clean

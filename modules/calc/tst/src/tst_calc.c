@@ -1,29 +1,19 @@
-////////////////----------------------------------------////////////////
-////////////////        EstDis                          ////////////////
-////////////////----------------------------------------////////////////
 
-	/*
-	 * EstDis	This is a solver of statistics problems.
-	 * Copyright (C) 2016 Alejandro Colomar Andrés
-	 *
-	 * This program is free software: you can redistribute it and/or
-	 * modify it under the terms of the GNU General Public License
-	 * as published by the Free Software Foundation, either version
-	 * 3 of the License, or (at your option) any later version.
-
-	 * This program is distributed in the hope that it will be
-	 * useful, but WITHOUT ANY WARRANTY; without even the implied
-	 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-	 * PURPOSE.  See the GNU General Public License for more
-	 * details.
-	 *
-	 * You should have received a copy of the GNU General Public
-	 * License along with this program.
-	 * If not, see <http://www.gnu.org/licenses/>.
-	 */
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
+/******************************************************************************
+ * This program is free software; you can redistribute it and/or modify	      *
+ * it under the terms of the GNU General Public License as published by	      *
+ * the Free Software Foundation; either version 2 of the License, or          *
+ * (at your option) any later version.					      *
+ *									      *
+ * This program is distributed in the hope that it will be useful,	      *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of	      *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the	      *
+ * GNU General Public License for more details.				      *
+ *									      *
+ * You should have received a copy of the GNU General Public License	      *
+ * along with this program; if not, see the file COPYING, or write	      *
+ * to the Free Software Foundation, Inc.				      *
+ ******************************************************************************/
 
 	#include <curses.h>
 	#include <stdbool.h>
@@ -98,7 +88,7 @@ int	main	()
 	const int64_t	r =	1;
 	const int64_t	c =	(80 - w) / 2;
 
-	const int64_t		len = TST_FUNCTIONS;
+	const int64_t		N = TST_FUNCTIONS;
 	const struct alx_option	mnu[TST_FUNCTIONS] =	{{32, 4, "[0]  END TEST"},
 
 						{2, 4, "[1]  binomial_P"},
@@ -152,58 +142,7 @@ int	main	()
 
 	wh = true;
 	while (wh) {
-		win =	newwin(h, w, r, c);
-		keypad(win, true);
-
-		alx_w_title(win, "MENU:");
-		mvwaddstr(win, mnu[1].r, mnu[1].c, mnu[1].t);
-		mvwaddstr(win, mnu[2].r, mnu[2].c, mnu[2].t);
-		mvwaddstr(win, mnu[3].r, mnu[3].c, mnu[3].t);
-		mvwaddstr(win, mnu[4].r, mnu[4].c, mnu[4].t);
-		mvwaddstr(win, mnu[5].r, mnu[5].c, mnu[5].t);
-		mvwaddstr(win, mnu[6].r, mnu[6].c, mnu[6].t);
-		mvwaddstr(win, mnu[7].r, mnu[7].c, mnu[7].t);
-		mvwaddstr(win, mnu[8].r, mnu[8].c, mnu[8].t);
-		mvwaddstr(win, mnu[9].r, mnu[9].c, mnu[9].t);
-		mvwaddstr(win, mnu[10].r, mnu[10].c, mnu[10].t);
-		mvwaddstr(win, mnu[11].r, mnu[11].c, mnu[11].t);
-		mvwaddstr(win, mnu[12].r, mnu[12].c, mnu[12].t);
-		mvwaddstr(win, mnu[13].r, mnu[13].c, mnu[13].t);
-		mvwaddstr(win, mnu[14].r, mnu[14].c, mnu[14].t);
-		mvwaddstr(win, mnu[15].r, mnu[15].c, mnu[15].t);
-		mvwaddstr(win, mnu[16].r, mnu[16].c, mnu[16].t);
-		mvwaddstr(win, mnu[17].r, mnu[17].c, mnu[17].t);
-		mvwaddstr(win, mnu[18].r, mnu[18].c, mnu[18].t);
-		mvwaddstr(win, mnu[19].r, mnu[19].c, mnu[19].t);
-		mvwaddstr(win, mnu[20].r, mnu[20].c, mnu[20].t);
-		mvwaddstr(win, mnu[21].r, mnu[21].c, mnu[21].t);
-		mvwaddstr(win, mnu[22].r, mnu[22].c, mnu[22].t);
-		mvwaddstr(win, mnu[23].r, mnu[23].c, mnu[23].t);
-		mvwaddstr(win, mnu[24].r, mnu[24].c, mnu[24].t);
-		mvwaddstr(win, mnu[25].r, mnu[25].c, mnu[25].t);
-		mvwaddstr(win, mnu[26].r, mnu[26].c, mnu[26].t);
-		mvwaddstr(win, mnu[27].r, mnu[27].c, mnu[27].t);
-		mvwaddstr(win, mnu[28].r, mnu[28].c, mnu[28].t);
-		mvwaddstr(win, mnu[29].r, mnu[29].c, mnu[29].t);
-		mvwaddstr(win, mnu[30].r, mnu[30].c, mnu[30].t);
-		mvwaddstr(win, mnu[31].r, mnu[31].c, mnu[31].t);
-		mvwaddstr(win, mnu[32].r, mnu[32].c, mnu[32].t);
-		mvwaddstr(win, mnu[33].r, mnu[33].c, mnu[33].t);
-		mvwaddstr(win, mnu[34].r, mnu[34].c, mnu[34].t);
-		mvwaddstr(win, mnu[35].r, mnu[35].c, mnu[35].t);
-		mvwaddstr(win, mnu[36].r, mnu[36].c, mnu[36].t);
-		mvwaddstr(win, mnu[37].r, mnu[37].c, mnu[37].t);
-		mvwaddstr(win, mnu[38].r, mnu[38].c, mnu[38].t);
-		mvwaddstr(win, mnu[39].r, mnu[39].c, mnu[39].t);
-		mvwaddstr(win, mnu[40].r, mnu[40].c, mnu[40].t);
-		mvwaddstr(win, mnu[0].r, mnu[0].c, mnu[0].t);
-		wrefresh(win);
-
-		sw =	alx_menu(len, mnu, win);
-
-		wclear(win);
-		wrefresh(win);
-		delwin(win);
+		sw =	alx_menu(h, w, N, mnu, "TEST:");
 
 		switch (sw) {
 		case TST_END:

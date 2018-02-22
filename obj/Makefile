@@ -2,41 +2,26 @@
 
 # MACRO = substitute with this
 
-OS = linux
-TST = false
-DBG = false
+# directories
 
-ifeq ($(OS), linux)
-	CC = gcc
-	CFLAGS = -std=c11 -O3 -march=native
-	LIBS = -l ncurses -l pthread -l m
-else
- ifeq ($(OS), win)
-	CC = gcc.exe
-	CFLAGS = -std=c11 -O3
-	LIBS = -l pdcurses -l m
- endif
-endif
+ESTDIS_DIR = ../
 
-
-ROOT_DIR = ../
-
-LIBALX_DIR = $(ROOT_DIR)/libalx/
+LIBALX_DIR = $(ESTDIS_DIR)/libalx/
 LIBALX_INC_DIR = $(LIBALX_DIR)/inc/
 
-MODULES_DIR = $(ROOT_DIR)/modules/
+MODULES_DIR = $(ESTDIS_DIR)/modules/
 TUI_DIR = $(MODULES_DIR)/tui/
 TUI_INC_DIR = $(TUI_DIR)/inc/
 
-INC_DIR = $(ROOT_DIR)/inc/
-SRC_DIR = $(ROOT_DIR)/src/
+INC_DIR = $(ESTDIS_DIR)/inc/
+SRC_DIR = $(ESTDIS_DIR)/src/
 
 # dependencies
 
 ALL = main.o
 
 MAIN_INC_LIBALX = alx_ncur.h
-MAIN_INC_TUI = menu.h
+MAIN_INC_TUI = menus.h
 MAIN_INC = global.h
 MAIN_DEPS = $(SRC_DIR)/main.c \
 			$(patsubst %,$(LIBALX_INC_DIR)/%,$(MAIN_INC_LIBALX)) \

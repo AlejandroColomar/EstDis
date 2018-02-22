@@ -15,40 +15,39 @@
  * to the Free Software Foundation, Inc.				      *
  ******************************************************************************/
 
-# ifndef		ABOUT_H
-	# define	ABOUT_H
+# ifndef		MENU_H
+	# define	MENU_H
 
-	#include <stdbool.h>
+	/*
+	 * + Menu:
+	 *	+ Continue:
+	 *		+ Descriptiva:
+	 *			- 1 Variable
+	 *			- 2 Variables
+	 *			- ..
+	 *		+ Distribuciones:
+	 *			- Binomial
+	 *			- help
+	 *			- Poisson
+	 *			- help
+	 *			- Geometrica
+	 *			- help
+	 *			- Hipergeometrica
+	 *			- help
+	 *			- Uniforme
+	 *			- help
+	 *			- Exponencial
+	 *			- help
+	 *			- Gauss(Normal)
+	 *			- help
+	 *			- ..
+	 *		- ..
+	 *	- Disclaimer
+	 *	- License
+	 *	- Exit program
+	 */
+/*----------------------------------------------------------------------------*/
 
-//	#include "alx_about.h"
-	#include "alx_file.h"
-//	#include "alx_getnum.h"
-//	#include "alx_math.h"
-//	#include "alx_ncur.h"
-//	#include "alx_seed.h"
+void	menu_main	(void);
 
-	#include "macros.h"
-
-	void	w_help_switch			(void);
-	void	print_help			(void);
-	void	print_version			(void);
-	void	print_usage			(void);
-
-	void	print_cpright			(void);
-	void	print_disclaim			(void);
-
-	void	w_print_cpright			(bool nul);
-	void	w_print_disclaim		(void);
-
-	# define	print_license()		alx_prn_file(ESTDIS_PATH LICENSE_RPATH)
-
-	# define	w_print_license()	alx_w_prn_file(ESTDIS_PATH LICENSE_RPATH)
-
-	void	dist_binomial_help		(void);
-	void	dist_poisson_help		(void);
-	void	dist_geometric_help		(void);
-	void	dist_hypergeometric_help	(void);
-	void	dist_uniform_help		(void);
-	void	dist_exponential_help		(void);
-
-# endif			/* about.h */
+# endif			/* menu.h */

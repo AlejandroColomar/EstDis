@@ -2,12 +2,7 @@
 
 # MACRO = substitute with this
 
-OS = linux
-TST = false
-DBG = false
-
-MAKE_ARGS = OS=$(OS) TST=$(TST) DGB=$(DBG)
-
+# directories
 
 LIBALX_DIR = ./
 
@@ -18,7 +13,7 @@ OBJ_DIR = $(LIBALX_DIR)/obj/
 #	action
 
 all:
-	cd $(OBJ_DIR) && $(MAKE) $(MAKE_ARGS) && cd ..
+	cd $(OBJ_DIR) && $(MAKE) && cd ..
 
 
 clean:

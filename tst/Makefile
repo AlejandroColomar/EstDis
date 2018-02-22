@@ -2,14 +2,11 @@
 
 # MACRO = substitute with this
 
-OS = linux
-DBG = false
-
 # directories
 
-ROOT_DIR = ../
+ESTDIS_DIR = ../
 
-TST_DIR = $(ROOT_DIR)/tst/
+TST_DIR = $(ESTDIS_DIR)/tst/
 BIN_DIR = $(TST_DIR)/bin/
 WIN_DIR = $(TST_DIR)/win/
 

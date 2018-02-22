@@ -32,7 +32,7 @@ TST_ABOUT_OBJS = $(TST_ABOUT_OBJ_DIR)/tst_about.o \
 all: $(ALL)
 
 
-tst_about: $(TST_ABOUT_OBJS)
+tst_about.exe: $(TST_ABOUT_OBJS)
 	$(CC) $(CFLAGS) $^ -o $@ $(LIBS)
 
 

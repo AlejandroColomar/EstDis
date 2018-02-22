@@ -2,20 +2,6 @@
 
 # MACRO = substitute with this
 
-OS = linux
-
-ifeq ($(OS), linux)
-	CC = gcc
-	CFLAGS = -std=c11 -O3 -march=native
-	LIBS = -l ncurses -l pthread -l m
-else
- ifeq ($(OS), win)
-	CC = gcc.exe
-	CFLAGS = -std=c11 -O3
-	LIBS = -l pdcurses -l m
- endif
-endif
-
 # directories
 
 LIBALX_DIR = ../
