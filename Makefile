@@ -15,9 +15,11 @@ export	LIBS = -l ncurses -l pthread -l m
 
  else
   ifeq ($(OS), win)
+CFLAGS_NCURSESW6 = -D_XOPEN_SOURCE=500 -I/mingw/include/ncursesw -I/mingw/include
+LIBS_NCURSESW6 = -L/mingw/lib -lncursesw -lpsapi
 export	CC = gcc.exe
-export	CFLAGS = -std=c11 -O3
-export	LIBS = -l ncurses -l m
+export	CFLAGS = -std=c11 -O3 $(CFLAGS_NCURSESW6)
+export	LIBS = -static -l m $(LIBS_NCURSESW6)
   endif
  endif
 
