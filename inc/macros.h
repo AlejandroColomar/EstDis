@@ -28,7 +28,7 @@
 
 	# define		PROG_NAME	"EstDis"
 	# define		PROG_YEAR	"2015"
-	# define		PROG_VERS	"2.A"
+	# define		PROG_VERS	"2.0"
 	# define		OPT_LIST	"a:b:c:f:hi:j:k:lo:p:r:s:V:vx"
 
 	# define		ESTDIS_PATH	"./"
