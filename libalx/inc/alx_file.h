@@ -19,6 +19,5 @@
 	# define	ALX_LCNS_H
 
 void	alx_prn_file	(const char *filepath);
-void	alx_w_prn_file	(const char *filepath);
 
 # endif			/* alx_lcns.h */

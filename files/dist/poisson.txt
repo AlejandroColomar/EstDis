@@ -1,0 +1,21 @@
+	Poisson	X -> P(l):
+
+Las vv.aa. asociadas a distribuciones de Poisson suelen representar el numero de
+sucesos aleatorios independientes que ocurren con velocidad constante en el
+tiempo o en el espacio.
+Sea l el promedio de ocurrencias del suceso aleatorio de interes por unidad de
+tiempo (espacio) y X la v.a. igual al numero de veces que ha ocurrido el suceso
+en un intervalo de tiempo(espacio) escogido al azar.
+Se dice que X tiene distribucion de Poisson de parametro l (con l>0) y su f.m.p.
+viene dada por
+
+	P{X=x} =	e^(-l) * l^x / x!,		x ∈ ℕ+
+	E[x] =		l
+	Var[X] =	l
+
+Criterio de aproximacion (Binomial -> Poisson):
+	n >= 25,
+	p <= 0.1,
+	n * p <= 5;
+
+	l = n * p

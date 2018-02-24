@@ -31,19 +31,11 @@
 //------------------------------------------------------------------------------
 
 	static	void	dist_normal_m		(double a, double b);
-
 	static	void	dist_normal_m_1		(double a, double b);
-
 	static	void	dist_normal_m_2		(double a, double b);
-
-	static	double	dist_binomial_P		(int64_t n, double p,
-							int64_t c);
-
-	static	double	dist_poisson_P		(double l,
-							int64_t c);
-
-	static	double	dist_geometric_P	(double p,
-							int64_t c);
+	static	double	dist_binomial_P		(int64_t n, double p, int64_t c);
+	static	double	dist_poisson_P		(double l, int64_t c);
+	static	double	dist_geometric_P	(double p, int64_t c);
 
 
 

@@ -94,14 +94,15 @@ void	menu_main		(void)
 	int64_t	sw;
 	bool	wh;
 	WINDOW		*win;
-	const int64_t	h =	10;
+	const int64_t	h =	11;
 	const int64_t	w =	34;
 
-	const int64_t		N = 4;
-	const struct alx_option	mnu[4] =	{{7, 4, "[0]	Exit program"},
+	const int64_t		N = 5;
+	const struct alx_option	mnu[5] =	{{8, 4, "[0]	Exit program"},
 						{2, 4, "[1]	Continue"},
-						{4, 4, "[2]	Disclaimer of warranty"},
-						{5, 4, "[3]	Terms and conditions"}
+						{4, 4, "[2]	Copyright"},
+						{5, 4, "[3]	Disclaimer of warranty"},
+						{6, 4, "[4]	Terms and conditions"}
 				};
 
 	wh = true;
@@ -118,11 +119,21 @@ void	menu_main		(void)
 			break;
 
 		case 2:
-			w_print_disclaim();
+			alx_pause_curses();
+			print_cpright();
+			alx_resume_curses();
 			break;
 
 		case 3:
-			w_print_license();
+			alx_pause_curses();
+			print_disclaim();
+			alx_resume_curses();
+			break;
+
+		case 4:
+			alx_pause_curses();
+			print_license();
+			alx_resume_curses();
 			break;
 		}
 	}
@@ -166,7 +177,9 @@ static	void	menu_continue	(void)
 			break;
 
 		case 2:
-			w_help_switch();
+			alx_pause_curses();
+			help_switch();
+			alx_resume_curses();
 			break;
 
 		case 3:
@@ -210,7 +223,6 @@ static	void	menu_select	(void)
 
 static	void	menu_verbose	(void)
 {
-	WINDOW		*win;
 	const int64_t	h =	10;
 	const int64_t	w =	51;
 
@@ -227,8 +239,4 @@ static	void	menu_verbose	(void)
 				};
 
 	flag_V =	alx_menu(h, w, N, mnu, "VERBOSE:");
-
-	wclear(win);
-	wrefresh(win);
-	delwin(win);
 }

@@ -1,0 +1,21 @@
+	Hipereometrica	X -> H(N, n, r):
+
+
+Esta distribucion esta asociada al muestreo aleatorio sin reemplazamiento.
+Concretamente, las vv.aa. con esta distribucion cuentan el numero de elementos
+con una cierta caracteristica en un experimento consistente en elegir n
+elementos de una poblacion de N de los cuales solo r poseen la caracteristica
+deseada.
+Una v.a. se dice que tiene distribucion hipergeometrica de parametros N, n y r
+si su f.m.p. es
+
+	P{X=x} =	(r  x) * (N-r  n-x) / (N  n)
+					max{0, n-N+r} <= x <= min{n, r}
+					N, n, r ∈ ℕ
+	E[x] =		r * n / N
+	Var[X] =	n * r * (N - r) * (N - n) / [N^2 * (N - 1)]
+
+Criterio de aproximacion (Hipergeometrica -> Binomial):
+	n < 0.1*N;
+
+	p = r/N

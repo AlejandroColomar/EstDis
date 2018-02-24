@@ -1,0 +1,20 @@
+	Exponencial	X -> exp(b):
+
+Este tipo de v.a. se utiliza generlmente para modelizar tiempos de vida o medir
+el tiempo entre dos ocurrencias consecutivas de un suceso que ocurre b veces por
+unidad de tiempo.
+Se dice que una v.a. X tiene distribucion exponencial con parametro b > 0 si su
+funcion de densidad viene dada por
+
+	f(x) = {
+		0			x < 0
+		b * e^(-b * x)		x >= 0
+	}
+	F(x) = {
+		0			x < 0
+		1 - e^(-b * x)		x >= 0
+	}
+	E[x] =\t\t1/b
+	Var[X] =\t1/b^2
+
+	P{X>=x+t / X>=t} = P{X>=x}

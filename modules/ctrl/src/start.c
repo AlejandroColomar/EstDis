@@ -21,8 +21,8 @@
 	#include "alx_ncur.h"
 //	#include "alx_seed.h"
 
+	#include "about.h"
 	#include "dist.h"
-	#include "start.h"
 
 	#include "global_ext.h"
 	#include "macros.h"
@@ -72,9 +72,43 @@ void	start_switch	(void)
 }
 
 
-void	w_start_switch	(void)
+void	help_switch			(void)
 {
-	alx_pause_curses();
-	start_switch();
-	alx_resume_curses();
+	switch (flag_s) {
+	case START_FOO:
+		break;
+
+	case START_DESC_1VAR:
+		break;
+
+	case START_DESC_2VAR:
+		break;
+
+	case START_BINOMIAL:
+		dist_binomial_help();
+		break;
+
+	case START_POISSON:
+		dist_poisson_help();
+		break;
+
+	case START_GEOMETRIC:
+		dist_geometric_help();
+		break;
+
+	case START_HYPERGEOMETRIC:
+		dist_hypergeometric_help();
+		break;
+
+	case START_UNIFORM:
+		dist_uniform_help();
+		break;
+
+	case START_EXPONENTIAL:
+		dist_exponential_help();
+		break;
+
+	case START_NORMAL:
+		break;
+	}
 }

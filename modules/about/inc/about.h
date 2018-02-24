@@ -29,7 +29,6 @@
 
 	#include "macros.h"
 
-	void	w_help_switch			(void);
 	void	print_help			(void);
 	void	print_version			(void);
 	void	print_usage			(void);
@@ -37,12 +36,7 @@
 	void	print_cpright			(void);
 	void	print_disclaim			(void);
 
-	void	w_print_cpright			(bool nul);
-	void	w_print_disclaim		(void);
-
 	# define	print_license()		alx_prn_file(ESTDIS_PATH LICENSE_RPATH)
-
-	# define	w_print_license()	alx_w_prn_file(ESTDIS_PATH LICENSE_RPATH)
 
 	void	dist_binomial_help		(void);
 	void	dist_poisson_help		(void);
