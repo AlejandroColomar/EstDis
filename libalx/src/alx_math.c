@@ -23,7 +23,7 @@
 	 */
 double	alx_fact	(int64_t n)
 {
-	if (n > 1) {
+	if (n < 1) {
 		return	1;
 	} else {
 		return	n * alx_fact(n - 1);
