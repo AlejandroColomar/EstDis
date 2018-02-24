@@ -41,25 +41,8 @@
 				const char	*formatB,
 						...);
 
-	double	alx_getdbl_m	(double	m,
-				double		def,
-				const char	*formatA,
-				const char	*formatB,
-						...);
-
-	double	alx_getdbl	(double	def,
-				const char	*formatA,
-				const char	*formatB,
-						...);
-
 	int64_t	alx_getint_mM	(int64_t	m,
 				int64_t		M,
-				int64_t		def,
-				const char	*formatA,
-				const char	*formatB,
-						...);
-
-	int64_t	alx_getint_m	(int64_t	m,
 				int64_t		def,
 				const char	*formatA,
 				const char	*formatB,

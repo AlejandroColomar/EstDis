@@ -15,14 +15,20 @@
  * to the Free Software Foundation, Inc.				      *
  ******************************************************************************/
 
+		/* need: INFINITY */
+	#include <float.h>
+		/* need: int64_t & INT64_MIN & INT64_MAX */
 	#include <inttypes.h>
+		/* need: INFINITY */
 	#include <math.h>
+		/* need: printf() */
 	#include <stdio.h>
 
+		/* need: alx_getint() & alx_getdbl() */
 	#include "alx_getnum.h"
 
+		/* do calculations */
 	#include "calc.h"
-	#include "dist.h"
 
 
 
@@ -35,7 +41,7 @@
 	static	void	dist_normal_m_2		(double a, double b);
 	static	double	dist_binomial_P		(int64_t n, double p, int64_t c);
 	static	double	dist_poisson_P		(double l, int64_t c);
-	static	double	dist_geometric_P	(double p, int64_t c);
+	static	double	dist_geometric_P	(double p);
 
 
 
@@ -67,13 +73,13 @@ void		desc_1var		(void)
 	printf("s\t= sqrt(s2)\t--Cuasidesviacion tipica.\n");
 	printf("CV\t= o/u\t\t--Coeficiente de variacion.\n\n");
 
-	N =	alx_getint_m(1, 2, "N:\t", NULL);
+	N =	alx_getint_mM(1, INT64_MAX, 2, "N:\t", NULL);
 
 	for (i = 1; i <= N; i++) {
 		printf("x_%"PRIi64":\t", i);
-		xi =	alx_getdbl(1, NULL, NULL);
+		xi =	alx_getdbl_mM(-INFINITY, INFINITY, 1, NULL, NULL);
 		printf("n_%"PRIi64":\t", i);
-		ni =	alx_getdbl_m(0, 1, NULL, NULL);
+		ni =	alx_getdbl_mM(0, INFINITY, 1, NULL, NULL);
 
 		Exi +=	descrip_Exi(ni, xi);
 		Exi2 +=	descrip_Exi2(ni, xi);
@@ -138,19 +144,19 @@ void		desc_2var		(void){
 
 	printf("n\t=\t\t\t--Numero de puntos.\n\n");
 
-	n =	alx_getint_m(1, 2, "n:\t", NULL);
+	n =	alx_getint_mM(1, INT64_MAX, 2, "n:\t", NULL);
 
 	double	x[n + 1];
 	double	y[n + 1];
 
 	for (i = 1; i <= n; i++) {
 		printf("x_%"PRIi64":\t", i);
-		x[i] =		alx_getdbl(1, NULL, NULL);
+		x[i] =		alx_getdbl_mM(-INFINITY, INFINITY, 1, NULL, NULL);
 		Exi +=		descrip_Exi(1, x[i]);
 		Exi2 +=		descrip_Exi2(1, x[i]);
 
 		printf("y_%"PRIi64":\t", i);
-		y[i] =		alx_getdbl(1, NULL, NULL);
+		y[i] =		alx_getdbl_mM(-INFINITY, INFINITY, 1, NULL, NULL);
 		Eyi +=		descrip_Exi(1, y[i]);
 		Eyi2 +=		descrip_Exi2(1, y[i]);
 
@@ -228,7 +234,7 @@ void		dist_binomial		(void)
 	printf("x = numero de veces que interesa que ocurra el suceso\n");
 	printf("c = cantidad de x que interesan (inroducir [0] para intervalo [a U b])\n\n");
 
-	n =	alx_getint_m(1, 2, "n:\t", NULL);
+	n =	alx_getint_mM(1, INT64_MAX, 2, "n:\t", NULL);
 	p =	alx_getdbl_mM(0, 1, 0.5, "p:\t", NULL);
 	c =	alx_getint_mM(0, n+1, 1, "c:\t", NULL);
 
@@ -262,8 +268,8 @@ void		dist_poisson		(void)
 	printf("x = veces que interesa que ocurra X/ud. de tiempo\n");
 	printf("c = cantidad de x que interesan (inroducir [0] para intervalo [a U b])\n\n");
 
-	l =	alx_getdbl_m(0, 1, "l:\t", NULL);
-	c =	alx_getint_m(0, 1, "c:\t", NULL);
+	l =	alx_getdbl_mM(0, INFINITY, 1, "l:\t", NULL);
+	c =	alx_getint_mM(0, INT64_MAX, 1, "c:\t", NULL);
 
 	P =	dist_poisson_P(l, c);
 	E =	poisson_E(l);
@@ -277,7 +283,6 @@ void		dist_poisson		(void)
 void		dist_geometric		(void)
 {
 	int64_t		x;
-	int64_t		c;
 	double	p;
 	double	P;
 	double	E;
@@ -288,12 +293,10 @@ void		dist_geometric		(void)
 
 	printf("p = probabilidad del suceso en cada repeticion\n");
 	printf("x = vez que interesa que ocurra el suceso\n\n");
-	printf("c = cantidad de x que interesan (inroducir [0] para intervalo [a U b])\n\n");
 
 	p =	alx_getdbl_mM(0, 1, 0.5, "p:\t", NULL);
-	c =	alx_getint_m(0, 1, "c:\t", NULL);
 
-	P =	dist_geometric_P(p, c);
+	P =	dist_geometric_P(p);
 	E =	geometric_E(p);
 	Var =	geometric_Var(p);
 
@@ -321,8 +324,8 @@ void		dist_uniform		(void)
 	printf("x1 = limite inferior de interes.\n");
 	printf("x2 = limite superior de interes.\n\n");
 
-	a =	alx_getdbl(0, "a:\t", NULL);
-	b =	alx_getdbl_m(a, a+1, "b:\t", NULL);
+	a =	alx_getdbl_mM(-INFINITY, INFINITY, 0, "a:\t", NULL);
+	b =	alx_getdbl_mM(a, INFINITY, a+1, "b:\t", NULL);
 	x1 =	alx_getdbl_mM(a, b, a, "x1:\t", NULL);
 	x2 =	alx_getdbl_mM(x1, b, b, "x2:\t", NULL);
 
@@ -353,9 +356,9 @@ void		dist_exponential	(void)
 	printf("x1 = limite inferior de interes.\n");
 	printf("x2 = limite superior de interes.\n\n");
 
-	b =	alx_getdbl_m(0, 1, "b:\t", NULL);
-	x1 =	alx_getdbl_m(0, 1, "x1:\t", NULL);
-	x2 =	alx_getdbl_m(x1, x1+1, "x2:\t", NULL);
+	b =	alx_getdbl_mM(0, INFINITY, 1, "b:\t", NULL);
+	x1 =	alx_getdbl_mM(0, INFINITY, 1, "x1:\t", NULL);
+	x2 =	alx_getdbl_mM(x1, INFINITY, x1+1, "x2:\t", NULL);
 
 	P =	exponential_P(b, x1, x2);
 	E =	exponential_E(b);
@@ -387,8 +390,8 @@ void		dist_normal		(void)
 	printf("a\t= 1/o\n");
 	printf("b\t= -u/o\n\n");
 
-	u =	alx_getdbl(0, "u:\t", NULL);
-	o2 =	alx_getdbl_m(0, 1, "o2:\t", NULL);
+	u =	alx_getdbl_mM(-INFINITY, INFINITY, 0, "u:\t", NULL);
+	o2 =	alx_getdbl_mM(0, INFINITY, 1, "o2:\t", NULL);
 
 	o =	normal_o(o2);
 	a =	normal_A(o);
@@ -436,7 +439,7 @@ static	void	dist_normal_m_1		(double a, double b)
 
 	printf("Z = %lf * X + %lf\n", a, b);
 
-	x =	alx_getdbl(0, "x:\t", NULL);
+	x =	alx_getdbl_mM(-INFINITY, INFINITY, 0, "x:\t", NULL);
 
 	z =	normal_Z(a, b, x);
 
@@ -450,7 +453,7 @@ static	void	dist_normal_m_2		(double a, double b)
 
 	printf("X = (Z - %lf) / %lf\n", b, a);
 
-	z =	alx_getdbl(0, "z:\t", NULL);
+	z =	alx_getdbl_mM(-INFINITY, INFINITY, 0, "z:\t", NULL);
 
 	x =	normal_X(a, b, z);
 
@@ -502,15 +505,15 @@ static	double	dist_poisson_P		(double l, int64_t c)
 	if (c) {
 		for	(i = 1; i <= c; i++) {
 			printf("x_%"PRIi64":\t", i);
-			x =	alx_getint_m(0, 1, NULL, NULL);
+			x =	alx_getint_mM(0, INT64_MAX, 1, NULL, NULL);
 
 			Pi =	poisson_P(l, x);
 			printf("P_%"PRIi64"\t= %lf\n", i, Pi);
 			P +=	Pi;
 		}
 	} else {
-		a =	alx_getint_m(0, 1, "a:\t", NULL);
-		b =	alx_getint_m(a+1, a+2, "b:\t", NULL);
+		a =	alx_getint_mM(0, INT64_MAX, 1, "a:\t", NULL);
+		b =	alx_getint_mM(a+1, INT64_MAX, a+2, "b:\t", NULL);
 
 		for	(; a <= b; a++) {
 			Pi =	poisson_P(l, a);
@@ -522,34 +525,18 @@ static	double	dist_poisson_P		(double l, int64_t c)
 	return	P;
 }
 
-static	double	dist_geometric_P	(double p, int64_t c)
+static	double	dist_geometric_P	(double p)
 {
 	int64_t		x;
 	int64_t		a;
 	int64_t		b;
-	int64_t		i;
-	double	Pi;
 	double	P = 0;
 
-	if (c) {
-		for	(i = 1; i <= c; i++) {
-			printf("x_%"PRIi64":\t", i);
-			x =	alx_getint_m(0, 1, NULL, NULL);
+		printf("x:\t");
+		x =	alx_getint_mM(0, INT64_MAX, 1, NULL, NULL);
 
-			Pi =	geometric_P(p, x);
-			printf("P_%"PRIi64"\t= %lf\n", i, Pi);
-			P +=	Pi;
-		}
-	} else {
-		a =	alx_getint_m(0, 1, "a:\t", NULL);
-		b =	alx_getint_m(a+1, a+2, "b:\t", NULL);
-
-		for	(; a <= b; a++) {
-			Pi =	geometric_P(p, a);
-			printf("P_%"PRIi64"\t= %lf\n", a, Pi);
-			P +=	Pi;
-		}
-	}
+		P =	geometric_P(p, x);
+		printf("P\t= %lf\n", P);
 
 	return	P;
 }

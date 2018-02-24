@@ -40,6 +40,28 @@
 	extern	int64_t		flag_V;
 	extern	bool		flag_x;
 
+	extern	int64_t		param_c;
+	extern	int64_t		param_n;
+	extern	int64_t		param_N;
+	extern	int64_t		param_r;
+
+	extern	double		param_a;
+	extern	double		param_b;
+	extern	double		param_p;
+	extern	double		param_x0;
+	extern	double		param_x1;
+	extern	double		param_x2;
+	extern	double		param_beta;
+	extern	double		param_lambda;
+
+	enum	Level_Verbose {
+		VERBOSE_Q = 0,
+		VERBOSE_1,
+		VERBOSE_2,
+		VERBOSE_3,
+		VERBOSE_MAX
+	};
+
 	enum	Start_Switch {
 		START_FOO = 0,
 		START_DESC_1VAR,
@@ -50,7 +72,8 @@
 		START_HYPERGEOMETRIC,
 		START_UNIFORM,
 		START_EXPONENTIAL,
-		START_NORMAL
+		START_NORMAL,
+		START_COUNT
 	};
 
 	enum	Help_Switch {
@@ -63,7 +86,8 @@
 		HELP_HYPERGEOMETRIC,
 		HELP_UNIFORM,
 		HELP_EXPONENTIAL,
-		HELP_NORMAL
+		HELP_NORMAL,
+		HELP_MAX
 	};
 
 	extern	char		file_path [FILENAME_MAX];

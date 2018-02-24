@@ -15,6 +15,7 @@
  * along with this program; if not, see the file COPYING, or write	      *
  * to the Free Software Foundation, Inc.				      *
  ******************************************************************************/
+
 /******************************************************************************
  *	Disclaimer of Warranty.						      *
  *									      *
@@ -41,6 +42,6 @@ compiling on windows (mingw with msys):
 	$ make OS=win
 
 running on linux:
-	EstDis/ $ cd bin/ && ./estdis && cd ..
+	.../EstDis/ $ cd bin/ && ./estdis && cd ..
 running on windows:
-	run 'estdis.exe' which is in EstDis\win\
+	run 'estdis.exe' which is in ...\EstDis\win\
