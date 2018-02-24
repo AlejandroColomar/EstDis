@@ -35,8 +35,7 @@
 
 	void	print_cpright			(void);
 	void	print_disclaim			(void);
-
-	# define	print_license()		alx_prn_file(ESTDIS_PATH LICENSE_RPATH)
+	void	print_license			(void);
 
 	void	dist_binomial_help		(void);
 	void	dist_poisson_help		(void);
