@@ -1,0 +1,14 @@
+	Binomial	X -> B(n, p):
+
+Supongase que un experimento aleatorio, consistente en observar si un
+determinado suceso ocurre o no, se realiza n veces consecutivas (obteniendose n
+realizaciones independientes del experimento aleatorio).
+Sea p la probabilidad de que ocurra el suceso A, esto es, P(A)=p y P(!A)=1-p=q.
+La v.a. X definida como el numero de veces que ocurre el suceso A en las n
+realizaciones independientes del experimento aleatorio.
+Se dice que tiene una distribucion binomial de parametros n y p, cuya funcion de
+probabilidad viene dada por
+
+	P{X=x} =	(n  x) * p^x * (1 - p)^(n - x),		x ∈ ℕº
+	E[x] =		n * p
+	Var[X] =	n * p * (1 - p)

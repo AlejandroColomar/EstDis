@@ -15,15 +15,3 @@
  * along with this program; if not, see the file COPYING, or write	      *
  * to the Free Software Foundation, Inc.				      *
  ******************************************************************************/
-
-https://github.com/AlejandroColomar/EstDis/
-
-compiling on windows (mingw with msys):
-	$ make OS=win
-compiling on linux:
-	$ make
-
-running on linux:
-	EstDis/ $ cd bin/ && ./estdis && cd ..
-running on windows:
-	run 'estdis.exe' which is in EstDis\win\

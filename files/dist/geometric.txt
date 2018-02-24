@@ -1,0 +1,12 @@
+	Geometrica	X -> G(p):
+
+Considerese un experimento aleatorio en el que se observa si ocurre o no un
+determinado suceso, siendo la probabilidad de exito p.
+Sea X la v.a. que cuenta el numero de veces que debe realizarse el experimento
+hasta que ocurre por primera vez el suceso de interes.
+Entonces, se dice que X tienen una distribucion geometrica de
+parametro p, estando su f.m.p. dada por
+
+	P{X=x} =	p * (1 - p)^(x - 1),		x ∈ ℕ+
+	E[x] =		1 / p
+	Var[X] =	(1 - p) / p^2

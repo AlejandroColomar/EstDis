@@ -16,4 +16,4 @@
  ******************************************************************************/
 
 void	start_switch	(void);
-void	w_start_switch	(void);
+void	help_switch	(void);

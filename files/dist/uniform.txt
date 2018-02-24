@@ -1,0 +1,19 @@
+	Uniforme	X -> U(a, b):
+
+La probabilidad de que X este en el intervalo [a, b] sera 1 y la probabilidad de
+que este en un subintervalo sera proporcional a su longitud.
+Se dice que una v.a. X tiene distribucion uniforme dentro del intervalo (a, b)
+si su funcion de densidad viene dada por
+
+	f(x) = {
+		1 / (b - a),		a < x < b
+		0,			else
+	}
+	F(x) = {
+		0			x < a
+		(x - a) / (b - a)	a <= x <= b
+		1			x > b
+	}
+
+	E[x] =		(a + b) / 2
+	Var[X] =	(b - a)^2 / 12

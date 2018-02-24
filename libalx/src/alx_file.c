@@ -43,22 +43,14 @@ void	alx_prn_file		(const char *filepath)
 	FILE	*fp;
 
 	fp =	fopen(filepath, "r");
-	printf("\n________________________________________________________________________________");
-	printf("\n\n");
+	printf("\n┌──────────────────────────────────────────────────────────────────────────────┐\n");
 	if (fp) {
 		while ((c = getc(fp)) != EOF){
 			putchar(c);
 		}
 		fclose(fp);
 	}
-	printf("\n________________________________________________________________________________");
-	printf("\n\n");
+	printf("└──────────────────────────────────────────────────────────────────────────────┘\n");
+	printf("\n");
 
-}
-
-void	alx_w_prn_file	(const char *filepath)
-{
-	alx_pause_curses();
-	alx_prn_file(filepath);
-	alx_resume_curses();
 }

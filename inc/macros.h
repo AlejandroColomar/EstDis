@@ -32,7 +32,7 @@
 	# define		OPT_LIST	"a:b:c:f:hi:j:k:lo:p:r:s:V:vx"
 
 	# define		ESTDIS_PATH	"./"
-	# define		LICENSE_RPATH	"./LICENSE.txt"
+	# define		LICENSE_RPATH	"../COPYING.txt"
 
 	# define		CORES_MAX	1
 	# define		THREADS_MAX	(2 * CORES_MAX - 1)
