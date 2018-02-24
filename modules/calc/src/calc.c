@@ -19,7 +19,6 @@
 	# define	CALC_H
 
 	#include <math.h>
-	#include <stdio.h>
 
 	#include "alx_math.h"
 
