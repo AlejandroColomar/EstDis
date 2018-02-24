@@ -15,8 +15,6 @@
  * to the Free Software Foundation, Inc.				      *
  ******************************************************************************/
 
-		/* need: INFINITY */
-	#include <float.h>
 		/* need: int64_t & INT64_MIN & INT64_MAX */
 	#include <inttypes.h>
 		/* need: INFINITY */
