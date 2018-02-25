@@ -15,7 +15,7 @@
  * to the Free Software Foundation, Inc.				      *
  ******************************************************************************/
 
-		/* need: int64_t & INT64_MIN & INT64_MAX */
+		/* need: int64_t & INT64_MIN & INT64_MAX  & PRNi64 */
 	#include <inttypes.h>
 		/* need: INFINITY */
 	#include <math.h>

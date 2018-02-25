@@ -40,6 +40,20 @@
 	int64_t		flag_V;
 	bool		flag_x;
 
+	int64_t		param_c;
+	int64_t		param_n;
+	int64_t		param_N;
+	int64_t		param_r;
+
+	double		param_a;
+	double		param_b;
+	double		param_p;
+	double		param_x0;
+	double		param_x1;
+	double		param_x2;
+	double		param_beta;
+	double		param_lambda;
+
 	char		file_path [FILENAME_MAX];
 
 # endif			/* global.h */

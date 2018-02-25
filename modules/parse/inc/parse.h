@@ -44,31 +44,29 @@
 		PARSE_S_PARAM_lambda		/* No short option */
 	};
 
-	enum	Parse_Long_Option {
-		PARSE_L_HELP =		"help",
-		PARSE_L_LICENSE =	"license",
-		PARSE_L_START =		"start",
-		PARSE_L_VERBOSE =	"Verbose",
-		PARSE_L_VERSION =	"version",
-		PARSE_L_EXIT =		"exit",
+	# define	PARSE_L_HELP 		"help"
+	# define	PARSE_L_LICENSE 	"license"
+	# define	PARSE_L_START 		"start"
+	# define	PARSE_L_VERBOSE 	"Verbose"
+	# define	PARSE_L_VERSION 	"version"
+	# define	PARSE_L_EXIT 		"exit"
 
-		PARSE_L_CPRIGHT =	"copyright",
-		PARSE_L_WARRANTY =	"warranty",
+	# define	PARSE_L_CPRIGHT 	"copyright"
+	# define	PARSE_L_WARRANTY 	"warranty"
 
-		PARSE_L_PARAM_c =	"param-c",
-		PARSE_L_PARAM_n =	"param-n",
-		PARSE_L_PARAM_N =	"param-N",
-		PARSE_L_PARAM_r =	"param-r",
+	# define	PARSE_L_PARAM_c 	"param-c"
+	# define	PARSE_L_PARAM_n 	"param-n"
+	# define	PARSE_L_PARAM_N 	"param-N"
+	# define	PARSE_L_PARAM_r 	"param-r"
 
-		PARSE_L_PARAM_a =	"param-a",
-		PARSE_L_PARAM_b =	"param-b",
-		PARSE_L_PARAM_p =	"param-p",
-		PARSE_L_PARAM_x0 =	"param-x0",
-		PARSE_L_PARAM_x1 =	"param-x1",
-		PARSE_L_PARAM_x2 =	"param-x2",
-		PARSE_L_PARAM_beta =	"param-beta",
-		PARSE_L_PARAM_lambda =	"param-lambda"
-	};
+	# define	PARSE_L_PARAM_a 	"param-a"
+	# define	PARSE_L_PARAM_b 	"param-b"
+	# define	PARSE_L_PARAM_p 	"param-p"
+	# define	PARSE_L_PARAM_x0 	"param-x0"
+	# define	PARSE_L_PARAM_x1 	"param-x1"
+	# define	PARSE_L_PARAM_x2 	"param-x2"
+	# define	PARSE_L_PARAM_beta 	"param-beta"
+	# define	PARSE_L_PARAM_lambda 	"param-lambda"
 
 	void	parser	(int argc, char *argv[]);
 

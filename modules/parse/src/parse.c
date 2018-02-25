@@ -16,6 +16,10 @@
  ******************************************************************************/
 
 	#include <getopt.h>
+		/* need: int64_t & INT64_MIN & INT64_MAX  & SCNi64 */
+	#include <inttypes.h>
+		/* need: INFINITY */
+	#include <math.h>
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string.h>
@@ -140,14 +144,14 @@ void	parser	(int argc, char *argv[])
 
 		case PARSE_S_PARAM_a:
 			if (parse_dbl(PARSE_L_PARAM_a, optarg,
-						&param_a, -DBL_MAX, DBL_MAX)) {
+						&param_a, -INFINITY, INFINITY)) {
 				exit(EXIT_FAILURE);
 			}
 			break;
 
 		case PARSE_S_PARAM_b:
 			if (parse_dbl(PARSE_L_PARAM_b, optarg,
-						&param_b, param_a, DBL_MAX)) {
+						&param_b, param_a, INFINITY)) {
 				exit(EXIT_FAILURE);
 			}
 			break;
@@ -162,35 +166,35 @@ void	parser	(int argc, char *argv[])
 		case PARSE_S_PARAM_x0:
 			if (parse_dbl(PARSE_L_PARAM_x0, optarg,
 						&param_x0,
-						-DBL_MAX, DBL_MAX)) {
+						-INFINITY, INFINITY)) {
 				exit(EXIT_FAILURE);
 			}
 			break;
 
 		case PARSE_S_PARAM_x1:
 			if (parse_dbl(PARSE_L_PARAM_x1, optarg,
-						&param_x1, -DBL_MAX, DBL_MAX)) {
+						&param_x1, -INFINITY, INFINITY)) {
 				exit(EXIT_FAILURE);
 			}
 			break;
 
 		case PARSE_S_PARAM_x2:
 			if (parse_dbl(PARSE_L_PARAM_x2, optarg,
-						&param_x2, param_x1, DBL_MAX)) {
+						&param_x2, param_x1, INFINITY)) {
 				exit(EXIT_FAILURE);
 			}
 			break;
 
 		case PARSE_S_PARAM_beta:
 			if (parse_dbl(PARSE_L_PARAM_beta, optarg,
-						&param_beta, 0, DBL_MAX)) {
+						&param_beta, 0, INFINITY)) {
 				exit(EXIT_FAILURE);
 			}
 			break;
 
 		case PARSE_S_PARAM_lambda:
 			if (parse_dbl(PARSE_L_PARAM_lambda, optarg,
-						&param_lambda, 0, DBL_MAX)) {
+						&param_lambda, 0, INFINITY)) {
 				exit(EXIT_FAILURE);
 			}
 			break;
@@ -213,7 +217,7 @@ static	int64_t	parse_int	(const char *optstr, const char *optarg,
 	int64_t	E = 0;
 
 	if (1 == sscanf(optarg, " %"SCNi64"", param)) {
-		if (param < m || param > M) {
+		if (*param < m || *param > M) {
 			printf("%s argument not valid\n", optstr);
 			printf("It must be greater an integer [%"PRIi64" U %"PRIi64"]\n", m, M);
 			E = 1;
@@ -233,7 +237,7 @@ static	int64_t	parse_dbl	(const char *optstr, const char *optarg,
 	int64_t	E = 0;
 
 	if (1 == sscanf(optarg, " %lf", param)) {
-		if (param < m || param > M) {
+		if (*param < m || *param > M) {
 			printf("%s argument not valid\n", optstr);
 			printf("It must be greater an integer [%lf U %lf]\n", m, M);
 			E = 1;

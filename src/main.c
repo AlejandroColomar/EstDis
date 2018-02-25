@@ -21,12 +21,13 @@
 
 	#include "global.h"
 	#include "menus.h"
+	#include "parse.h"
 
 int	main	(int argc, char *argv[], char *envp[])
 {
 	alx_start_curses();
 //	init_values();
-//	parser(argc, argv);
+	parser(argc, argv);
 //								print_verbose(1, w_print_cpright, NULL);
 //	start_switch();
 //	if (!flag_x) {
