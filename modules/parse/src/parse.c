@@ -115,28 +115,28 @@ void	parser	(int argc, char *argv[])
 
 		case PARSE_S_PARAM_c:
 			if (parse_int(PARSE_L_PARAM_c, optarg,
-						&param_c, 0, 3)) {
+						&param_i_c, 0, 3)) {
 				exit(EXIT_FAILURE);
 			}
 			break;
 
 		case PARSE_S_PARAM_n:
 			if (parse_int(PARSE_L_PARAM_n, optarg,
-						&param_n, 0, INT64_MAX)) {
+						&param_i_n, 0, INT64_MAX)) {
 				exit(EXIT_FAILURE);
 			}
 			break;
 
 		case PARSE_S_PARAM_N:
 			if (parse_int(PARSE_L_PARAM_N, optarg,
-						&param_N, 0, INT64_MAX)) {
+						&param_i_N, 0, INT64_MAX)) {
 				exit(EXIT_FAILURE);
 			}
 			break;
 
 		case PARSE_S_PARAM_r:
 			if (parse_int(PARSE_L_PARAM_r, optarg,
-						&param_r, 0, INT64_MAX)) {
+						&param_i_r, 0, INT64_MAX)) {
 				exit(EXIT_FAILURE);
 			}
 			break;
@@ -165,7 +165,7 @@ void	parser	(int argc, char *argv[])
 
 		case PARSE_S_PARAM_x0:
 			if (parse_dbl(PARSE_L_PARAM_x0, optarg,
-						&param_x0,
+						&param_x_dbl[0],
 						-INFINITY, INFINITY)) {
 				exit(EXIT_FAILURE);
 			}
@@ -173,14 +173,14 @@ void	parser	(int argc, char *argv[])
 
 		case PARSE_S_PARAM_x1:
 			if (parse_dbl(PARSE_L_PARAM_x1, optarg,
-						&param_x1, -INFINITY, INFINITY)) {
+						&param_x_dbl[1], -INFINITY, INFINITY)) {
 				exit(EXIT_FAILURE);
 			}
 			break;
 
 		case PARSE_S_PARAM_x2:
 			if (parse_dbl(PARSE_L_PARAM_x2, optarg,
-						&param_x2, param_x1, INFINITY)) {
+						&param_x_dbl[2], param_x_dbl[1], INFINITY)) {
 				exit(EXIT_FAILURE);
 			}
 			break;

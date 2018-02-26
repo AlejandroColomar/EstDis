@@ -33,7 +33,7 @@
 	 * the number two more times. After that, it uses the default
 	 * value.
 	 */
-double	alx_getdbl_mM	(double m, double M, double def,
+double	alx_getdbl	(double m, double def, double M,
 			const char *formatA, const char *formatB, ...)
 {
 	va_list	args;
@@ -96,7 +96,7 @@ double	alx_getdbl_mM	(double m, double M, double def,
 	 * the number two more times. After that, it uses the default
 	 * value.
 	 */
-int64_t	alx_getint_mM	(int64_t m, int64_t M, int64_t def,
+int64_t	alx_getint	(int64_t m, int64_t def, int64_t M,
 			const char *formatA, const char *formatB, ...)
 {
 	va_list	args;

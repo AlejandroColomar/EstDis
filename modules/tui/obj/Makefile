@@ -32,13 +32,16 @@ TST_DIR = $(TUI_DIR)/tst/
 ALL = dist.o menus.o
 
 DIST_INC_LIBALX = alx_getnum.h
+DIST_INC_GLOBAL = global_ext.h
 DIST_INC_CALC = calc.h
 DIST_INC = dist.h
 DIST_DEPS = $(SRC_DIR)/dist.c \
 			$(patsubst %,$(LIBALX_INC_DIR)/%,$(DIST_INC_LIBALX)) \
+			$(patsubst %,$(GLOBAL_INC_DIR)/%,$(DIST_INC_GLOBAL)) \
 			$(patsubst %,$(CALC_INC_DIR)/%,$(DIST_INC_CALC)) \
 			$(patsubst %,$(INC_DIR)/%,$(DIST_INC))
 DIST_INC_DIRS = -I $(LIBALX_INC_DIR) \
+			-I $(GLOBAL_INC_DIR) \
 			-I $(CALC_INC_DIR) \
 			-I $(INC_DIR)
 
