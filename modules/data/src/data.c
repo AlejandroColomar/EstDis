@@ -15,57 +15,37 @@
  * to the Free Software Foundation, Inc.				      *
  ******************************************************************************/
 
-# ifndef		GLOBAL_EXT_H
-	# define	GLOBAL_EXT_H
 
-//	#include <getopt.h>
-//	#include <inttypes.h>
-//	#include <ncurses.h>
-//	#include <pthread.h>
-//	#include <stdarg.h>
+	#include <inttypes.h>
 	#include <stdbool.h>
-	#include <stdint.h>
-	#include <stdio.h>
-//	#include <stdlib.h>
-//	#include <string.h>
-//	#include <sys/types.h>
-	#include <time.h>
-//	#include <unistd.h>
-
-	#include "macros.h"
 
 
-	extern	int64_t		flag_s;
-	extern	int64_t		flag_r;
-	extern	int64_t		flag_V;
-	extern	bool		flag_x;
+	int64_t	flag_s;
+	int64_t	flag_r;
+	int64_t	flag_V;
+	bool	flag_x;
 
-	enum	Start_Switch {
-		START_FOO = 0,
-		START_DESC_1VAR,
-		START_DESC_2VAR,
-		START_BINOMIAL,
-		START_POISSON,
-		START_GEOMETRIC,
-		START_HYPERGEOMETRIC,
-		START_UNIFORM,
-		START_EXPONENTIAL,
-		START_NORMAL
-	};
 
-	enum	Help_Switch {
-		HELP_GENERIC = 0,
-		HELP_DESC_1VAR,
-		HELP_DESC_2VAR,
-		HELP_BINOMIAL,
-		HELP_POISSON,
-		HELP_GEOMETRIC,
-		HELP_HYPERGEOMETRIC,
-		HELP_UNIFORM,
-		HELP_EXPONENTIAL,
-		HELP_NORMAL
-	};
+	int64_t	param_i_a;
+	int64_t	param_i_b;
+	int64_t	param_i_c;
+	int64_t	param_i_n;
+	int64_t	param_i_N;
+	int64_t	param_i_r;
+	int64_t	param_i_x [65536];
 
-	extern	char		file_path [FILENAME_MAX];
+	double	param_a;
+	double	param_b;
+	double	param_p;
+	double	param_x_dbl [65536];
+	double	param_y [65536];
+	double	param_beta;
+	double	param_lambda;
+	double	param_mu;
+	double	param_sigma2;
+	double	param_X;
+	double	param_Z;
 
-# endif			/* global_ext.h */
+	double	result_P;
+	double	result_E;
+	double	result_Var;

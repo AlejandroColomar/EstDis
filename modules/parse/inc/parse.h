@@ -15,31 +15,9 @@
  * to the Free Software Foundation, Inc.				      *
  ******************************************************************************/
 
-# ifndef		GLOBAL_H
-	# define	GLOBAL_H
+# ifndef		ARGS_H
+	# define	ARGS_H
 
-//	#include <getopt.h>
-//	#include <inttypes.h>
-//	#include <ncurses.h>
-//	#include <pthread.h>
-//	#include <stdarg.h>
-	#include <stdbool.h>
-	#include <stdint.h>
-	#include <stdio.h>
-//	#include <stdlib.h>
-//	#include <string.h>
-//	#include <sys/types.h>
-	#include <time.h>
-//	#include <unistd.h>
+	void	parser	(int argc, char *argv[]);
 
-	#include "macros.h"
-
-
-	int64_t		flag_s;
-	int64_t		flag_r;
-	int64_t		flag_V;
-	bool		flag_x;
-
-	char		file_path [FILENAME_MAX];
-
-# endif			/* global.h */
+# endif			/* args.h */

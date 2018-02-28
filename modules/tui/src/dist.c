@@ -15,14 +15,18 @@
  * to the Free Software Foundation, Inc.				      *
  ******************************************************************************/
 
+		/* int64_t & PRNi64 */
 	#include <inttypes.h>
-	#include <math.h>
+		/* printf() */
 	#include <stdio.h>
 
+		/* alx_getint() & alx_getdbl() */
 	#include "alx_getnum.h"
 
+		/* calculations */
 	#include "calc.h"
-	#include "dist.h"
+		/* variables */
+	#include "data.h"
 
 
 
@@ -33,9 +37,9 @@
 	static	void	dist_normal_m		(double a, double b);
 	static	void	dist_normal_m_1		(double a, double b);
 	static	void	dist_normal_m_2		(double a, double b);
-	static	double	dist_binomial_P		(int64_t n, double p, int64_t c);
-	static	double	dist_poisson_P		(double l, int64_t c);
-	static	double	dist_geometric_P	(double p, int64_t c);
+	static	double	dist_binomial_P		(void);
+	static	double	dist_poisson_P		(void);
+	static	double	dist_geometric_P	(void);
 
 
 
@@ -45,10 +49,7 @@
 
 void		desc_1var		(void)
 {
-	int64_t		N;
-	int64_t		i;
-	double	xi;
-	double	ni;
+	int64_t	i;
 	double	Eni = 0;
 	double	Exi = 0;
 	double	Exi2 = 0;
@@ -67,17 +68,25 @@ void		desc_1var		(void)
 	printf("s\t= sqrt(s2)\t--Cuasidesviacion tipica.\n");
 	printf("CV\t= o/u\t\t--Coeficiente de variacion.\n\n");
 
-	N =	alx_getint_m(1, 2, "N:\t", NULL);
+	param_i_N =	alx_getint(PARAM_i_N_MIN, PARAM_i_N_DEF, PARAM_i_N_MAX,
+							"N:\t", NULL);
 
-	for (i = 1; i <= N; i++) {
+	/* here param_y is used as n */
+	for (i = 0; i < param_i_N; i++) {
 		printf("x_%"PRIi64":\t", i);
-		xi =	alx_getdbl(1, NULL, NULL);
+		param_x_dbl[i] =	alx_getdbl(PARAM_x_MIN, PARAM_x_DEF, PARAM_x_MAX,
+							NULL, NULL);
 		printf("n_%"PRIi64":\t", i);
-		ni =	alx_getdbl_m(0, 1, NULL, NULL);
+		param_y[i] =	alx_getdbl(PARAM_n_MIN, PARAM_n_DEF, PARAM_n_MAX,
+							NULL, NULL);
+		printf("\n");
+	}
 
-		Exi +=	descrip_Exi(ni, xi);
-		Exi2 +=	descrip_Exi2(ni, xi);
-		Eni +=	descrip_Eni(ni);
+	/* here param_y is used as n */
+	for (i = 0; i < param_i_N; i++) {
+		Exi +=	descrip_Exi(param_y[i], param_x_dbl[i]);
+		Exi2 +=	descrip_Exi2(param_y[i], param_x_dbl[i]);
+		Eni +=	descrip_Eni(param_y[i]);
 	}
 
 	u =	descrip_u(Exi, Eni);
@@ -96,8 +105,7 @@ void		desc_1var		(void)
 }
 
 void		desc_2var		(void){
-	int64_t		n;
-	int64_t		i;
+	int64_t	i;
 	double	Exi = 0;
 	double	Exi2 = 0;
 	double	ux;
@@ -138,51 +146,53 @@ void		desc_2var		(void){
 
 	printf("n\t=\t\t\t--Numero de puntos.\n\n");
 
-	n =	alx_getint_m(1, 2, "n:\t", NULL);
+	param_i_N =	alx_getint(PARAM_i_N_MIN, PARAM_i_N_DEF, PARAM_i_N_MAX,
+							"n:\t", NULL);
 
-	double	x[n + 1];
-	double	y[n + 1];
-
-	for (i = 1; i <= n; i++) {
+	for (i = 0; i < param_i_N; i++) {
 		printf("x_%"PRIi64":\t", i);
-		x[i] =		alx_getdbl(1, NULL, NULL);
-		Exi +=		descrip_Exi(1, x[i]);
-		Exi2 +=		descrip_Exi2(1, x[i]);
-
+		param_x_dbl[i] =	alx_getdbl(PARAM_x_MIN, PARAM_x_DEF, PARAM_x_MAX,
+							NULL, NULL);
 		printf("y_%"PRIi64":\t", i);
-		y[i] =		alx_getdbl(1, NULL, NULL);
-		Eyi +=		descrip_Exi(1, y[i]);
-		Eyi2 +=		descrip_Exi2(1, y[i]);
-
-		Exiyi +=	descrip_Exiyi(x[i], y[i]);
+		param_y[i] =	alx_getdbl(PARAM_y_MIN, PARAM_y_DEF, PARAM_y_MAX,
+							NULL, NULL);
+		printf("\n");
 	}
 
-	ux =	descrip_u(Exi, n);
-	ox2 =	descrip_o2(Exi2, n, ux);
+	for (i = 0; i < param_i_N; i++) {
+		Exi +=		descrip_Exi(1, param_x_dbl[i]);
+		Exi2 +=		descrip_Exi2(1, param_x_dbl[i]);
+		Eyi +=		descrip_Exi(1, param_y[i]);
+		Eyi2 +=		descrip_Exi2(1, param_y[i]);
+		Exiyi +=	descrip_Exiyi(param_x_dbl[i], param_y[i]);
+	}
+
+	ux =	descrip_u(Exi, param_i_N);
+	ox2 =	descrip_o2(Exi2, param_i_N, ux);
 	ox =	descrip_o(ox2);
 
-	uy =	descrip_u(Eyi, n);
-	oy2 =	descrip_o2(Eyi2, n, uy);
+	uy =	descrip_u(Eyi, param_i_N);
+	oy2 =	descrip_o2(Eyi2, param_i_N, uy);
 	oy =	descrip_o(oy2);
 
-	oxy =	descrip_oxy(Exiyi, n, ux, uy);
+	oxy =	descrip_oxy(Exiyi, param_i_N, ux, uy);
 	a =	descrip_a(oxy, ox2);
 	b =	descrip_b(ux, uy, a);
 	c =	descrip_a(oxy, oy2);
 	d =	descrip_b(uy, ux, c);
 	r =	descrip_r(oxy, ox, oy);
 
-	for (i = 1; i <= n; i++) {
-		Eyiy2 +=	descrip_Eyiy2(x[i], y[i], a, b);
-		Exix2 +=	descrip_Eyiy2(y[i], x[i], c, d);;
+	for (i = 0; i < param_i_N; i++) {
+		Eyiy2 +=	descrip_Eyiy2(param_x_dbl[i], param_y[i], a, b);
+		Exix2 +=	descrip_Eyiy2(param_y[i], param_x_dbl[i], c, d);;
 	}
 
-	Aa =	descrip_Aa(n, Exi, Exi2, Eyiy2);
-	Ab =	descrip_Ab(n, Exi2, Aa);
-	Ac =	descrip_Aa(n, Eyi, Eyi2, Exix2);
-	Ad =	descrip_Ab(n, Eyi2, Ac);
+	Aa =	descrip_Aa(param_i_N, Exi, Exi2, Eyiy2);
+	Ab =	descrip_Ab(param_i_N, Exi2, Aa);
+	Ac =	descrip_Aa(param_i_N, Eyi, Eyi2, Exix2);
+	Ad =	descrip_Ab(param_i_N, Eyi2, Ac);
 
-	Vr =	descrip_Vr(n, Eyiy2);
+	Vr =	descrip_Vr(param_i_N, Eyiy2);
 	R2 =	descrip_R2(oy2, Vr);
 
 	printf("\nux\t= %lf", ux);
@@ -213,10 +223,7 @@ void		desc_2var		(void){
 
 void		dist_binomial		(void)
 {
-	int64_t		n;
-	int64_t		c;
-	double	p;
-	double	P = 0;
+	double	P;
 	double	E;
 	double	Var;
 
@@ -228,19 +235,22 @@ void		dist_binomial		(void)
 	printf("x = numero de veces que interesa que ocurra el suceso\n");
 	printf("c = cantidad de x que interesan (inroducir [0] para intervalo [a U b])\n\n");
 
-	n =	alx_getint_m(1, 2, "n:\t", NULL);
-	p =	alx_getdbl_mM(0, 1, 0.5, "p:\t", NULL);
-	c =	alx_getint_mM(0, n+1, 1, "c:\t", NULL);
+	param_i_N =	alx_getint(PARAM_i_N_MIN, PARAM_i_N_DEF, PARAM_i_N_MAX,
+							"n:\t", NULL);
+	param_p =	alx_getdbl(PARAM_p_MIN, PARAM_p_DEF, PARAM_p_MAX,
+							"p:\t", NULL);
+	param_i_c =	alx_getint(PARAM_i_c_MIN, PARAM_i_c_DEF, param_i_N + 1,
+							"c:\t", NULL);
 
-	P =	dist_binomial_P(n, p, c);
-	E =	binomial_E(n, p);
-	Var =	binomial_Var(n, p);
+	P =	dist_binomial_P();
+	E =	binomial_E(param_i_N, param_p);
+	Var =	binomial_Var(param_i_N, param_p);
 
 	printf("\nP{X}\t= %lf", P);
 	printf("\nE(X)\t= %lf", E);
 	printf("\nVar(X)\t= %lf\n", Var);
 
-	if ((n*p > 5) && (n*(1-p) > 5)) {
+	if ((param_i_N*param_p > 5) && (param_i_N*(1-param_p) > 5)) {
 		printf("\nAproximacion a Distribucion Normal N(u = np, o2 = np(1-p))");
 		printf("\nu\t= %lf", E);
 		printf("\no2\t= %lf\n", Var);
@@ -249,25 +259,26 @@ void		dist_binomial		(void)
 
 void		dist_poisson		(void)
 {
-	int64_t		c;
-	double	l;
 	double	P;
 	double	E;
 	double	Var;
 
 	printf("\n________________________________________________________________________________\n");
-	printf("\nESTADISTICA/Distribuciones:\tDistribucion de Poisson: P(l)\n\n");
+	printf("\nESTADISTICA/Distribuciones:\tDistribucion de Poisson: P(lambda)\n\n");
 
-	printf("l = veces que ocurre de media/ud. de tiempo\n");
+	printf("lambda = veces que ocurre de media/ud. de tiempo\n");
 	printf("x = veces que interesa que ocurra X/ud. de tiempo\n");
 	printf("c = cantidad de x que interesan (inroducir [0] para intervalo [a U b])\n\n");
 
-	l =	alx_getdbl_m(0, 1, "l:\t", NULL);
-	c =	alx_getint_m(0, 1, "c:\t", NULL);
+	param_i_N =	PARAM_i_N_MAX;
+	param_lambda =	alx_getdbl(PARAM_lambda_MIN, PARAM_lambda_DEF, PARAM_lambda_MAX,
+							"l:\t", NULL);
+	param_i_c =	alx_getint(PARAM_i_c_MIN, PARAM_i_c_DEF, PARAM_i_c_MAX,
+							"c:\t", NULL);
 
-	P =	dist_poisson_P(l, c);
-	E =	poisson_E(l);
-	Var =	poisson_Var(l);
+	P =	dist_poisson_P();
+	E =	poisson_E(param_lambda);
+	Var =	poisson_Var(param_lambda);
 
 	printf("\nP{X}\t= %lf", P);
 	printf("\nE(X)\t= %lf", E);
@@ -276,9 +287,6 @@ void		dist_poisson		(void)
 
 void		dist_geometric		(void)
 {
-	int64_t		x;
-	int64_t		c;
-	double	p;
 	double	P;
 	double	E;
 	double	Var;
@@ -288,14 +296,13 @@ void		dist_geometric		(void)
 
 	printf("p = probabilidad del suceso en cada repeticion\n");
 	printf("x = vez que interesa que ocurra el suceso\n\n");
-	printf("c = cantidad de x que interesan (inroducir [0] para intervalo [a U b])\n\n");
 
-	p =	alx_getdbl_mM(0, 1, 0.5, "p:\t", NULL);
-	c =	alx_getint_m(0, 1, "c:\t", NULL);
+	param_p =	alx_getdbl(PARAM_p_MIN, PARAM_p_DEF, PARAM_p_MAX,
+							"p:\t", NULL);
 
-	P =	dist_geometric_P(p, c);
-	E =	geometric_E(p);
-	Var =	geometric_Var(p);
+	P =	dist_geometric_P();
+	E =	geometric_E(param_p);
+	Var =	geometric_Var(param_p);
 
 	printf("\nP{X=x}\t= %lf", P);
 	printf("\nE(X)\t= %lf", E);
@@ -305,10 +312,6 @@ void		dist_geometric		(void)
 
 void		dist_uniform		(void)
 {
-	double	a;
-	double	b;
-	double	x1;
-	double	x2;
 	double	P;
 	double	E;
 	double	Var;
@@ -321,14 +324,18 @@ void		dist_uniform		(void)
 	printf("x1 = limite inferior de interes.\n");
 	printf("x2 = limite superior de interes.\n\n");
 
-	a =	alx_getdbl(0, "a:\t", NULL);
-	b =	alx_getdbl_m(a, a+1, "b:\t", NULL);
-	x1 =	alx_getdbl_mM(a, b, a, "x1:\t", NULL);
-	x2 =	alx_getdbl_mM(x1, b, b, "x2:\t", NULL);
+	param_a =	alx_getdbl(PARAM_a_MIN, PARAM_a_DEF, PARAM_a_MAX,
+							"a:\t", NULL);
+	param_b =	alx_getdbl(PARAM_b_MIN, PARAM_b_DEF, PARAM_b_MAX,
+							"b:\t", NULL);
+	param_x_dbl[1] =	alx_getdbl(param_a, param_a, param_b,
+							"x1:\t", NULL);
+	param_x_dbl[2] =	alx_getdbl(param_x_dbl[1], param_b, param_b,
+							"x2:\t", NULL);
 
-	P =	uniform_P(a, b, x1, x2);
-	E =	uniform_E(a, b);
-	Var =	uniform_Var(a, b);
+	P =	uniform_P(param_a, param_b, param_x_dbl[1], param_x_dbl[2]);
+	E =	uniform_E(param_a, param_b);
+	Var =	uniform_Var(param_a, param_b);
 
 	printf("\nP{x1<X<x2}\t= %lf", P);
 	printf("\nE(X)\t\t= %lf", E);
@@ -338,28 +345,28 @@ void		dist_uniform		(void)
 
 void		dist_exponential	(void)
 {
-	double	b;
-	double	x1;
-	double	x2;
 	double	P;
 	double	E;
 	double	Var;
 
 	printf("\n________________________________________________________________________________\n");
-	printf("\nESTADISTICA/Distribuciones:\tDistribucion Exponencial: exp(b)\n\n");
+	printf("\nESTADISTICA/Distribuciones:\tDistribucion Exponencial: exp(beta)\n\n");
 
-	printf("b = coeficiente beta\n");
+	printf("beta = coeficiente beta\n");
 	printf("x = tiempo para que ocurra el suceso\n");
 	printf("x1 = limite inferior de interes.\n");
 	printf("x2 = limite superior de interes.\n\n");
 
-	b =	alx_getdbl_m(0, 1, "b:\t", NULL);
-	x1 =	alx_getdbl_m(0, 1, "x1:\t", NULL);
-	x2 =	alx_getdbl_m(x1, x1+1, "x2:\t", NULL);
+	param_beta =	alx_getdbl(PARAM_beta_MIN, PARAM_beta_DEF, PARAM_beta_MAX,
+							"b:\t", NULL);
+	param_x_dbl[1] =	alx_getdbl(0, 0, PARAM_x_MAX,
+							"x1:\t", NULL);
+	param_x_dbl[2] =	alx_getdbl(param_x_dbl[1], param_x_dbl[1] + 1, PARAM_x_MAX,
+							"x2:\t", NULL);
 
-	P =	exponential_P(b, x1, x2);
-	E =	exponential_E(b);
-	Var =	exponential_Var(b);
+	P =	exponential_P(param_beta, param_x_dbl[1], param_x_dbl[2]);
+	E =	exponential_E(param_beta);
+	Var =	exponential_Var(param_beta);
 
 	printf("\nP{x1<X<x2}\t= %lf\n", P);
 	printf("\nE(X)\t= %lf", E);
@@ -375,24 +382,26 @@ void		dist_normal		(void)
 	double	b;
 
 	printf("\n________________________________________________________________________________\n");
-	printf("\nESTADISTICA/Distribuciones:\tDistribucion Normal (Gauss): N(u,o2)\n\n");
+	printf("\nESTADISTICA/Distribuciones:\tDistribucion Normal (Gauss): N(mu, sigma2)\n\n");
 
-	printf("X -> N(u,o2)\n");
-	printf("u\t=\t\t--Esperanza de X.\n");
-	printf("o2\t=\t\t--Varianza de X.\n\n");
-	printf("o\t=\t\t--Desviacion tipica de X.\n\n");
+	printf("X -> N(mu,sigma2)\n");
+	printf("mu\t=\t\t--Esperanza de X.\n");
+	printf("sigma2\t=\t\t--Varianza de X.\n\n");
+	printf("sigma\t=\t\t--Desviacion tipica de X.\n\n");
 
 	printf("Z = aX + b\n");
 	printf("Z -> N(0,1)\n");
 	printf("a\t= 1/o\n");
 	printf("b\t= -u/o\n\n");
 
-	u =	alx_getdbl(0, "u:\t", NULL);
-	o2 =	alx_getdbl_m(0, 1, "o2:\t", NULL);
+	param_mu =	alx_getdbl(PARAM_mu_MIN, PARAM_mu_DEF, PARAM_mu_MAX,
+							"u:\t", NULL);
+	param_sigma2 =	alx_getdbl(PARAM_sigma2_MIN, PARAM_sigma2_DEF, PARAM_sigma2_MAX,
+							"o2:\t", NULL);
 
-	o =	normal_o(o2);
+	o =	normal_o(param_sigma2);
 	a =	normal_A(o);
-	b =	normal_B(u, o);
+	b =	normal_B(param_mu, o);
 
 	printf	("\na\t= %lf\nb\t= %lf\n", a, b);
 
@@ -407,15 +416,15 @@ void		dist_normal		(void)
 
 static	void	dist_normal_m		(double a, double b)
 {
-	int64_t		i;
-	int64_t		wh = 1;
+	int64_t	sw;
+	int64_t	wh = 1;
 
 	while (wh) {
 		printf	("\nTipificar:\n");
 		printf	("X -> Z [1]\tZ -> X [2]\tExit[0]\n");
 
-		i =	alx_getint_mM(0, 2, 1, NULL, NULL);
-		switch (i){
+		sw =	alx_getint(0, 1, 2, NULL, NULL);
+		switch (sw){
 		case 0:
 			wh =	0;
 			break;
@@ -431,14 +440,14 @@ static	void	dist_normal_m		(double a, double b)
 
 static	void	dist_normal_m_1		(double a, double b)
 {
-	double	x;
 	double	z;
 
 	printf("Z = %lf * X + %lf\n", a, b);
 
-	x =	alx_getdbl(0, "x:\t", NULL);
+	param_X =	alx_getdbl(PARAM_X_MIN, PARAM_X_DEF, PARAM_X_MAX,
+							"x:\t", NULL);
 
-	z =	normal_Z(a, b, x);
+	z =	normal_Z(a, b, param_X);
 
 	printf("\nz = %lf\n", z);
 }
@@ -446,110 +455,106 @@ static	void	dist_normal_m_1		(double a, double b)
 static	void	dist_normal_m_2		(double a, double b)
 {
 	double	x;
-	double	z;
 
 	printf("X = (Z - %lf) / %lf\n", b, a);
 
-	z =	alx_getdbl(0, "z:\t", NULL);
+	param_Z =	alx_getdbl(PARAM_Z_MIN, PARAM_Z_DEF, PARAM_Z_MAX,
+							"z:\t", NULL);
 
-	x =	normal_X(a, b, z);
+	x =	normal_X(a, b, param_Z);
 
 	printf("\nx = %lf\n", x);
 }
 
-static	double	dist_binomial_P		(int64_t n, double p, int64_t c)
+static	double	dist_binomial_P		(void)
 {
-	int64_t		x;
-	int64_t		a;
-	int64_t		b;
-	int64_t		i;
+	int64_t	i;
 	double	Pi;
 	double	P = 0;
 
-	if (c) {
-		for (i = 1; i <= c; i++) {
+	if (param_i_c) {
+		for (i = 0; i < param_i_c; i++) {
 			printf("x_%"PRIi64":\t", i);
-			x =	alx_getint_mM(0, n, 0, NULL, NULL);
+			param_i_x[i] =	alx_getint(PARAM_i_x_MIN, PARAM_i_x_DEF, PARAM_i_x_MAX,
+							NULL, NULL);
+		}
+	} else {
+		param_i_a =	alx_getint(PARAM_i_a_MIN, PARAM_i_a_DEF, PARAM_i_a_MAX,
+							"a:\t", NULL);
+		param_i_b =	alx_getint(PARAM_i_b_MIN, PARAM_i_b_DEF, PARAM_i_b_MAX,
+							"b:\t", NULL);
+	}
 
-			Pi =	binomial_P(n, p, x);
-			printf("P_%"PRIi64"\t= %lf\n", i, Pi);
+	if (param_i_c) {
+		for (i = 0; i < param_i_c; i++) {
+			Pi =	binomial_P(param_i_N, param_p, param_i_x[i]);
+			printf("P_%"PRIi64"\t= %lf\n", param_i_x[i], Pi);
 			P +=	Pi;
 		}
 	} else {
-		a =	alx_getint_mM(0, n, 0, "a:\t", NULL);
-		b =	alx_getint_mM(a+1, n, 0, "b:\t", NULL);
-
-		for (; a <= b; a++) {
-			Pi =	binomial_P(n, p, a);
-			printf("P_%"PRIi64"\t= %lf\n", a, Pi);
+		for (i = param_i_a; i < param_i_b; i++) {
+			Pi =	binomial_P(param_i_N, param_p, i);
+			printf("P_%"PRIi64"\t= %lf\n", i, Pi);
 			P +=	Pi;
 		}
+		Pi =	binomial_P(param_i_N, param_p, param_i_b);
+		printf("P_%"PRIi64"\t= %lf\n", param_i_b, Pi);
+		P +=	Pi;
 	}
 
 	return	P;
 }
 
 
-static	double	dist_poisson_P		(double l, int64_t c)
+static	double	dist_poisson_P		(void)
 {
-	int64_t		x;
-	int64_t		a;
-	int64_t		b;
-	int64_t		i;
+	int64_t	i;
 	double	Pi;
 	double	P = 0;
 
-	if (c) {
-		for	(i = 1; i <= c; i++) {
+	if (param_i_c) {
+		for (i = 0; i < param_i_c; i++) {
 			printf("x_%"PRIi64":\t", i);
-			x =	alx_getint_m(0, 1, NULL, NULL);
+			param_i_x[i] =	alx_getint(PARAM_i_x_MIN, PARAM_i_x_DEF, PARAM_i_x_MAX,
+							NULL, NULL);
+		}
+	} else {
+		param_i_a =	alx_getint(PARAM_i_a_MIN, PARAM_i_a_DEF, PARAM_i_a_MAX,
+							"a:\t", NULL);
+		param_i_b =	alx_getint(PARAM_i_b_MIN, PARAM_i_b_DEF, PARAM_i_b_MAX,
+							"b:\t", NULL);
+	}
 
-			Pi =	poisson_P(l, x);
-			printf("P_%"PRIi64"\t= %lf\n", i, Pi);
+	if (param_i_c) {
+		for (i = 0; i < param_i_c; i++) {
+			Pi =	poisson_P(param_lambda, param_i_x[i]);
+			printf("P_%"PRIi64"\t= %lf\n", param_i_x[i], Pi);
 			P +=	Pi;
 		}
 	} else {
-		a =	alx_getint_m(0, 1, "a:\t", NULL);
-		b =	alx_getint_m(a+1, a+2, "b:\t", NULL);
-
-		for	(; a <= b; a++) {
-			Pi =	poisson_P(l, a);
-			printf("P_%"PRIi64"\t= %lf\n", a, Pi);
+		for (i = param_i_a; i < param_i_b; i++) {
+			Pi =	poisson_P(param_lambda, i);
+			printf("P_%"PRIi64"\t= %lf\n", i, Pi);
 			P +=	Pi;
 		}
+		Pi =	poisson_P(param_lambda, param_i_b);
+		printf("P_%"PRIi64"\t= %lf\n", param_i_b, Pi);
+		P +=	Pi;
 	}
 
 	return	P;
 }
 
-static	double	dist_geometric_P	(double p, int64_t c)
+static	double	dist_geometric_P	(void)
 {
-	int64_t		x;
-	int64_t		a;
-	int64_t		b;
-	int64_t		i;
-	double	Pi;
 	double	P = 0;
 
-	if (c) {
-		for	(i = 1; i <= c; i++) {
-			printf("x_%"PRIi64":\t", i);
-			x =	alx_getint_m(0, 1, NULL, NULL);
+		printf("x:\t");
+		param_i_x[0] =	alx_getint(PARAM_i_x_MIN, PARAM_i_x_DEF, PARAM_i_x_MAX,
+							NULL, NULL);
 
-			Pi =	geometric_P(p, x);
-			printf("P_%"PRIi64"\t= %lf\n", i, Pi);
-			P +=	Pi;
-		}
-	} else {
-		a =	alx_getint_m(0, 1, "a:\t", NULL);
-		b =	alx_getint_m(a+1, a+2, "b:\t", NULL);
-
-		for	(; a <= b; a++) {
-			Pi =	geometric_P(p, a);
-			printf("P_%"PRIi64"\t= %lf\n", a, Pi);
-			P +=	Pi;
-		}
-	}
+		P =	geometric_P(param_p, param_i_x[0]);
+		printf("P\t= %lf\n", P);
 
 	return	P;
 }

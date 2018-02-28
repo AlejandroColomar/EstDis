@@ -22,10 +22,8 @@
 //	#include "alx_seed.h"
 
 	#include "about.h"
+	#include "data.h"
 	#include "dist.h"
-
-	#include "global_ext.h"
-	#include "macros.h"
 
 
 void	start_switch	(void)
