@@ -15,23 +15,11 @@
  * to the Free Software Foundation, Inc.				      *
  ******************************************************************************/
 
-# ifndef		GLOBAL_EXT_H
-	# define	GLOBAL_EXT_H
+# ifndef		DATA_H
+	# define	DATA_H
 
-		/* need: int64_t */
 	#include <inttypes.h>
-		/* need: INFINITY */
-	#include <math.h>
 	#include <stdbool.h>
-	#include <stdint.h>
-	#include <stdio.h>
-//	#include <stdlib.h>
-//	#include <string.h>
-//	#include <sys/types.h>
-	#include <time.h>
-//	#include <unistd.h>
-
-	#include "macros.h"
 
 
 	extern	int64_t		flag_s;
@@ -40,11 +28,11 @@
 	extern	bool		flag_x;
 
 
-	extern	double		param_i_a;
+	extern	int64_t		param_i_a;
 	# define		PARAM_i_a_MIN		(0)
 	# define		PARAM_i_a_DEF		(0)
 	# define		PARAM_i_a_MAX		(param_i_N)
-	extern	double		param_i_b;
+	extern	int64_t		param_i_b;
 	# define		PARAM_i_b_MIN		(param_i_a)
 	# define		PARAM_i_b_DEF		(param_i_N)
 	# define		PARAM_i_b_MAX		(param_i_N)
@@ -61,7 +49,7 @@
 	# define		PARAM_i_N_DEF		(2)
 	# define		PARAM_i_N_MAX		(65536)
 	extern	int64_t		param_i_r;
-	extern	double		param_i_x [65536];
+	extern	int64_t		param_i_x [65536];
 	# define		PARAM_i_x_MIN		(0)
 	# define		PARAM_i_x_DEF		(1)
 	# define		PARAM_i_x_MAX		(param_i_N)
@@ -120,7 +108,7 @@
 	extern	double		result_Var;
 
 	enum	Level_Verbose {
-		VERBOSE_Q = 0,
+		VERBOSE_0 = 0,
 		VERBOSE_1,
 		VERBOSE_2,
 		VERBOSE_3,
@@ -155,6 +143,4 @@
 		HELP_MAX
 	};
 
-	extern	char		file_path [FILENAME_MAX];
-
-# endif			/* global_ext.h */
+# endif			/* data.h */

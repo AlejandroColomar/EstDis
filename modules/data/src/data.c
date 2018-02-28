@@ -15,24 +15,9 @@
  * to the Free Software Foundation, Inc.				      *
  ******************************************************************************/
 
-# ifndef		GLOBAL_H
-	# define	GLOBAL_H
 
-//	#include <getopt.h>
-//	#include <inttypes.h>
-//	#include <ncurses.h>
-//	#include <pthread.h>
-//	#include <stdarg.h>
+	#include <inttypes.h>
 	#include <stdbool.h>
-	#include <stdint.h>
-	#include <stdio.h>
-//	#include <stdlib.h>
-//	#include <string.h>
-//	#include <sys/types.h>
-	#include <time.h>
-//	#include <unistd.h>
-
-	#include "macros.h"
 
 
 	int64_t	flag_s;
@@ -41,13 +26,13 @@
 	bool	flag_x;
 
 
-	double	param_i_a;
-	double	param_i_b;
+	int64_t	param_i_a;
+	int64_t	param_i_b;
 	int64_t	param_i_c;
 	int64_t	param_i_n;
 	int64_t	param_i_N;
 	int64_t	param_i_r;
-	double	param_i_x [65536];
+	int64_t	param_i_x [65536];
 
 	double	param_a;
 	double	param_b;
@@ -64,7 +49,3 @@
 	double	result_P;
 	double	result_E;
 	double	result_Var;
-
-	char	file_path [FILENAME_MAX];
-
-# endif			/* global.h */

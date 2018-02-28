@@ -18,17 +18,6 @@
 # ifndef		ABOUT_H
 	# define	ABOUT_H
 
-	#include <stdbool.h>
-
-//	#include "alx_about.h"
-	#include "alx_file.h"
-//	#include "alx_getnum.h"
-//	#include "alx_math.h"
-//	#include "alx_ncur.h"
-//	#include "alx_seed.h"
-
-	#include "macros.h"
-
 	void	print_help			(void);
 	void	print_version			(void);
 	void	print_usage			(void);

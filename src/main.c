@@ -17,23 +17,25 @@
  * to the Free Software Foundation, Inc.				      *
  ******************************************************************************/
 
+		/* start and end curses */
 	#include "alx_ncur.h"
 
-	#include "global.h"
+		/* menu_main() */
 	#include "menus.h"
+		/* parser() */
 	#include "parse.h"
 
 int	main	(int argc, char *argv[], char *envp[])
 {
 	parser(argc, argv);
 
-	alx_start_curses();
 //	init_values();
 //								print_verbose(1, w_print_cpright, NULL);
 //	start_switch();
 //	if (!flag_x) {
+		alx_start_curses();
 		menu_main();
+		alx_end_curses();
 //	}
-	alx_end_curses();
 	return	0;
 }

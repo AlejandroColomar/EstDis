@@ -20,6 +20,9 @@ CALC_OBJ_DIR = $(CALC_DIR)/obj/
 CTRL_DIR = $(MODULES_DIR)/ctrl/
 CTRL_OBJ_DIR = $(CTRL_DIR)/obj/
 
+DATA_DIR = $(MODULES_DIR)/data/
+DATA_OBJ_DIR = $(DATA_DIR)/obj/
+
 PARSE_DIR = $(MODULES_DIR)/parse/
 PARSE_OBJ_DIR = $(PARSE_DIR)/obj/
 
@@ -36,6 +39,7 @@ ESTDIS_OBJ_LIBALX = alx_file.o alx_getnum.o alx_math.o alx_ncur.o
 ESTDIS_OBJ_ABOUT = about.o
 ESTDIS_OBJ_CALC = calc.o
 ESTDIS_OBJ_CTRL = start.o
+ESTDIS_OBJ_DATA = data.o
 ESTDIS_OBJ_PARSE = parse.o
 ESTDIS_OBJ_TUI = dist.o menus.o
 ESTDIS_OBJS = $(OBJ_DIR)/main.o \
@@ -43,6 +47,7 @@ ESTDIS_OBJS = $(OBJ_DIR)/main.o \
 			$(patsubst %,$(ABOUT_OBJ_DIR)/%,$(ESTDIS_OBJ_ABOUT)) \
 			$(patsubst %,$(CALC_OBJ_DIR)/%,$(ESTDIS_OBJ_CALC)) \
 			$(patsubst %,$(CTRL_OBJ_DIR)/%,$(ESTDIS_OBJ_CTRL)) \
+			$(patsubst %,$(DATA_OBJ_DIR)/%,$(ESTDIS_OBJ_DATA)) \
 			$(patsubst %,$(PARSE_OBJ_DIR)/%,$(ESTDIS_OBJ_PARSE)) \
 			$(patsubst %,$(TUI_OBJ_DIR)/%,$(ESTDIS_OBJ_TUI))
 

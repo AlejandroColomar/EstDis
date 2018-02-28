@@ -15,14 +15,17 @@
  * to the Free Software Foundation, Inc.				      *
  ******************************************************************************/
 
-//	#include <getopt.h>
-		/* Need int64_t */
+
+/******************************************************************************
+ ******| include |*************************************************************
+ ******************************************************************************/
+		/* int64_t */
 	#include <inttypes.h>
-		/* Need curses interface */
+		/* curses interface */
 	#include <curses.h>
 //	#include <pthread.h>
 //	#include <stdarg.h>
-		/* Need bool */
+		/* bool */
 	#include <stdbool.h>
 //	#include <stdint.h>
 	#include <stdio.h>
@@ -34,61 +37,60 @@
 //	#include <unistd.h>
 //	#include <wchar.h>
 
-//	#include "alx_file.h"
-//	#include "alx_getnum.h"
-//	#include "alx_math.h"
+		/* menu & curses */
 	#include "alx_ncur.h"
-//	#include "alx_seed.h"
 
+		/* print functions */
 	#include "about.h"
-//	#include "desc.h"
-//	#include "dist.h"
-//	#include "menu.h"
+		/* variables */
+	#include "data.h"
+		/* start */
 	#include "start.h"
 
-	#include "global_ext.h"
+		/* DBG */
 	#include "macros.h"
 
+
+/******************************************************************************
+ ******| menu |****************************************************************
+ ******************************************************************************/
 	/*
 	 * + Menu:
 	 *	+ Continue:
-	 *		+ Descriptiva:
-	 *			- 1 Variable
-	 *			- 2 Variables
-	 *			- ..
-	 *		+ Distribuciones:
+	 *		- Run
+	 *		- Help
+	 *		+ Select:
+	 *			- 1 Var
+	 *			- 2 Var
 	 *			- Binomial
-	 *			- help
 	 *			- Poisson
-	 *			- help
 	 *			- Geometrica
-	 *			- help
 	 *			- Hipergeometrica
-	 *			- help
 	 *			- Uniforme
-	 *			- help
 	 *			- Exponencial
-	 *			- help
 	 *			- Gauss(Normal)
-	 *			- help
+	 *			- ..
+	 *		+ Verbose: Not yet
 	 *			- ..
 	 *		- ..
+	 *	- Copyright
 	 *	- Disclaimer
-	 *	- License
+	 *	- Terms & conditions
 	 *	- Exit program
 	 */
-/*----------------------------------------------------------------------------*/
 
+
+/******************************************************************************
+ ******| submenus |************************************************************
+ ******************************************************************************/
 static	void	menu_continue	(void);
 static	void	menu_select	(void);
 static	void	menu_verbose	(void);
 
 
-
-//------------------------------------------------------------------------------
-//--| menu |--------------------------------------------------------------------
-//------------------------------------------------------------------------------
-
+/******************************************************************************
+ ******| main menu |***********************************************************
+ ******************************************************************************/
 void	menu_main		(void)
 {
 	int64_t	sw;
@@ -102,7 +104,7 @@ void	menu_main		(void)
 						{2, 4, "[1]	Continue"},
 						{4, 4, "[2]	Copyright"},
 						{5, 4, "[3]	Disclaimer of warranty"},
-						{6, 4, "[4]	Terms and conditions"}
+						{6, 4, "[4]	Terms & conditions"}
 				};
 
 	wh = true;
@@ -140,11 +142,9 @@ void	menu_main		(void)
 }
 
 
-
-//------------------------------------------------------------------------------
-//--| submenus |----------------------------------------------------------------
-//------------------------------------------------------------------------------
-
+/******************************************************************************
+ ******| submenus |************************************************************
+ ******************************************************************************/
 static	void	menu_continue	(void)
 {
 	int64_t	sw;

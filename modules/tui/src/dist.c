@@ -15,19 +15,18 @@
  * to the Free Software Foundation, Inc.				      *
  ******************************************************************************/
 
-		/* need: int64_t & PRNi64 */
+		/* int64_t & PRNi64 */
 	#include <inttypes.h>
-		/* need: printf() */
+		/* printf() */
 	#include <stdio.h>
 
-		/* need: alx_getint() & alx_getdbl() */
+		/* alx_getint() & alx_getdbl() */
 	#include "alx_getnum.h"
 
-		/* variables */
-	#include "global_ext.h"
-
-		/* do calculations */
+		/* calculations */
 	#include "calc.h"
+		/* variables */
+	#include "data.h"
 
 
 
@@ -271,6 +270,7 @@ void		dist_poisson		(void)
 	printf("x = veces que interesa que ocurra X/ud. de tiempo\n");
 	printf("c = cantidad de x que interesan (inroducir [0] para intervalo [a U b])\n\n");
 
+	param_i_N =	PARAM_i_N_MAX;
 	param_lambda =	alx_getdbl(PARAM_lambda_MIN, PARAM_lambda_DEF, PARAM_lambda_MAX,
 							"l:\t", NULL);
 	param_i_c =	alx_getint(PARAM_i_c_MIN, PARAM_i_c_DEF, PARAM_i_c_MAX,
