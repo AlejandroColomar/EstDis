@@ -1,49 +1,46 @@
-
 /******************************************************************************
- * This program is free software; you can redistribute it and/or modify	      *
- * it under the terms of the GNU General Public License as published by	      *
- * the Free Software Foundation; either version 2 of the License, or          *
- * (at your option) any later version.					      *
- *									      *
- * This program is distributed in the hope that it will be useful,	      *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of	      *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the	      *
- * GNU General Public License for more details.				      *
- *									      *
- * You should have received a copy of the GNU General Public License	      *
- * along with this program; if not, see the file COPYING, or write	      *
- * to the Free Software Foundation, Inc.				      *
+ *	Copyright (C) 2017	Alejandro Colomar Andrés		      *
  ******************************************************************************/
 
-	#include <curses.h>
-//	#include <getopt.h>
+	#include <ncurses.h>
 	#include <inttypes.h>
-	#include <math.h>
 	#include <stdarg.h>
 	#include <stdbool.h>
-//	#include <stdint.h>
 	#include <stdio.h>
-//	#include <stdlib.h>
 	#include <string.h>
-//	#include <sys/types.h>
-//	#include <time.h>
-//	#include <unistd.h>
 	#include <wchar.h>
 
 	#include "alx_ncur.h"
 
-	# define	BUFF_SIZE	1024
+	# define	BUFF_SIZE	(1024)
 
-static	void	alx_ncur_prn_title	(WINDOW			*win,
-					const char		*str);
+	# define	MAX_TRIES	(2)
 
-static	void	alx_ncur_prn_menu	(WINDOW			*win,
-					const int64_t		N,
-					const struct alx_option	mnu[N]);
+	# define	ERR_RANGE	(1)
+	# define	ERR_SSCANF	(2)
+	# define	ERR_GETSTR	(3)
+	# define	ERR_FPTR	(4)
 
-static	int64_t	alx_ncur_usr_sel	(WINDOW			*win,
-					const int64_t		N,
-					const struct alx_option	mnu[N]);
+	# define	ERR_RANGE_MSG	"¡ Number is out of range !"
+	# define	ERR_SSCANF_MSG	"¡ sscanf() error !"
+	# define	ERR_GETSTR_MSG	"¡ wgetstr() error !"
+	# define	ERR_FPTR_MSG	"¡ FILE error !"
+
+
+static	void	alx_ncur_prn_title	(WINDOW *win, const char *title);
+static	void	alx_ncur_prn_menu	(WINDOW *win,
+					int N, struct alx_optn mnu[N]);
+static	int	alx_ncur_usr_sel	(WINDOW *win,
+					int N, struct alx_optn mnu[N]);
+static	double	loop_w_getdbl		(WINDOW *win,
+					double m, double def, double M);
+static	int64_t	loop_w_getint		(WINDOW *win,
+					double m, int64_t def, double M);
+static	void	loop_w_getstr		(char *str, WINDOW *win,
+					const char *def);
+static	void	loop_w_getfpath		(char *fpath, WINDOW *win,
+					const char *def);
+static	void	manage_w_error		(WINDOW *win, int err);
 
 
 void	alx_start_curses	(void)
@@ -57,13 +54,11 @@ void	alx_start_curses	(void)
 //	mousemask(BUTTON4_PRESSED | BUTTON2_PRESSED, NULL);
 }
 
-
 void	alx_pause_curses	(void)
 {
 	def_prog_mode();
 	endwin();
 }
-
 
 void	alx_resume_curses	(void)
 {
@@ -72,418 +67,377 @@ void	alx_resume_curses	(void)
 	reset_prog_mode();
 }
 
-
-void	alx_end_curses	(void)
+void	alx_end_curses		(void)
 {
 	endwin();
 }
 
-
-int64_t	alx_menu		(const int64_t		h,
-				const int64_t		w,
-				const int64_t		N,
-				const struct alx_option	mnu[N],
-				const char		*str)
+void	alx_win_del		(WINDOW *win)
 {
+	/* Delete window */
+	wclear(win);
+	wrefresh(win);
+	delwin(win);
+}
 
-	/* Create a window of size h*w and position (r,c)
-	 *	r	start at the top
-	 *	c	center in terminal (80 cols)
-	 */
-	WINDOW		*win;
-	const int64_t	r =	1;
-	const int64_t	c =	(80 - w) / 2;
+int	alx_menu		(int h, int w,
+				int N, struct alx_optn mnu[N], const char *title)
+{
+	/* Dimensions */
+	WINDOW	*win;
+	int	r;
+	int	c;
+	r =	1;
+	c =	(80 - w) / 2;
 	win =	newwin(h, w, r, c);
 
+	/* Input */
+	int	i;
+	i =	alx_menu_2(win, N, mnu, title);
+
+	/* Delete window */
+	alx_win_del(win);
+
+	return	i;
+}
+
+int	alx_menu_2		(WINDOW *win,
+				int N, struct alx_optn mnu[N], const char *title)
+{
 	/* Activate keypad, and don't echo input */
 	keypad(win, true);
 	noecho();
 
 	/* Print title and menu items */
-	alx_ncur_prn_title(win, str);
+	alx_ncur_prn_title(win, title);
 	alx_ncur_prn_menu(win, N, mnu);
 
-	/* User input */
-	int64_t	i;
+	/* Input */
+	int	i;
 	i =	alx_ncur_usr_sel(win, N, mnu);
-
-	/* Delete window */
-	wclear(win);
-	wrefresh(win);
-	delwin(win);
 
 	return	i;
 }
 
 
-double	alx_w_getdbl_mM		(double m, double M, double def,
-				WINDOW *win_i, WINDOW *win_o,
+double	alx_w_getdbl		(int w, int r, const char *title,
+				double m, double def, double M,
 				const char *format, ...)
 {
+	/* Varargs */
 	va_list	args;
 	va_start(args, format);
 
-	int64_t	i;
-	int64_t	wh;
-	char	buff [BUFF_SIZE];
-	int64_t	x;
-	double	R;
-	int64_t	ri;
-	int64_t	ci;
-	int64_t	ro;
-	int64_t	co;
+	/* Dimensions */
+	WINDOW	*win1;
+	int	h1;
+	int	w1;
+	int	r1;
+	int	c1;
+	WINDOW	*win2;
+	int	h2;
+	int	w2;
+	int	r2;
+	int	c2;
+	WINDOW	*win3;
+	int	h3;
+	int	w3;
+	int	r3;
+	int	c3;
+	h1 =	3;
+	w1 =	w;
+	r1 =	r;
+	c1 =	(80 - w) / 2;
+	h2 =	1;
+	w2 =	w1 - 4;
+	r2 =	r1 + 3;
+	c2 =	c1 + 2;
+	h3 =	1;
+	w3 =	w1 - 2;
+	r3 =	r1 + 1;
+	c3 =	c1 + 1;
 
-	getbegyx(win_i, ri, ci);
-	getbegyx(win_o, ro, co);
-	wmove(win_o, ri-ro +2, ci-co +1);
+	/* Box & title */
+	win1 =	newwin(h1, w1, r1, c1);
+	wbkgd(win1, A_REVERSE);
+	alx_ncur_prn_title(win1, title);
+	wrefresh(win1);
+
+	/* Help */
+	win2 =	newwin(h2, w2, r2, c2);
 	if (format == NULL) {
-		wprintw(win_o, "Introduce a real number [%lf U %lf]", m, M);
+		wprintw(win2, "Introduce a real number [%lf U %lf] (default %lf)", m, M, def);
 	} else {
-		vw_printw(win_o, format, args);
+		vw_printw(win2, format, args);
 	}
-	wrefresh(win_o);
+	wrefresh(win2);
 
-	wh = 1;
-	for (i = 0; i < 2 && wh; i++) {
-		echo();
-		x =	mvwgetstr(win_i, 0, 0, buff);
-		noecho();
+	/* Input */
+	double	R;
+	win3 =	newwin(h3, w3, r3, c3);
+	wbkgd(win3, A_REVERSE);
+	wrefresh(win3);
+	R =	loop_w_getdbl(win3, m, def, M);
 
-		wclear(win_i);
-		wrefresh(win_i);
+	/* Delete window */
+	alx_win_del(win3);
+	alx_win_del(win2);
+	alx_win_del(win1);
 
-		if (x) {
-			if (1 == sscanf(buff, "%lf", &R)) {
-				if (R < m || R > M) {
-					wh = 1;
-				} else {
-					wh = 0;
-				}
-			} else {
-				wh = 2;
-			}
-		} else {
-			wh = 3;
-		}
-
-		if (wh) {
-			switch (wh) {
-			case 1:
-				mvwaddstr(win_i, 0, 0, "Not valid");
-					break;
-			case 2:
-				mvwaddstr(win_i, 0, 0, "Not valid!");
-					break;
-			case 3:
-				mvwaddstr(win_i, 0, 0, "Not valid!!!");
-					break;
-			}
-			wrefresh(win_i);
-			wgetch(win_i);
-			wclear(win_i);
-			wrefresh(win_i);
-			R =	def;
-		}
-	}
-
+	/* End varargs */
 	va_end(args);
+
 	return	R;
 }
 
 
-int64_t	alx_w_getint		(int64_t def,
-				WINDOW *win_i, WINDOW *win_o,
+int64_t	alx_w_getint		(int w, int r, const char *title,
+				double m, int64_t def, double M,
 				const char *format, ...)
 {
+	/* Varargs */
 	va_list	args;
 	va_start(args, format);
 
-	int64_t	i;
-	int64_t	wh;
-	char	buff [BUFF_SIZE];
-	int64_t	x;
-	int64_t	Z;
-	int64_t	ri;
-	int64_t	ci;
-	int64_t	ro;
-	int64_t	co;
+	/* Dimensions */
+	WINDOW	*win1;
+	int	h1;
+	int	w1;
+	int	r1;
+	int	c1;
+	WINDOW	*win2;
+	int	h2;
+	int	w2;
+	int	r2;
+	int	c2;
+	WINDOW	*win3;
+	int	h3;
+	int	w3;
+	int	r3;
+	int	c3;
+	h1 =	3;
+	w1 =	w;
+	r1 =	r;
+	c1 =	(80 - w) / 2;
+	h2 =	1;
+	w2 =	w1 - 4;
+	r2 =	r1 + 3;
+	c2 =	c1 + 2;
+	h3 =	1;
+	w3 =	w1 - 2;
+	r3 =	r1 + 1;
+	c3 =	c1 + 1;
 
-	getbegyx(win_i, ri, ci);
-	getbegyx(win_o, ro, co);
-	wmove(win_o, ri-ro +2, ci-co +1);
+	/* Box & title */
+	win1 =	newwin(h1, w1, r1, c1);
+	wbkgd(win1, A_REVERSE);
+	alx_ncur_prn_title(win1, title);
+	wrefresh(win1);
+
+	/* Help */
+	win2 =	newwin(h2, w2, r2, c2);
 	if (format == NULL) {
-		waddstr(win_o, "Introduce an integer number");
+		wprintw(win2, "Introduce an integer number [%lf U %lf] (default %"PRIi64")", m, M, def);
 	} else {
-		vw_printw(win_o, format, args);
+		vw_printw(win2, format, args);
 	}
-	wrefresh(win_o);
+	wrefresh(win2);
 
-	wh = 1;
-	for (i = 0; i < 2 && wh; i++) {
-		echo();
-		x =	mvwgetstr(win_i, 0, 0, buff);
-		noecho();
+	/* Input */
+	int	Z;
+	win3 =	newwin(h3, w3, r3, c3);
+	wbkgd(win3, A_REVERSE);
+	wrefresh(win3);
+	Z =	loop_w_getint(win3, m, def, M);
 
-		wclear(win_i);
-		wrefresh(win_i);
+	/* Delete window */
+	alx_win_del(win3);
+	alx_win_del(win2);
+	alx_win_del(win1);
 
-		if (x) {
-			if (1 == sscanf(buff, "%"SCNi64"", &Z)) {
-				wh = 0;
-			} else {
-				wh = 2;
-			}
-		} else {
-			wh = 3;
-		}
-
-		if (wh) {
-			switch (wh) {
-			case 2:
-				mvwaddstr(win_i, 0, 0, "Not valid!");
-					break;
-			case 3:
-				mvwaddstr(win_i, 0, 0, "Not valid!!!");
-					break;
-			}
-			wrefresh(win_i);
-			wgetch(win_i);
-			wclear(win_i);
-			wrefresh(win_i);
-			Z =	def;
-		}
-	}
-
-	wclear(win_i);
-	wrefresh(win_i);
-	delwin(win_i);
-
+	/* End varargs */
 	va_end(args);
+
 	return	Z;
 }
 
 
-int64_t	alx_w_getint_mM		(int64_t m, int64_t M, int64_t def,
-				WINDOW *win_i, WINDOW *win_o,
+void	alx_w_getstr		(char *str,
+				const int w, const int r, const char *title,
+				const char *def,
 				const char *format, ...)
 {
+	/* Varargs */
 	va_list	args;
 	va_start(args, format);
 
-	int64_t	i;
-	int64_t	wh;
-	char	buff [BUFF_SIZE];
-	int64_t	x;
-	int64_t	Z;
-	int64_t	ri;
-	int64_t	ci;
-	int64_t	ro;
-	int64_t	co;
+	/* Dimensions */
+	WINDOW	*win1;
+	int	h1;
+	int	w1;
+	int	r1;
+	int	c1;
+	WINDOW	*win2;
+	int	h2;
+	int	w2;
+	int	r2;
+	int	c2;
+	WINDOW	*win3;
+	int	h3;
+	int	w3;
+	int	r3;
+	int	c3;
+	h1 =	3;
+	w1 =	w;
+	r1 =	r;
+	c1 =	(80 - w) / 2;
+	h2 =	1;
+	w2 =	w1 - 4;
+	r2 =	r1 + 3;
+	c2 =	c1 + 2;
+	h3 =	1;
+	w3 =	w1 - 2;
+	r3 =	r1 + 1;
+	c3 =	c1 + 1;
 
-	getbegyx(win_i, ri, ci);
-	getbegyx(win_o, ro, co);
-	wmove(win_o, ri-ro +2, ci-co +1);
+	/* Box & title */
+	win1 =	newwin(h1, w1, r1, c1);
+	wbkgd(win1, A_REVERSE);
+	alx_ncur_prn_title(win1, title);
+	wrefresh(win1);
+
+	/* Help */
+	win2 =	newwin(h2, w2, r2, c2);
 	if (format == NULL) {
-		wprintw(win_o, "Introduce an integer number [%"SCNi64" U %"SCNi64"]", m, M);
+		waddstr(win2, "Introduce a file path");
 	} else {
-		vw_printw(win_o, format, args);
+		vw_printw(win2, format, args);
 	}
-	wrefresh(win_o);
+	wrefresh(win2);
 
-	wh = 1;
-	for (i = 0; i < 2 && wh; i++) {
-		echo();
-		x =	mvwgetstr(win_i, 0, 0, buff);
-		noecho();
+	/* Input */
+	win3 =	newwin(h3, w3, r3, c3);
+	wbkgd(win3, A_REVERSE);
+	wrefresh(win3);
+	loop_w_getstr(str, win3, def);
 
-		wclear(win_i);
-		wrefresh(win_i);
+	/* Delete window */
+	alx_win_del(win3);
+	alx_win_del(win2);
+	alx_win_del(win1);
 
-		if (x) {
-			if (1 == sscanf(buff, "%"SCNi64"", &Z)) {
-				if (Z < m || Z > M) {
-					wh = 1;
-				} else {
-					wh = 0;
-				}
-			} else {
-				wh = 2;
-			}
-		} else {
-			wh = 3;
-		}
-
-		if (wh) {
-			switch (wh) {
-			case 1:
-				mvwaddstr(win_i, 0, 0, "Not valid");
-					break;
-			case 2:
-				mvwaddstr(win_i, 0, 0, "Not valid!");
-					break;
-			case 3:
-				mvwaddstr(win_i, 0, 0, "Not valid!!!");
-					break;
-			}
-			wrefresh(win_i);
-			wgetch(win_i);
-			wclear(win_i);
-			wrefresh(win_i);
-			Z =	def;
-		}
-	}
-
-	va_end(args);
-	return	Z;
-}
-
-
-void	alx_w_getstr		(char *str, const char *def,
-				WINDOW *win_i, WINDOW *win_o,
-				const char *format, ...)
-{
-	va_list	args;
-	va_start(args, format);
-
-	int64_t	i;
-	bool	wh;
-	char	buff [BUFF_SIZE];
-	int64_t	x;
-	int64_t	ri;
-	int64_t	ci;
-	int64_t	ro;
-	int64_t	co;
-
-	getbegyx(win_i, ri, ci);
-	getbegyx(win_o, ro, co);
-	wmove(win_o, ri-ro +2, ci-co +1);
-	if (format == NULL) {
-		waddstr(win_o, "Introduce a string");
-	} else {
-		vw_printw(win_o, format, args);
-	}
-	wrefresh(win_o);
-
-	wh = true;
-	for (i = 0; i < 2 && wh; i++) {
-		echo();
-		x =	mvwgetstr(win_i, 0, 0, buff);
-		noecho();
-
-		wclear(win_i);
-		wrefresh(win_i);
-
-		if (x == ERR) {
-			mvwaddstr(win_i, 0, 0, "Not valid!!!");
-			wrefresh(win_i);
-			wgetch(win_i);
-			wclear(win_i);
-			wrefresh(win_i);
-			strcpy(str, def);
-		} else {
-			strcpy(str, buff);
-			wh = false;
-		}
-	}
-
+	/* End varargs */
 	va_end(args);
 }
 
 
-void	alx_w_getfpath		(char *fpath, const char *def,
-				WINDOW *win_i, WINDOW *win_o,
+void	alx_w_getfpath		(char *fpath,
+				const int w, const int r, const char *title,
+				const char *def,
 				const char *format, ...)
 {
+	/* Varargs */
 	va_list	args;
 	va_start(args, format);
 
-	int64_t	i;
-	bool	wh;
-	char	buff [BUFF_SIZE];
-	int64_t	x;
-	FILE	*fp;
-	int64_t	ri;
-	int64_t	ci;
-	int64_t	ro;
-	int64_t	co;
+	/* Dimensions */
+	WINDOW	*win1;
+	int	h1;
+	int	w1;
+	int	r1;
+	int	c1;
+	WINDOW	*win2;
+	int	h2;
+	int	w2;
+	int	r2;
+	int	c2;
+	WINDOW	*win3;
+	int	h3;
+	int	w3;
+	int	r3;
+	int	c3;
+	h1 =	3;
+	w1 =	w;
+	r1 =	r;
+	c1 =	(80 - w) / 2;
+	h2 =	1;
+	w2 =	w1 - 4;
+	r2 =	r1 + 3;
+	c2 =	c1 + 2;
+	h3 =	1;
+	w3 =	w1 - 2;
+	r3 =	r1 + 1;
+	c3 =	c1 + 1;
 
-	getbegyx(win_i, ri, ci);
-	getbegyx(win_o, ro, co);
-	wmove(win_o, ri-ro +2, ci-co +1);
+	/* Box & title */
+	win1 =	newwin(h1, w1, r1, c1);
+	wbkgd(win1, A_REVERSE);
+	alx_ncur_prn_title(win1, title);
+	wrefresh(win1);
+
+	/* Help */
+	win2 =	newwin(h2, w2, r2, c2);
 	if (format == NULL) {
-		waddstr(win_o, "Introduce a file path");
+		waddstr(win2, "Introduce a file path");
 	} else {
-		vw_printw(win_o, format, args);
+		vw_printw(win2, format, args);
 	}
-	wrefresh(win_o);
+	wrefresh(win2);
 
-	wh = true;
-	for (i = 0; i < 2 && wh; i++) {
-		echo();
-		x =	mvwgetstr(win_i, 0, 0, buff);
-		noecho();
+	/* Input */
+	win3 =	newwin(h3, w3, r3, c3);
+	wbkgd(win3, A_REVERSE);
+	wrefresh(win3);
+	loop_w_getfpath(fpath, win3, def);
 
-		wclear(win_i);
-		wrefresh(win_i);
-		fp =	fopen(buff, "r");
+	/* Delete window */
+	alx_win_del(win3);
+	alx_win_del(win2);
+	alx_win_del(win1);
 
-		if (fp == NULL || x == ERR) {
-			mvwaddstr(win_i, 0, 0, "Not valid!!!");
-			wrefresh(win_i);
-			wgetch(win_i);
-			wclear(win_i);
-			wrefresh(win_i);
-			strcpy(fpath, def);
-		} else {
-			fclose(fp);
-			strcpy(fpath, buff);
-			wh = false;
-		}
-	}
-
+	/* End varargs */
 	va_end(args);
 }
+
 
 /******************************************************************************/
-/******* Static functions *****************************************************/
+/******* static functions *****************************************************/
 /******************************************************************************/
 
 
-static	void	alx_ncur_prn_title	(WINDOW			*win,
-					const char		*str)
+static	void	alx_ncur_prn_title	(WINDOW *win, const char *title)
 {
 	/* Print window borders */
 	box(win, 0, 0);
 
 	/* Find size of window */
-	int64_t	h;
-	int64_t	w;
+	int	h;
+	int	w;
 	getmaxyx(win, h, w);
 
 	/* Find length of title */
-	int64_t len;
-	len =	strlen(str);
+	int	len;
+	len =	strlen(title);
 
 	/* Print title centered */
 	mvwaddch(win, 0, (w - len)/2 - 1, ACS_RTEE);
-	wprintw(win, " %s ", str);
+	wprintw(win, " %s ", title);
 	waddch(win, ACS_LTEE);
 
 	wrefresh(win);
 }
 
 
-static	void	alx_ncur_prn_menu	(WINDOW			*win,
-					const int64_t		N,
-					const struct alx_option	mnu[N])
+static	void	alx_ncur_prn_menu	(WINDOW *win,
+					int N, struct alx_optn mnu[N])
 {
 	/* Find size of window */
-	int64_t	h;
-	int64_t	w;
+	int	h;
+	int	w;
 	getmaxyx(win, h, w);
 
 	/* Print all menu items */
-	int64_t	i;
+	int	i;
 	for (i = 0; i < N; i++) {
 		mvwaddstr(win, mnu[i].r, mnu[i].c, mnu[i].t);
 	}
@@ -492,12 +446,11 @@ static	void	alx_ncur_prn_menu	(WINDOW			*win,
 }
 
 
-static	int64_t	alx_ncur_usr_sel	(WINDOW			*win,
-					const int64_t		N,
-					const struct alx_option	mnu[N])
+static	int	alx_ncur_usr_sel	(WINDOW *win,
+					int N, struct alx_optn mnu[N])
 {
 	/* default item */
-	int64_t	i =	1;
+	int	i =	1;
 	wmove(win, mnu[i].r, mnu[i].c + 1);
 
 	/* Receive input until ENTER key */
@@ -515,7 +468,7 @@ static	int64_t	alx_ncur_usr_sel	(WINDOW			*win,
 
 		} else if (ch == KEY_UP) {
 			/* KEY_UP, move one item up */
-			if (i != 0) {
+			if (i) {
 				i--;
 			} else {
 				i = N - 1;
@@ -538,4 +491,155 @@ static	int64_t	alx_ncur_usr_sel	(WINDOW			*win,
 	}
 
 	return	i;
+}
+
+static	double	loop_w_getdbl		(WINDOW *win,
+					double m, double def, double M)
+{
+	int	i;
+	char	buff [BUFF_SIZE];
+	int	x;
+	double	R;
+	int	err;
+
+	for (i = 0; i < MAX_TRIES; i++) {
+		echo();
+		x =	mvwgetstr(win, 0, 0, buff);
+		noecho();
+		wclear(win);
+		wrefresh(win);
+
+		if (x == ERR) {
+			err =	ERR_GETSTR;
+		} else if (sscanf(buff, "%lf", &R) != 1) {
+			err =	ERR_SSCANF;
+		} else if (R < m || R > M) {
+			err =	ERR_RANGE;
+		} else {
+			break;
+		}
+
+		manage_w_error(win, err);
+		R =	def;
+	}
+
+	return	R;
+}
+
+static	int64_t	loop_w_getint		(WINDOW *win,
+					double m, int64_t def, double M)
+{
+	int	i;
+	char	buff [BUFF_SIZE];
+	int	x;
+	int64_t	Z;
+	int	err;
+
+	for (i = 0; i < MAX_TRIES; i++) {
+		echo();
+		x =	mvwgetstr(win, 0, 0, buff);
+		noecho();
+		wclear(win);
+		wrefresh(win);
+
+		if (x == ERR) {
+			err =	ERR_GETSTR;
+		} else if (sscanf(buff, "%"SCNi64, &Z) != 1) {
+			err =	ERR_SSCANF;
+		} else if (Z < m || Z > M) {
+			err =	ERR_RANGE;
+		} else {
+			break;
+		}
+
+		manage_w_error(win, err);
+		Z =	def;
+	}
+
+	return	Z;
+}
+
+static	void	loop_w_getstr		(char *str, WINDOW *win,
+					const char *def)
+{
+	int	i;
+	char	buff [BUFF_SIZE];
+	int	x;
+	int	err;
+
+	for (i = 0; i < MAX_TRIES; i++) {
+		echo();
+		x =	mvwgetstr(win, 0, 0, buff);
+		noecho();
+		wclear(win);
+		wrefresh(win);
+
+		if (x == ERR) {
+			err =	ERR_GETSTR;
+		} else {
+			break;
+		}
+
+		manage_w_error(win, err);
+		strcpy(buff, def);
+	}
+
+	strcpy(str, buff);
+}
+
+static	void	loop_w_getfpath		(char *fpath, WINDOW *win,
+					const char *def)
+{
+	int	i;
+	char	buff [BUFF_SIZE];
+	int	x;
+	int	err;
+	FILE	*fp;
+
+	for (i = 0; i < MAX_TRIES; i++) {
+		echo();
+		x =	mvwgetstr(win, 0, 0, buff);
+		noecho();
+		wclear(win);
+		wrefresh(win);
+
+		if (x == ERR) {
+			err =	ERR_GETSTR;
+		} else {
+			fp =	fopen(buff, "r");
+
+			if (fp == NULL) {
+				err =	ERR_FPTR;
+			} else {
+				fclose(fp);
+				break;
+			}
+		}
+
+		manage_w_error(win, err);
+		strcpy(buff, def);
+	}
+
+	strcpy(fpath, buff);
+}
+
+static	void	manage_w_error		(WINDOW *win, int err)
+{
+	switch (err) {
+	case ERR_RANGE:
+		mvwaddstr(win, 0, 0, ERR_RANGE_MSG);
+		break;
+	case ERR_SSCANF:
+		mvwaddstr(win, 0, 0, ERR_SSCANF_MSG);
+		break;
+	case ERR_GETSTR:
+		mvwaddstr(win, 0, 0, ERR_GETSTR_MSG);
+		break;
+	case ERR_FPTR:
+		mvwaddstr(win, 0, 0, ERR_FPTR_MSG);
+		break;
+	}
+	wrefresh(win);
+	/* Wait for any key */
+	wgetch(win);
 }
