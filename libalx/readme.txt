@@ -1,5 +1,5 @@
 /******************************************************************************
- * EstDis	Copyright (C) 2015	Alejandro Colomar Andrés	      *
+ * libalx	Copyright (C) 2017	Alejandro Colomar Andrés	      *
  *									      *
  * This program is free software; you can redistribute it and/or modify	      *
  * it under the terms of the GNU General Public License as published by	      *
@@ -32,15 +32,3 @@
  * SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY   *
  * SERVICING, REPAIR OR CORRECTION.					      *
  ******************************************************************************/
-
-https://github.com/AlejandroColomar/EstDis/
-
-compiling on linux:
-	$ make
-compiling on windows (mingw with msys):
-	$ make OS=win
-
-running on linux:
-	.../EstDis/ $ cd bin/ && ./estdis && cd ..
-running on windows:
-	run 'estdis.exe' which is in ...\EstDis\win\

@@ -1,18 +1,5 @@
-
 /******************************************************************************
- * This program is free software; you can redistribute it and/or modify	      *
- * it under the terms of the GNU General Public License as published by	      *
- * the Free Software Foundation; either version 2 of the License, or          *
- * (at your option) any later version.					      *
- *									      *
- * This program is distributed in the hope that it will be useful,	      *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of	      *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the	      *
- * GNU General Public License for more details.				      *
- *									      *
- * You should have received a copy of the GNU General Public License	      *
- * along with this program; if not, see the file COPYING, or write	      *
- * to the Free Software Foundation, Inc.				      *
+ *	Copyright (C) 2015	Alejandro Colomar Andrés		      *
  ******************************************************************************/
 
 
@@ -39,7 +26,7 @@
 		/* DBG */
 	#include "macros.h"
 
-	#include "menu.h"
+	#include "menus.h"
 
 
 /******************************************************************************
@@ -91,12 +78,13 @@ void	menu_main		(void)
 	int	w =	34;
 
 	int		N = 5;
-	struct alx_optn	mnu[5] =	{{8, 4, "[0]	Exit program"},
-						{2, 4, "[1]	Continue"},
-						{4, 4, "[2]	Copyright"},
-						{5, 4, "[3]	Disclaimer of warranty"},
-						{6, 4, "[4]	Terms & conditions"}
-				};
+	struct alx_optn	mnu[5] =	{
+		{8, 4, "[0]	Exit program"},
+		{2, 4, "[1]	Continue"},
+		{4, 4, "[2]	Copyright"},
+		{5, 4, "[3]	Disclaimer of warranty"},
+		{6, 4, "[4]	Terms & conditions"}
+	};
 
 	wh = true;
 	while (wh) {
@@ -145,12 +133,13 @@ static	void	menu_continue	(void)
 	int	w =	35;
 
 	int		N = 5;
-	struct alx_optn	mnu[5] =	{{7, 4, "[0]	Back"},
-					{2, 4, "[1]	Run"},
-					{3, 4, "[2]	Help"},
-					{4, 4, "[3]	Select problem type"},
-					{5, 4, "[4]	Change verbose"}
-			};
+	struct alx_optn	mnu[5] =	{
+		{7, 4, "[0]	Back"},
+		{2, 4, "[1]	Run"},
+		{3, 4, "[2]	Help"},
+		{4, 4, "[3]	Select problem type"},
+		{5, 4, "[4]	Change verbose"}
+	};
 
 	wh = true;
 	while (wh) {
@@ -192,17 +181,18 @@ static	void	menu_select	(void)
 	int	w =	50;
 
 	int		N = 10;
-	struct alx_optn	mnu[10] =	{{13, 4, "[0]	Back"},
-						{2, 4, "[1]	1 Variable"},
-						{3, 4, "[2]	2 Variables"},
-						{5, 4, "[3]	Binomial"},
-						{6, 4, "[4]	Poisson"},
-						{7, 4, "[5]	Geometrica"},
-						{8, 4, "[6]	Hipergeometrica"},
-						{9, 4, "[7]	Uniforme"},
-						{10, 4, "[8]	Exponencial"},
-						{11, 4, "[9]	Gauss(Normal)"}
-				};
+	struct alx_optn	mnu[10] =	{
+		{13, 4, "[0]	Back"},
+		{2, 4, "[1]	1 Variable"},
+		{3, 4, "[2]	2 Variables"},
+		{5, 4, "[3]	Binomial"},
+		{6, 4, "[4]	Poisson"},
+		{7, 4, "[5]	Geometrica"},
+		{8, 4, "[6]	Hipergeometrica"},
+		{9, 4, "[7]	Uniforme"},
+		{10, 4, "[8]	Exponencial"},
+		{11, 4, "[9]	Gauss(Normal)"}
+	};
 
 	buff =	alx_menu(h, w, N, mnu, "SELECT:");
 
@@ -217,16 +207,17 @@ static	void	menu_verbose	(void)
 	int	w =	51;
 
 	int		N = 5;
-	struct alx_optn	mnu[5] =	{{7, 4, "[0]	Show NOTHING"},
-						{2, 4, "[1]	Show only solution"},
-						{3, 4, "[2]	Show short help"},
-						{4, 4, "[3]	Show help"},
+	struct alx_optn	mnu[5] =	{
+		{7, 4, "[0]	Show NOTHING"},
+		{2, 4, "[1]	Show only solution"},
+		{3, 4, "[2]	Show short help"},
+		{4, 4, "[3]	Show help"},
 # if (DBG)
-						{5, 4, "[4]	Show everything  (DBG)"}
+		{5, 4, "[4]	Show everything  (DBG)"}
 # else
-						{5, 4, "[4]	DBG (Not active)"}
+		{5, 4, "[4]	DBG (Not active)"}
 # endif
-				};
+	};
 
 	flag_V =	alx_menu(h, w, N, mnu, "VERBOSE:");
 }

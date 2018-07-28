@@ -20,8 +20,10 @@ TST_DIR = $(DATA_DIR)/tst/
 
 ALL = data.o
 
-DATA_DEPS = $(SRC_DIR)/data.c
-DATA_INC_DIRS =
+DATA_INC = data.h
+DATA_DEPS = $(SRC_DIR)/data.c \
+			$(patsubst %,$(INC_DIR)/%,$(DATA_INC))
+DATA_INC_DIRS = -I $(INC_DIR)
 
 # target: dependencies
 #	action
