@@ -20,9 +20,12 @@ TST_DIR = $(CALC_DIR)/tst/
 ALL = calc.o
 
 CALC_INC_LIBALX = alx_math.h
+CALC_INC = calc.h
 CALC_DEPS = $(SRC_DIR)/calc.c \
-			$(patsubst %,$(LIBALX_INC_DIR)/%,$(CALC_INC_LIBALX))
-CALC_INC_DIRS = -I $(LIBALX_INC_DIR)
+			$(patsubst %,$(LIBALX_INC_DIR)/%,$(CALC_INC_LIBALX)) \
+			$(patsubst %,$(INC_DIR)/%,$(CALC_INC))
+CALC_INC_DIRS = -I $(LIBALX_INC_DIR) \
+			-I $(INC_DIR)
 
 # target: dependencies
 #	action

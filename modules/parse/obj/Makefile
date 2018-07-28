@@ -31,13 +31,16 @@ ALL = parse.o
 
 PARSE_INC_ABOUT = about.h
 PARSE_INC_DATA = data.h
+PARSE_INC = parse.h
 PARSE_DEPS = $(SRC_DIR)/parse.c \
 			$(patsubst %,$(LIBALX_INC_DIR)/%,$(PARSE_INC_LIBALX)) \
 			$(patsubst %,$(ABOUT_INC_DIR)/%,$(PARSE_INC_ABOUT)) \
-			$(patsubst %,$(DATA_INC_DIR)/%,$(PARSE_INC_DATA))
+			$(patsubst %,$(DATA_INC_DIR)/%,$(PARSE_INC_DATA)) \
+			$(patsubst %,$(INC_DIR)/%,$(PARSE_INC))
 PARSE_INC_DIRS = -I $(LIBALX_INC_DIR) \
 			-I $(ABOUT_INC_DIR) \
 			-I $(DATA_INC_DIR) \
+			-I $(INC_DIR)
 
 # target: dependencies
 #	action
