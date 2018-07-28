@@ -1,39 +1,17 @@
-
 /******************************************************************************
- * This program is free software; you can redistribute it and/or modify	      *
- * it under the terms of the GNU General Public License as published by	      *
- * the Free Software Foundation; either version 2 of the License, or          *
- * (at your option) any later version.					      *
- *									      *
- * This program is distributed in the hope that it will be useful,	      *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of	      *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the	      *
- * GNU General Public License for more details.				      *
- *									      *
- * You should have received a copy of the GNU General Public License	      *
- * along with this program; if not, see the file COPYING, or write	      *
- * to the Free Software Foundation, Inc.				      *
+ *	Copyright (C) 2017	Alejandro Colomar Andrés		      *
  ******************************************************************************/
 
-//	#include <getopt.h>
-	#include <inttypes.h>
-	#include <curses.h>
-//	#include <pthread.h>
-//	#include <stdarg.h>
-//	#include <stdbool.h>
+	#include <stdint.h>
 	#include <stdio.h>
-//	#include <stdlib.h>
-//	#include <string.h>
-//	#include <sys/types.h>
-//	#include <threads.h>
-//	#include <time.h>
-//	#include <unistd.h>
-//	#include <wchar.h>
 
 	#include "alx_file.h"
-	#include "alx_ncur.h"
 
 
+	# define	BEGINNING	"\n┌──────────────────────────────────────────────────────────────────────────────┐\n"
+	# define	ENDING		"└──────────────────────────────────────────────────────────────────────────────┘\n\n"
+
+	# define	ERR_FPTR_MSG	"¡ FILE error !"
 
 
 void	alx_prn_file		(const char *filepath)
@@ -43,14 +21,15 @@ void	alx_prn_file		(const char *filepath)
 	FILE	*fp;
 
 	fp =	fopen(filepath, "r");
-	printf("\n┌──────────────────────────────────────────────────────────────────────────────┐\n");
+	printf(BEGINNING);
 	if (fp) {
 		while ((c = getc(fp)) != EOF){
 			putchar(c);
 		}
 		fclose(fp);
+	} else {
+		printf(ERR_FPTR_MSG);
 	}
-	printf("└──────────────────────────────────────────────────────────────────────────────┘\n");
-	printf("\n");
+	printf(ENDING);
 
 }

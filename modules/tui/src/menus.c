@@ -19,23 +19,12 @@
 /******************************************************************************
  ******| include |*************************************************************
  ******************************************************************************/
-		/* int64_t */
-	#include <inttypes.h>
 		/* curses interface */
-	#include <curses.h>
-//	#include <pthread.h>
-//	#include <stdarg.h>
+	#include <ncurses.h>
 		/* bool */
 	#include <stdbool.h>
-//	#include <stdint.h>
-	#include <stdio.h>
-//	#include <stdlib.h>
-//	#include <string.h>
-//	#include <sys/types.h>
-//	#include <threads.h>
-//	#include <time.h>
-//	#include <unistd.h>
-//	#include <wchar.h>
+		/* int64_t */
+	#include <stdint.h>
 
 		/* menu & curses */
 	#include "alx_ncur.h"
@@ -49,6 +38,8 @@
 
 		/* DBG */
 	#include "macros.h"
+
+	#include "menu.h"
 
 
 /******************************************************************************
@@ -93,14 +84,14 @@ static	void	menu_verbose	(void);
  ******************************************************************************/
 void	menu_main		(void)
 {
-	int64_t	sw;
+	int	sw;
 	bool	wh;
-	WINDOW		*win;
-	const int64_t	h =	11;
-	const int64_t	w =	34;
+	WINDOW	*win;
+	int	h =	11;
+	int	w =	34;
 
-	const int64_t		N = 5;
-	const struct alx_option	mnu[5] =	{{8, 4, "[0]	Exit program"},
+	int		N = 5;
+	struct alx_optn	mnu[5] =	{{8, 4, "[0]	Exit program"},
 						{2, 4, "[1]	Continue"},
 						{4, 4, "[2]	Copyright"},
 						{5, 4, "[3]	Disclaimer of warranty"},
@@ -147,19 +138,19 @@ void	menu_main		(void)
  ******************************************************************************/
 static	void	menu_continue	(void)
 {
-	int64_t	sw;
+	int	sw;
 	bool	wh;
-	WINDOW		*win;
-	const int64_t	h =	10;
-	const int64_t	w =	35;
+	WINDOW	*win;
+	int	h =	10;
+	int	w =	35;
 
-	const int64_t		N = 5;
-	const struct alx_option	mnu[5] =	{{7, 4, "[0]	Back"},
-						{2, 4, "[1]	Run"},
-						{3, 4, "[2]	Help"},
-						{4, 4, "[3]	Select problem type"},
-						{5, 4, "[4]	Change verbose"}
-				};
+	int		N = 5;
+	struct alx_optn	mnu[5] =	{{7, 4, "[0]	Back"},
+					{2, 4, "[1]	Run"},
+					{3, 4, "[2]	Help"},
+					{4, 4, "[3]	Select problem type"},
+					{5, 4, "[4]	Change verbose"}
+			};
 
 	wh = true;
 	while (wh) {
@@ -195,14 +186,13 @@ static	void	menu_continue	(void)
 
 static	void	menu_select	(void)
 {
-	int64_t	buff;
-	bool	wh;
-	WINDOW		*win;
-	const int64_t	h =	16;
-	const int64_t	w =	50;
+	int	buff;
+	WINDOW	*win;
+	int	h =	16;
+	int	w =	50;
 
-	const int64_t		N = 10;
-	const struct alx_option	mnu[10] =	{{13, 4, "[0]	Back"},
+	int		N = 10;
+	struct alx_optn	mnu[10] =	{{13, 4, "[0]	Back"},
 						{2, 4, "[1]	1 Variable"},
 						{3, 4, "[2]	2 Variables"},
 						{5, 4, "[3]	Binomial"},
@@ -223,11 +213,11 @@ static	void	menu_select	(void)
 
 static	void	menu_verbose	(void)
 {
-	const int64_t	h =	10;
-	const int64_t	w =	51;
+	int	h =	10;
+	int	w =	51;
 
-	const int64_t		N = 5;
-	const struct alx_option	mnu[5] =	{{7, 4, "[0]	Show NOTHING"},
+	int		N = 5;
+	struct alx_optn	mnu[5] =	{{7, 4, "[0]	Show NOTHING"},
 						{2, 4, "[1]	Show only solution"},
 						{3, 4, "[2]	Show short help"},
 						{4, 4, "[3]	Show help"},

@@ -11,16 +11,13 @@ export	DBG = false
  ifeq ($(OS), linux)
 export	CC = gcc
 export	CFLAGS = -std=c11 -O3 -march=native
-export	LIBS = -l ncurses -l pthread -l m
-
- else
-  ifeq ($(OS), win)
-CFLAGS_NCURSESW6 = -D_XOPEN_SOURCE=500 -I/mingw/include/ncursesw -I/mingw/include
-LIBS_NCURSESW6 = -L/mingw/lib -lncursesw -lpsapi
+export	LIBS = -l ncurses -l m
+ else ifeq ($(OS), win)
+CFLAGS_NCURSESW6 = -D _XOPEN_SOURCE=500 -I /mingw/include/ncursesw -I /mingw/include
+LIBS_NCURSESW6 = -L /mingw/lib -l ncursesw -l psapi
 export	CC = gcc.exe
 export	CFLAGS = -std=c11 -O3 $(CFLAGS_NCURSESW6)
 export	LIBS = -static -l m $(LIBS_NCURSESW6)
-  endif
  endif
 
 # directories
@@ -45,17 +42,15 @@ all:
 
  ifeq ($(OS), linux)
 	cd $(BIN_DIR) && $(MAKE) && cd ..
- else
-  ifeq ($(OS), win)
+ else ifeq ($(OS), win)
 	cd $(WIN_DIR) && $(MAKE) && cd ..
-  endif
  endif
 
  ifeq ($(TST), true)
 	cd $(TST_DIR) && $(MAKE) && cd ..
  endif
 
-del: clean
+mrproper: clean
 	cd $(WIN_DIR) && $(MAKE) clean && cd ..
 	cd $(BIN_DIR) && $(MAKE) clean && cd ..
 

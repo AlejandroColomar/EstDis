@@ -1,32 +1,16 @@
-
 /******************************************************************************
- * This program is free software; you can redistribute it and/or modify	      *
- * it under the terms of the GNU General Public License as published by	      *
- * the Free Software Foundation; either version 2 of the License, or          *
- * (at your option) any later version.					      *
- *									      *
- * This program is distributed in the hope that it will be useful,	      *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of	      *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the	      *
- * GNU General Public License for more details.				      *
- *									      *
- * You should have received a copy of the GNU General Public License	      *
- * along with this program; if not, see the file COPYING, or write	      *
- * to the Free Software Foundation, Inc.				      *
+ *	Copyright (C) 2017	Alejandro Colomar Andrés		      *
  ******************************************************************************/
 
 # ifndef		LIBALX_NCUR_H
 	# define	LIBALX_NCUR_H
 
-	#include <curses.h>
-	#include <math.h>
-//	#include <stdbool.h>
-	#include <stdarg.h>
+	#include <ncurses.h>
 	#include <stdint.h>
 
-	struct	alx_option {
-		int64_t	r;
-		int64_t	c;
+	struct	alx_optn {
+		int	r;
+		int	c;
 		char	*t;
 	};
 
@@ -35,48 +19,52 @@
 	void	alx_pause_curses	(void);
 	void	alx_resume_curses	(void);
 	void	alx_end_curses		(void);
+	void	alx_win_del		(WINDOW		*win);
 
-	int64_t	alx_menu		(const int64_t		h,
-					const int64_t		w,
-					const int64_t		N,
-					const struct alx_option	mnu[N],
-					const char		*str);
+	int	alx_menu		(int		h,
+					int		w,
+					int		N,
+					struct alx_optn	mnu[N],
+					const char	*str);
 
-	double	alx_w_getdbl_mM		(double		m,
-					double			M,
-					double			def,
-					WINDOW			*win_i,
-					WINDOW			*win_o,
-					const char		*format,
-								...);
+	int	alx_menu_2		(WINDOW		*win,
+					int		N,
+					struct alx_optn	mnu[N],
+					const char	*str);
 
-	int64_t	alx_w_getint		(int64_t		def,
-					WINDOW			*win_i,
-					WINDOW			*win_o,
-					const char		*format,
-								...);
+	double	alx_w_getdbl		(int		w,
+					int		r,
+					const char	*title,
+					double		m,
+					double		def,
+					double		M,
+					const char	*format,
+							...);
 
-	int64_t	alx_w_getint_mM		(int64_t		m,
-					int64_t			M,
-					int64_t			def,
-					WINDOW			*win_i,
-					WINDOW			*win_o,
-					const char		*format,
-								...);
+	int64_t	alx_w_getint		(int		w,
+					int		r,
+					const char	*title,
+					double		m,
+					int64_t		def,
+					double		M,
+					const char	*format,
+							...);
 
-	void	alx_w_getstr		(char			*str,
-					const char		*def,
-					WINDOW			*win_i,
-					WINDOW			*win_o,
-					const char		*format,
-								...);
+	void	alx_w_getstr		(char		*str,
+					int		w,
+					int		r,
+					const char	*title,
+					const char	*def,
+					const char	*format,
+							...);
 
-	void	alx_w_getfpath		(char			*fpath,
-					const char		*def,
-					WINDOW			*win_i,
-					WINDOW			*win_o,
-					const char		*format,
-								...);
+	void	alx_w_getfpath		(char		*fpath,
+					int		w,
+					int		r,
+					const char	*title,
+					const char	*def,
+					const char	*format,
+							...);
 
 
 /*
