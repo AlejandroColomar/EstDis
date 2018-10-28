@@ -1,12 +1,8 @@
-# -*- MakeFile -*-
+#!/usr/bin/make -f
 
 # MACRO = substitute with this
 
 # directories
-
-ESTDIS_DIR = ../
-
-MODULES_DIR = $(ESTDIS_DIR)/modules/
 
 ABOUT_DIR = $(MODULES_DIR)/about/
 CALC_DIR = $(MODULES_DIR)/calc/
@@ -15,6 +11,15 @@ DATA_DIR = $(MODULES_DIR)/data/
 PARSE_DIR = $(MODULES_DIR)/parse/
 TUI_DIR = $(MODULES_DIR)/tui/
 
+TMP_DIR = $(MODULES_DIR)/tmp/
+
+export	ABOUT_DIR
+export	CALC_DIR
+export	CTRL_DIR
+export	DATA_DIR
+export	PARSE_DIR
+export	TUI_DIR
+
 # dependencies
 
 
@@ -22,18 +27,20 @@ TUI_DIR = $(MODULES_DIR)/tui/
 #	action
 
 all:
-	cd $(ABOUT_DIR) && $(MAKE) && cd ..
-	cd $(CALC_DIR) && $(MAKE) && cd ..
-	cd $(CTRL_DIR) && $(MAKE) && cd ..
-	cd $(DATA_DIR) && $(MAKE) && cd ..
-	cd $(PARSE_DIR) && $(MAKE) && cd ..
-	cd $(TUI_DIR) && $(MAKE) && cd ..
+	$(Q)cd $(ABOUT_DIR) && $(MAKE) && cd ..
+	$(Q)cd $(CALC_DIR) && $(MAKE) && cd ..
+	$(Q)cd $(CTRL_DIR) && $(MAKE) && cd ..
+	$(Q)cd $(DATA_DIR) && $(MAKE) && cd ..
+	$(Q)cd $(PARSE_DIR) && $(MAKE) && cd ..
+	$(Q)cd $(TUI_DIR) && $(MAKE) && cd ..
+	$(Q)cd $(TMP_DIR) && $(MAKE) && cd ..
 
 
 clean:
-	cd $(ABOUT_DIR) && $(MAKE) clean && cd ..
-	cd $(CALC_DIR) && $(MAKE) clean && cd ..
-	cd $(CTRL_DIR) && $(MAKE) clean && cd ..
-	cd $(DATA_DIR) && $(MAKE) clean && cd ..
-	cd $(PARSE_DIR) && $(MAKE) clean && cd ..
-	cd $(TUI_DIR) && $(MAKE) clean && cd ..
+	$(Q)find . -type f -name '*.o' -exec rm '{}' '+'
+	$(Q)find . -type f -name '*.s' -exec rm '{}' '+'
+	@echo  "Clean modules"
+
+################################################################################
+######## End of file ###########################################################
+################################################################################

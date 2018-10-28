@@ -74,16 +74,15 @@ void	menu_main		(void)
 	int	sw;
 	bool	wh;
 	WINDOW	*win;
-	int	h =	11;
-	int	w =	34;
+	int	h =	23;
+	int	w =	80;
 
-	int		N = 5;
-	struct alx_optn	mnu[5] =	{
+	int		N = 4;
+	struct Alx_Menu	mnu[4] =	{
 		{8, 4, "[0]	Exit program"},
 		{2, 4, "[1]	Continue"},
-		{4, 4, "[2]	Copyright"},
-		{5, 4, "[3]	Disclaimer of warranty"},
-		{6, 4, "[4]	Terms & conditions"}
+		{4, 4, "[2]	Disclaimer of warranty"},
+		{5, 4, "[3]	Terms & conditions"}
 	};
 
 	wh = true;
@@ -101,19 +100,15 @@ void	menu_main		(void)
 
 		case 2:
 			alx_pause_curses();
-			print_cpright();
+			print_share_file(SHARE_DISCLAIMER);
+			getchar();
 			alx_resume_curses();
 			break;
 
 		case 3:
 			alx_pause_curses();
-			print_disclaim();
-			alx_resume_curses();
-			break;
-
-		case 4:
-			alx_pause_curses();
-			print_license();
+			print_share_file(SHARE_LICENSE);
+			getchar();
 			alx_resume_curses();
 			break;
 		}
@@ -129,11 +124,11 @@ static	void	menu_continue	(void)
 	int	sw;
 	bool	wh;
 	WINDOW	*win;
-	int	h =	10;
-	int	w =	35;
+	int	h =	23;
+	int	w =	80;
 
 	int		N = 5;
-	struct alx_optn	mnu[5] =	{
+	struct Alx_Menu	mnu[5] =	{
 		{7, 4, "[0]	Back"},
 		{2, 4, "[1]	Run"},
 		{3, 4, "[2]	Help"},
@@ -177,11 +172,11 @@ static	void	menu_select	(void)
 {
 	int	buff;
 	WINDOW	*win;
-	int	h =	16;
-	int	w =	50;
+	int	h =	23;
+	int	w =	80;
 
 	int		N = 10;
-	struct alx_optn	mnu[10] =	{
+	struct Alx_Menu	mnu[10] =	{
 		{13, 4, "[0]	Back"},
 		{2, 4, "[1]	1 Variable"},
 		{3, 4, "[2]	2 Variables"},
@@ -203,11 +198,11 @@ static	void	menu_select	(void)
 
 static	void	menu_verbose	(void)
 {
-	int	h =	10;
-	int	w =	51;
+	int	h =	23;
+	int	w =	80;
 
 	int		N = 5;
-	struct alx_optn	mnu[5] =	{
+	struct Alx_Menu	mnu[5] =	{
 		{7, 4, "[0]	Show NOTHING"},
 		{2, 4, "[1]	Show only solution"},
 		{3, 4, "[2]	Show short help"},

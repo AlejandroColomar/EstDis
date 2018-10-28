@@ -1,25 +1,16 @@
-# -*- MakeFile -*-
-
-# MACRO = substitute with this
+#!/usr/bin/make -f
 
 # directories
 
-ESTDIS_DIR = ../../
-
-MODULES_DIR = $(ESTDIS_DIR)/modules/
-ABOUT_DIR = $(MODULES_DIR)/about/
-OBJ_DIR = $(ABOUT_DIR)/obj/
-TST_DIR = $(ABOUT_DIR)/tst/
+TMP_DIR	= $(ABOUT_DIR)/tmp/
 
 # target: dependencies
 #	action
 
 all:
-	cd $(OBJ_DIR) && $(MAKE) && cd ..
- ifeq ($(TST), true)
-	cd $(TST_DIR) && $(MAKE) && cd ..
- endif
+	$(Q)cd $(TMP_DIR) && $(MAKE) && cd ..
 
-clean:
-	cd $(OBJ_DIR) && $(MAKE) clean && cd ..
-	cd $(TST_DIR) && $(MAKE) clean && cd ..
+
+################################################################################
+######## End of file ###########################################################
+################################################################################

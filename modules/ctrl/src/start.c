@@ -72,27 +72,27 @@ void	help_switch			(void)
 		break;
 
 	case START_BINOMIAL:
-		dist_binomial_help();
+		print_share_file(SHARE_DIST_BINOMIAL);
 		break;
 
 	case START_POISSON:
-		dist_poisson_help();
+		print_share_file(SHARE_DIST_POISSON);
 		break;
 
 	case START_GEOMETRIC:
-		dist_geometric_help();
+		print_share_file(SHARE_DIST_GEOMETRIC);
 		break;
 
 	case START_HYPERGEOMETRIC:
-		dist_hypergeometric_help();
+		print_share_file(SHARE_DIST_HYPERGEOMETRIC);
 		break;
 
 	case START_UNIFORM:
-		dist_uniform_help();
+		print_share_file(SHARE_DIST_UNIFORM);
 		break;
 
 	case START_EXPONENTIAL:
-		dist_exponential_help();
+		print_share_file(SHARE_DIST_EXPONENTIAL);
 		break;
 
 	case START_NORMAL:

@@ -4,8 +4,9 @@
 
 
 /******************************************************************************
- ******| include |*************************************************************
+ ******* headers **************************************************************
  ******************************************************************************/
+/* Standard C ----------------------------------------------------------------*/
 	#include <getopt.h>
 		/* int64_t & INT64_MIN & INT64_MAX & SCNi64 */
 	#include <inttypes.h>
@@ -16,43 +17,19 @@
 		/* exit? */
 	#include <stdlib.h>
 
+/* Project -------------------------------------------------------------------*/
 		/* print functions */
 	#include "about.h"
 		/* global variables */
 	#include "data.h"
 
+/* Module --------------------------------------------------------------------*/
 	#include "parse.h"
 
 
 /******************************************************************************
- ******| options |*************************************************************
+ ******* macros ***************************************************************
  ******************************************************************************/
-	enum	Parse_Short_Option {
-		PARSE_S_HELP =		'h',
-		PARSE_S_LICENSE =	'l',
-		PARSE_S_START =		's',
-		PARSE_S_VERBOSE =	'V',
-		PARSE_S_VERSION =	'v',
-		PARSE_S_EXIT =		'x',
-
-		PARSE_S_CPRIGHT =	10000,	/* No short option */
-		PARSE_S_WARRANTY,		/* No short option */
-
-		PARSE_S_PARAM_c,		/* No short option */
-		PARSE_S_PARAM_n,		/* No short option */
-		PARSE_S_PARAM_N,		/* No short option */
-		PARSE_S_PARAM_r,		/* No short option */
-
-		PARSE_S_PARAM_a,		/* No short option */
-		PARSE_S_PARAM_b,		/* No short option */
-		PARSE_S_PARAM_p,		/* No short option */
-		PARSE_S_PARAM_x0,		/* No short option */
-		PARSE_S_PARAM_x1,		/* No short option */
-		PARSE_S_PARAM_x2,		/* No short option */
-		PARSE_S_PARAM_beta,		/* No short option */
-		PARSE_S_PARAM_lambda		/* No short option */
-	};
-
 	# define	OPT_LIST		"hls:V:vx"
 
 	# define	PARSE_L_HELP 		"help"
@@ -81,7 +58,37 @@
 
 
 /******************************************************************************
- ******| static functions |****************************************************
+ ******* enums ****************************************************************
+ ******************************************************************************/
+	enum	Parse_Short_Option {
+		PARSE_S_HELP =		'h',
+		PARSE_S_LICENSE =	'l',
+		PARSE_S_START =		's',
+		PARSE_S_VERBOSE =	'V',
+		PARSE_S_VERSION =	'v',
+		PARSE_S_EXIT =		'x',
+
+		PARSE_S_CPRIGHT =	10000,	/* No short option */
+		PARSE_S_WARRANTY,		/* No short option */
+
+		PARSE_S_PARAM_c,		/* No short option */
+		PARSE_S_PARAM_n,		/* No short option */
+		PARSE_S_PARAM_N,		/* No short option */
+		PARSE_S_PARAM_r,		/* No short option */
+
+		PARSE_S_PARAM_a,		/* No short option */
+		PARSE_S_PARAM_b,		/* No short option */
+		PARSE_S_PARAM_p,		/* No short option */
+		PARSE_S_PARAM_x0,		/* No short option */
+		PARSE_S_PARAM_x1,		/* No short option */
+		PARSE_S_PARAM_x2,		/* No short option */
+		PARSE_S_PARAM_beta,		/* No short option */
+		PARSE_S_PARAM_lambda		/* No short option */
+	};
+
+
+/******************************************************************************
+ ******* static functions *****************************************************
  ******************************************************************************/
 static	int64_t	parse_int	(const char *optstr, const char *optarg,
 				int64_t *param, int64_t m, int64_t M);
@@ -91,7 +98,7 @@ static	int64_t	parse_dbl	(const char *optstr, const char *optarg,
 
 
 /******************************************************************************
- ******| parser |**************************************************************
+ ******* functions ************************************************************
  ******************************************************************************/
 void	parser	(int argc, char *argv[])
 {
@@ -129,11 +136,11 @@ void	parser	(int argc, char *argv[])
 						&opt_index )) != -1) {
 		switch (opt) {
 		case PARSE_S_HELP:
-			print_help();
+			print_share_file(SHARE_HELP);
 			exit(EXIT_SUCCESS);
 
 		case PARSE_S_LICENSE:
-			print_license();
+			print_share_file(SHARE_LICENSE);
 			exit(EXIT_SUCCESS);
 
 		case PARSE_S_START:
@@ -160,11 +167,11 @@ void	parser	(int argc, char *argv[])
 
 
 		case PARSE_S_CPRIGHT:
-			print_cpright();
+			print_share_file(SHARE_COPYRIGHT);
 			exit(EXIT_SUCCESS);
 
 		case PARSE_S_WARRANTY:
-			print_disclaim();
+			print_share_file(SHARE_DISCLAIMER);
 			exit(EXIT_SUCCESS);
 
 
@@ -258,7 +265,7 @@ void	parser	(int argc, char *argv[])
 			/* getopt_long already printed an error message. */
 
 		default:
-			print_usage();
+			print_share_file(SHARE_USAGE);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -266,7 +273,7 @@ void	parser	(int argc, char *argv[])
 
 
 /******************************************************************************
- ******| static functions |****************************************************
+ ******* static functions *****************************************************
  ******************************************************************************/
 static	int64_t	parse_int	(const char *optstr, const char *optarg,
 				int64_t *param, int64_t m, int64_t M)
@@ -306,3 +313,8 @@ static	int64_t	parse_dbl	(const char *optstr, const char *optarg,
 		E = 2;
 	}
 }
+
+
+/******************************************************************************
+ ******* end of file **********************************************************
+ ******************************************************************************/

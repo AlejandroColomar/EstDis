@@ -2,67 +2,108 @@
  *	Copyright (C) 2015	Alejandro Colomar Andrés		      *
  ******************************************************************************/
 
+
+/******************************************************************************
+ ******* headers **************************************************************
+ ******************************************************************************/
+/* Standard C ----------------------------------------------------------------*/
+		/* printf() */
 	#include <stdio.h>
 
+/* libalx --------------------------------------------------------------------*/
+		/* alx_snprint_file() */
 	#include "alx_file.h"
 
 	#include "macros.h"
 
+/* Module --------------------------------------------------------------------*/
 	#include "about.h"
 
-void	print_help			(void)
+
+/******************************************************************************
+ ******* macros ***************************************************************
+ ******************************************************************************/
+	# define	BUFF_SIZE_TEXT	(1048576)
+
+	# define	BEGINNING	"\n┌──────────────────────────────────────────────────────────────────────────────┐\n"
+	# define	ENDING		"└──────────────────────────────────────────────────────────────────────────────┘\n\n"
+
+
+/******************************************************************************
+ ******* variables ************************************************************
+ ******************************************************************************/
+char	share_path [FILENAME_MAX];
+
+
+/******************************************************************************
+ ******* main *****************************************************************
+ ******************************************************************************/
+void	about_init		(void)
 {
-	printf(PROG_NAME "\n\n");
+	snprintf(share_path, FILENAME_MAX, "%s/%s/", INSTALL_SHARE_DIR, SHARE_DIR);
 }
-void	print_version			(void)
+
+void	snprint_share_file	(char *dest, int destsize, int share_file)
 {
-	printf("Version:\t" PROG_VERS "\n\n");
+	char	file_name [FILENAME_MAX];
+
+	switch (share_file) {
+	case SHARE_COPYRIGHT:
+		snprintf(file_name, FILENAME_MAX, "%s/%s", share_path, "COPYRIGHT.txt");
+		break;
+	case SHARE_DISCLAIMER:
+		snprintf(file_name, FILENAME_MAX, "%s/%s", share_path, "DISCLAIMER.txt");
+		break;
+	case SHARE_HELP:
+		snprintf(file_name, FILENAME_MAX, "%s/%s", share_path, "HELP.txt");
+		break;
+	case SHARE_LICENSE:
+		snprintf(file_name, FILENAME_MAX, "%s/%s", share_path, "LICENSE.txt");
+		break;
+	case SHARE_USAGE:
+		snprintf(file_name, FILENAME_MAX, "%s/%s", share_path, "USAGE.txt");
+		break;
+
+	case SHARE_DIST_BINOMIAL:
+		snprintf(file_name, FILENAME_MAX, "%s/%s", share_path, "dist/binomial.txt");
+		break;
+	case SHARE_DIST_POISSON:
+		snprintf(file_name, FILENAME_MAX, "%s/%s", share_path, "dist/poisson.txt");
+		break;
+	case SHARE_DIST_GEOMETRIC:
+		snprintf(file_name, FILENAME_MAX, "%s/%s", share_path, "dist/geometric.txt");
+		break;
+	case SHARE_DIST_HYPERGEOMETRIC:
+		snprintf(file_name, FILENAME_MAX, "%s/%s", share_path, "dist/hypergeometric.txt");
+		break;
+	case SHARE_DIST_UNIFORM:
+		snprintf(file_name, FILENAME_MAX, "%s/%s", share_path, "dist/uniform.txt");
+		break;
+	case SHARE_DIST_EXPONENTIAL:
+		snprintf(file_name, FILENAME_MAX, "%s/%s", share_path, "dist/exponential.txt");
+		break;
+	}
+
+	alx_snprint_file(dest, destsize, file_name);
 }
-void	print_usage			(void)
+
+void	print_share_file	(int share_file)
 {
-	printf("Usage: TO BE WRITTEN\n");
-	printf("Help:\n");
-	printf("$ ./exe --help\n");
-	printf("or\n");
-	printf("$ ./exe -h\n\n");
+	char	str [BUFF_SIZE_TEXT];
+
+	snprint_share_file(str, BUFF_SIZE_TEXT, share_file);
+
+	printf(BEGINNING);
+	printf("%s", str);
+	printf(ENDING);
+}
+
+void	print_version		(void)
+{
+	printf("" PROG_NAME " " PROG_VERSION "\n\n");
 }
 
 
-void	print_cpright			(void)
-{
-	alx_prn_file("../files/COPYRIGHT.txt");
-}
-void	print_disclaim			(void)
-{
-	alx_prn_file("../files/DISCLAIMER.txt");
-}
-void	print_license			(void)
-{
-	alx_prn_file("../files/LICENSE.txt");
-}
-
-
-void	dist_binomial_help		(void)
-{
-	alx_prn_file("../files/dist/binomial.txt");
-}
-void	dist_poisson_help		(void)
-{
-	alx_prn_file("../files/dist/poisson.txt");
-}
-void	dist_geometric_help		(void)
-{
-	alx_prn_file("../files/dist/geometric.txt");
-}
-void	dist_hypergeometric_help	(void)
-{
-	alx_prn_file("../files/dist/hypergeometric.txt");
-}
-void	dist_uniform_help		(void)
-{
-	alx_prn_file("../files/dist/uniform.txt");
-}
-void	dist_exponential_help		(void)
-{
-	alx_prn_file("../files/dist/exponential.txt");
-}
+/******************************************************************************
+ ******* end of file **********************************************************
+ ******************************************************************************/

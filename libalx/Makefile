@@ -4,17 +4,16 @@
 
 # directories
 
-LIBALX_DIR = ./
-
-OBJ_DIR = $(LIBALX_DIR)/obj/
+TMP_DIR = $(LIBALX_DIR)/tmp/
 
 
 # target: dependencies
 #	action
 
 all:
-	cd $(OBJ_DIR) && $(MAKE) && cd ..
+	$(Q)cd $(TMP_DIR) && $(MAKE) && cd ..
 
 
 clean:
-	cd $(OBJ_DIR) && $(MAKE) clean && cd ..
+	$(Q)cd $(TMP_DIR) && $(MAKE) clean && cd ..
+	@echo  "Clean libalx"
