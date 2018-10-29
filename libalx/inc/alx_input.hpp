@@ -13,10 +13,19 @@
 /******************************************************************************
  ******* headers **************************************************************
  ******************************************************************************/
-	#include <math.h>
-	#include <stdarg.h>
 	#include <stdbool.h>
 	#include <stdint.h>
+
+
+/******************************************************************************
+ ******* macros ***************************************************************
+ ******************************************************************************/
+	# define	ERR_OK		(0)
+	# define	ERR_RANGE	(1)
+	# define	ERR_SSCANF	(2)
+	# define	ERR_FPTR	(3)
+	# define	ERR_FGETS	(4)
+	# define	ERR_GETSTR	(5)
 
 
 /******************************************************************************
@@ -34,7 +43,13 @@ extern	"C" {
 				double		M,
 				const char	*str);
 
-	int	alx_sscan_int	(int64_t	*dest,
+	int	alx_sscan_int	(int		*dest,
+				double		m,
+				int		def,
+				double		M,
+				const char	*str);
+
+	int	alx_sscan_int64	(int64_t	*dest,
 				double		m,
 				int64_t		def,
 				double		M,

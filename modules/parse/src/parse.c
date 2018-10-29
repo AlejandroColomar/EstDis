@@ -8,7 +8,7 @@
  ******************************************************************************/
 /* Standard C ----------------------------------------------------------------*/
 	#include <getopt.h>
-		/* int64_t & INT64_MIN & INT64_MAX & SCNi64 */
+		/* int64_t & SCNi64 */
 	#include <inttypes.h>
 		/* INFINITY */
 	#include <math.h>
@@ -17,11 +17,18 @@
 		/* exit? */
 	#include <stdlib.h>
 
+/* libalx --------------------------------------------------------------------*/
+	#include "alx_input.h"
+
 /* Project -------------------------------------------------------------------*/
 		/* print functions */
 	#include "about.h"
-		/* global variables */
-	#include "data.h"
+		/* statistics variables */
+	#include "calc.h"
+		/* flag_verbose */
+	#include "menus.h"
+		/* start_mode */
+	#include "start.h"
 
 /* Module --------------------------------------------------------------------*/
 	#include "parse.h"
@@ -90,11 +97,7 @@
 /******************************************************************************
  ******* static functions *****************************************************
  ******************************************************************************/
-static	int64_t	parse_int	(const char *optstr, const char *optarg,
-				int64_t *param, int64_t m, int64_t M);
-
-static	int64_t	parse_dbl	(const char *optstr, const char *optarg,
-				double *param, double m, double M);
+static	void	error_handle	(int err, const char *optstr, double m, double M);
 
 
 /******************************************************************************
@@ -106,31 +109,33 @@ void	parser	(int argc, char *argv[])
 	int	opt_index =	0;
 
 	struct option long_options[] = {
-		{PARSE_L_HELP,		no_argument,		0,	PARSE_S_HELP},
-		{PARSE_L_LICENSE,	no_argument,		0,	PARSE_S_LICENSE},
-		{PARSE_L_START,		required_argument,	0,	PARSE_S_START},
-		{PARSE_L_VERBOSE,	required_argument,	0,	PARSE_S_VERBOSE},
-		{PARSE_L_VERSION,	no_argument,		0,	PARSE_S_VERSION},
-		{PARSE_L_EXIT,		no_argument,		0,	PARSE_S_EXIT},
+		{PARSE_L_HELP,		no_argument,		0, PARSE_S_HELP},
+		{PARSE_L_LICENSE,	no_argument,		0, PARSE_S_LICENSE},
+		{PARSE_L_START,		required_argument,	0, PARSE_S_START},
+		{PARSE_L_VERBOSE,	required_argument,	0, PARSE_S_VERBOSE},
+		{PARSE_L_VERSION,	no_argument,		0, PARSE_S_VERSION},
+		{PARSE_L_EXIT,		no_argument,		0, PARSE_S_EXIT},
 
-		{PARSE_L_CPRIGHT,	no_argument,		0,	PARSE_S_CPRIGHT},
-		{PARSE_L_WARRANTY,	no_argument,		0,	PARSE_S_WARRANTY},
+		{PARSE_L_CPRIGHT,	no_argument,		0, PARSE_S_CPRIGHT},
+		{PARSE_L_WARRANTY,	no_argument,		0, PARSE_S_WARRANTY},
 
-		{PARSE_L_PARAM_c,	required_argument,	0,	PARSE_S_PARAM_c},
-		{PARSE_L_PARAM_n,	required_argument,	0,	PARSE_S_PARAM_n},
-		{PARSE_L_PARAM_N,	required_argument,	0,	PARSE_S_PARAM_N},
-		{PARSE_L_PARAM_r,	required_argument,	0,	PARSE_S_PARAM_r},
+		{PARSE_L_PARAM_c,	required_argument,	0, PARSE_S_PARAM_c},
+		{PARSE_L_PARAM_n,	required_argument,	0, PARSE_S_PARAM_n},
+		{PARSE_L_PARAM_N,	required_argument,	0, PARSE_S_PARAM_N},
+		{PARSE_L_PARAM_r,	required_argument,	0, PARSE_S_PARAM_r},
 
-		{PARSE_L_PARAM_a,	required_argument,	0,	PARSE_S_PARAM_a},
-		{PARSE_L_PARAM_b,	required_argument,	0,	PARSE_S_PARAM_b},
-		{PARSE_L_PARAM_p,	required_argument,	0,	PARSE_S_PARAM_p},
-		{PARSE_L_PARAM_x0,	required_argument,	0,	PARSE_S_PARAM_x0},
-		{PARSE_L_PARAM_x1,	required_argument,	0,	PARSE_S_PARAM_x1},
-		{PARSE_L_PARAM_x2,	required_argument,	0,	PARSE_S_PARAM_x2},
-		{PARSE_L_PARAM_beta,	required_argument,	0,	PARSE_S_PARAM_beta},
-		{PARSE_L_PARAM_lambda,	required_argument,	0,	PARSE_S_PARAM_lambda},
-		{0,			0,			0,	0}
+		{PARSE_L_PARAM_a,	required_argument,	0, PARSE_S_PARAM_a},
+		{PARSE_L_PARAM_b,	required_argument,	0, PARSE_S_PARAM_b},
+		{PARSE_L_PARAM_p,	required_argument,	0, PARSE_S_PARAM_p},
+		{PARSE_L_PARAM_x0,	required_argument,	0, PARSE_S_PARAM_x0},
+		{PARSE_L_PARAM_x1,	required_argument,	0, PARSE_S_PARAM_x1},
+		{PARSE_L_PARAM_x2,	required_argument,	0, PARSE_S_PARAM_x2},
+		{PARSE_L_PARAM_beta,	required_argument,	0, PARSE_S_PARAM_beta},
+		{PARSE_L_PARAM_lambda,	required_argument,	0, PARSE_S_PARAM_lambda},
+		{0,			0,			0, 0}
 	};
+
+	int	err;
 
 	while ((opt = getopt_long(argc, argv, OPT_LIST, long_options,
 						&opt_index )) != -1) {
@@ -144,17 +149,16 @@ void	parser	(int argc, char *argv[])
 			exit(EXIT_SUCCESS);
 
 		case PARSE_S_START:
-			if (parse_int(PARSE_L_START, optarg, &flag_s,
-						START_FOO, START_COUNT)) {
-				exit(EXIT_FAILURE);
-			}
+			err	= alx_sscan_int(&start_mode, START_FOO, 0,
+							START_NORMAL, optarg);
+			error_handle(err, PARSE_L_START, START_FOO, START_NORMAL);
 			break;
 
 		case PARSE_S_VERBOSE:
-			if (parse_int(PARSE_L_VERBOSE, optarg, &flag_V,
-						VERBOSE_0, VERBOSE_MAX)) {
-				exit(EXIT_FAILURE);
-			}
+			err	= alx_sscan_int(&flag_verbose, VERBOSE_0, 0,
+							VERBOSE_MAX, optarg);
+			error_handle(err, PARSE_L_VERBOSE, VERBOSE_0,
+							VERBOSE_MAX);
 			break;
 
 		case PARSE_S_VERSION:
@@ -162,7 +166,7 @@ void	parser	(int argc, char *argv[])
 			exit(EXIT_SUCCESS);
 
 		case PARSE_S_EXIT:
-			flag_x =	true;
+			flag_exit	= true;
 			break;
 
 
@@ -176,89 +180,75 @@ void	parser	(int argc, char *argv[])
 
 
 		case PARSE_S_PARAM_c:
-			if (parse_int(PARSE_L_PARAM_c, optarg,
-						&param_i_c, 0, 3)) {
-				exit(EXIT_FAILURE);
-			}
+			err	= alx_sscan_int64(&param_i_c, 0, 0, 3, optarg);
+			error_handle(err, PARSE_L_PARAM_c, 0, 3);
 			break;
 
 		case PARSE_S_PARAM_n:
-			if (parse_int(PARSE_L_PARAM_n, optarg,
-						&param_i_n, 0, INT64_MAX)) {
-				exit(EXIT_FAILURE);
-			}
+			err	= alx_sscan_int64(&param_i_n, 0, 0, INFINITY,
+							optarg);
+			error_handle(err, PARSE_L_PARAM_n, 0, INFINITY);
 			break;
 
 		case PARSE_S_PARAM_N:
-			if (parse_int(PARSE_L_PARAM_N, optarg,
-						&param_i_N, 0, INT64_MAX)) {
-				exit(EXIT_FAILURE);
-			}
+			err	= alx_sscan_int64(&param_i_N, 0, 0, INFINITY,
+							optarg);
+			error_handle(err, PARSE_L_PARAM_N, 0, INFINITY);
 			break;
 
 		case PARSE_S_PARAM_r:
-			if (parse_int(PARSE_L_PARAM_r, optarg,
-						&param_i_r, 0, INT64_MAX)) {
-				exit(EXIT_FAILURE);
-			}
+			err	= alx_sscan_int64(&param_i_r, 0, 0, INFINITY,
+							optarg);
+			error_handle(err, PARSE_L_PARAM_r, 0, INFINITY);
 			break;
 
 
 		case PARSE_S_PARAM_a:
-			if (parse_dbl(PARSE_L_PARAM_a, optarg,
-						&param_a, -INFINITY, INFINITY)) {
-				exit(EXIT_FAILURE);
-			}
+			err	= alx_sscan_dbl(&param_a, -INFINITY, 0,
+							INFINITY, optarg);
+			error_handle(err, PARSE_L_PARAM_a, -INFINITY, INFINITY);
 			break;
 
 		case PARSE_S_PARAM_b:
-			if (parse_dbl(PARSE_L_PARAM_b, optarg,
-						&param_b, param_a, INFINITY)) {
-				exit(EXIT_FAILURE);
-			}
+			err	= alx_sscan_dbl(&param_b, param_a, 0, INFINITY,
+							optarg);
+			error_handle(err, PARSE_L_PARAM_b, param_a, INFINITY);
 			break;
 
 		case PARSE_S_PARAM_p:
-			if (parse_dbl(PARSE_L_PARAM_p, optarg,
-						&param_p, 0, 1)) {
-				exit(EXIT_FAILURE);
-			}
+			err	= alx_sscan_dbl(&param_p, 0, 0, 1, optarg);
+			error_handle(err, PARSE_L_PARAM_p, 0, 1);
 			break;
 
 		case PARSE_S_PARAM_x0:
-			if (parse_dbl(PARSE_L_PARAM_x0, optarg,
-						&param_x_dbl[0],
-						-INFINITY, INFINITY)) {
-				exit(EXIT_FAILURE);
-			}
+			err	= alx_sscan_dbl(&param_x_dbl[0], -INFINITY, 0,
+							INFINITY, optarg);
+			error_handle(err, PARSE_L_PARAM_x0, -INFINITY, INFINITY);
 			break;
 
 		case PARSE_S_PARAM_x1:
-			if (parse_dbl(PARSE_L_PARAM_x1, optarg,
-						&param_x_dbl[1], -INFINITY, INFINITY)) {
-				exit(EXIT_FAILURE);
-			}
+			err	= alx_sscan_dbl(&param_x_dbl[1], -INFINITY, 0,
+							INFINITY, optarg);
+			error_handle(err, PARSE_L_PARAM_x1, -INFINITY, INFINITY);
 			break;
 
 		case PARSE_S_PARAM_x2:
-			if (parse_dbl(PARSE_L_PARAM_x2, optarg,
-						&param_x_dbl[2], param_x_dbl[1], INFINITY)) {
-				exit(EXIT_FAILURE);
-			}
+			err	= alx_sscan_dbl(&param_x_dbl[2], param_x_dbl[1],
+							0, INFINITY, optarg);
+			error_handle(err, PARSE_L_PARAM_x2, param_x_dbl[1],
+							INFINITY);
 			break;
 
 		case PARSE_S_PARAM_beta:
-			if (parse_dbl(PARSE_L_PARAM_beta, optarg,
-						&param_beta, 0, INFINITY)) {
-				exit(EXIT_FAILURE);
-			}
+			err	= alx_sscan_dbl(&param_beta, 0, 0, INFINITY,
+							optarg);
+			error_handle(err, PARSE_L_PARAM_beta, 0, INFINITY);
 			break;
 
 		case PARSE_S_PARAM_lambda:
-			if (parse_dbl(PARSE_L_PARAM_lambda, optarg,
-						&param_lambda, 0, INFINITY)) {
-				exit(EXIT_FAILURE);
-			}
+			err	= alx_sscan_dbl(&param_lambda, 0, 0, INFINITY,
+							optarg);
+			error_handle(err, PARSE_L_PARAM_lambda, 0, INFINITY);
 			break;
 
 		case '?':
@@ -275,42 +265,21 @@ void	parser	(int argc, char *argv[])
 /******************************************************************************
  ******* static functions *****************************************************
  ******************************************************************************/
-static	int64_t	parse_int	(const char *optstr, const char *optarg,
-				int64_t *param, int64_t m, int64_t M)
+static	void	error_handle	(int err, const char *optstr, double m, double M)
 {
-	/* Error */
-	int64_t	E = 0;
-
-	if (1 == sscanf(optarg, " %"SCNi64"", param)) {
-		if (*param < m || *param > M) {
-			printf("%s argument not valid\n", optstr);
-			printf("It must be greater an integer [%"PRIi64" U %"PRIi64"]\n", m, M);
-			E = 1;
-		}
-	} else {
+	if (err) {
 		printf("%s argument not valid\n", optstr);
-		printf("NaN\n");
-		E = 2;
-	}
-}
 
-
-static	int64_t	parse_dbl	(const char *optstr, const char *optarg,
-				double *param, double m, double M)
-{
-	/* Error */
-	int64_t	E = 0;
-
-	if (1 == sscanf(optarg, " %lf", param)) {
-		if (*param < m || *param > M) {
-			printf("%s argument not valid\n", optstr);
-			printf("It must be greater an integer [%lf U %lf]\n", m, M);
-			E = 1;
+		switch (err) {
+		case ERR_RANGE:
+			printf("It must be in the range [%lf U %lf]\n", m, M);
+			break;
+		case ERR_SSCANF:
+			puts("NaN");
+			break;
 		}
-	} else {
-		printf("%s argument not valid\n", optstr);
-		printf("NaN\n");
-		E = 2;
+
+		exit(EXIT_FAILURE);
 	}
 }
 

@@ -31,13 +31,6 @@
 
 	# define	MAX_TRIES	(2)
 
-	# define	ERR_OK		(0)
-	# define	ERR_RANGE	(1)
-	# define	ERR_SSCANF	(2)
-	# define	ERR_FPTR	(3)
-	# define	ERR_FGETS	(4)
-	# define	ERR_GETSTR	(5)
-
 	# define	ERR_RANGE_MSG	"¡ Number is out of range !"
 	# define	ERR_SSCANF_MSG	"¡ sscanf() error !"
 	# define	ERR_FPTR_MSG	"¡ FILE error !"
@@ -568,7 +561,7 @@ static	int64_t	loop_w_getint		(WINDOW *win,
 		if (x == ERR) {
 			err	= ERR_GETSTR;
 		} else {
-			err	= alx_sscan_int(&Z, m, def, M, buff);
+			err	= alx_sscan_int64(&Z, m, def, M, buff);
 		}
 
 		if (err) {

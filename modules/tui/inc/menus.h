@@ -5,32 +5,47 @@
 # ifndef		MENU_H
 	# define	MENU_H
 
+
+/******************************************************************************
+ ******* variables ************************************************************
+ ******************************************************************************/
+	extern	bool	flag_exit;
+	extern	int	flag_verbose;
+	extern	int	menu_iface_mode;
+
+
+/******************************************************************************
+ ******* enums ****************************************************************
+ ******************************************************************************/
+	enum	Level_Verbose {
+		VERBOSE_0 = 0,
+		VERBOSE_1,
+		VERBOSE_2,
+		VERBOSE_3,
+		VERBOSE_MAX
+	};
+
 	/*
 	 * + Menu:
 	 *	+ Continue:
-	 *		+ Descriptiva:
-	 *			- 1 Variable
-	 *			- 2 Variables
-	 *			- ..
-	 *		+ Distribuciones:
+	 *		- Run
+	 *		- Help
+	 *		+ Select:
+	 *			- 1 Var
+	 *			- 2 Var
 	 *			- Binomial
-	 *			- help
 	 *			- Poisson
-	 *			- help
 	 *			- Geometrica
-	 *			- help
 	 *			- Hipergeometrica
-	 *			- help
 	 *			- Uniforme
-	 *			- help
 	 *			- Exponencial
-	 *			- help
 	 *			- Gauss(Normal)
-	 *			- help
+	 *			- ..
+	 *		+ Verbose: Not yet
 	 *			- ..
 	 *		- ..
 	 *	- Disclaimer
-	 *	- License
+	 *	- Terms & conditions
 	 *	- Exit program
 	 */
 /*----------------------------------------------------------------------------*/
