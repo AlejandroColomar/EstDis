@@ -4,7 +4,7 @@
 
 
 /******************************************************************************
- ******| include |*************************************************************
+ ******* headers **************************************************************
  ******************************************************************************/
 		/* curses interface */
 	#include <ncurses.h>
@@ -18,8 +18,6 @@
 
 		/* print functions */
 	#include "about.h"
-		/* variables */
-	#include "data.h"
 		/* start */
 	#include "start.h"
 
@@ -27,6 +25,14 @@
 	#include "macros.h"
 
 	#include "menus.h"
+
+
+/******************************************************************************
+ ******* variables ************************************************************
+ ******************************************************************************/
+	bool	flag_exit;
+	int	flag_verbose;
+	int	menu_iface_mode;
 
 
 /******************************************************************************
@@ -51,7 +57,6 @@
 	 *		+ Verbose: Not yet
 	 *			- ..
 	 *		- ..
-	 *	- Copyright
 	 *	- Disclaimer
 	 *	- Terms & conditions
 	 *	- Exit program
@@ -192,7 +197,7 @@ static	void	menu_select	(void)
 	buff =	alx_menu(h, w, N, mnu, "SELECT:");
 
 	if (buff) {
-		flag_s =	buff;
+		start_mode =	buff;
 	}
 }
 
@@ -214,5 +219,5 @@ static	void	menu_verbose	(void)
 # endif
 	};
 
-	flag_V =	alx_menu(h, w, N, mnu, "VERBOSE:");
+	flag_verbose =	alx_menu(h, w, N, mnu, "VERBOSE:");
 }

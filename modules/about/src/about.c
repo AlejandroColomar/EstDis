@@ -14,8 +14,6 @@
 		/* alx_snprint_file() */
 	#include "alx_file.h"
 
-	#include "macros.h"
-
 /* Module --------------------------------------------------------------------*/
 	#include "about.h"
 

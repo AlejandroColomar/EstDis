@@ -19,7 +19,6 @@ ALL	= $(_ALL) ctrl_mod.o
 
 STRT_INC_LIBALX	= alx_ncur.h
 STRT_INC_ABOUT	= about.h
-STRT_INC_DATA	= data.h
 STRT_INC_TUI	= dist.h
 STRT_INC	= start.h
 STRT_DEPS	= $(SRC_DIR)/start.c \

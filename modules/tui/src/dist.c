@@ -12,8 +12,6 @@
 
 		/* calculations */
 	#include "calc.h"
-		/* variables */
-	#include "data.h"
 
 	#include "dist.h"
 
