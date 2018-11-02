@@ -53,4 +53,4 @@ main.o: main.s
 
 clean:
 	$(Q)rm -f *.o *.s
-	@echo  "Clean binaries"
+	@echo  "Clean tmp"

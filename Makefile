@@ -180,10 +180,6 @@ PHONY += object
 object: modules libalx
 	$(Q)cd $(TMP_DIR) && $(MAKE) && cd ..
 
-PHONY += test
-test: object
-	$(Q)cd $(TST_DIR) && $(MAKE) && cd ..
-
 PHONY += binary
 binary: object
 	$(Q)cd $(BIN_DIR) && $(MAKE) && cd ..
