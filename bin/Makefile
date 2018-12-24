@@ -18,9 +18,12 @@ MAIN_OBJS	= $(TMP_DIR)/main.o \
 			$(patsubst %,$(MODULES_TMP_DIR)/%,$(MAIN_OBJ_MODULES))
 
 # static libs
-MAIN_LIB_LIBALX		= -L $(LIBALX_LIB_DIR) -l alx
+STATIC_LIB_LIBALX	= -L $(LIBALX_LIB_DIR) \
+				-l alx-curses \
+				-l alx-io \
+				-l alx-base
 
-STATIC_LIBS	= $(MAIN_LIB_LIBALX)
+STATIC_LIBS	= $(STATIC_LIB_LIBALX)
 
 
 # target: dependencies
@@ -31,17 +34,15 @@ all: $(ALL)
 
 ifeq ($(OS), linux)
 $(BIN_NAME): $(MAIN_OBJS)
+	@echo	"	CC	$@"
 	$(Q)$(CC) $^ -o $@ $(STATIC_LIBS) $(LIBS)
-	@echo  "	CC	$@"
-	@echo  ""
 else ifeq ($(OS), win)
 $(BIN_NAME).exe: $(MAIN_OBJS)
+	@echo	"	CC	$@"
 	$(Q)$(CC) $^ -o $@ $(STATIC_LIBS) $(LIBS)
-	@echo  "	CC	$@"
-	@echo  ""
 endif
 
 
 clean:
+	@echo  "	RM	$(_ALL)"
 	$(Q)rm -f $(_ALL)
-	@echo  "Clean binaries"
