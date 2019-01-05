@@ -27,17 +27,16 @@ all: $(ALL)
 
 
 calc_mod.o: $(_ALL)
-	$(Q)$(LD) -r $^ -o $@
 	@echo  "	LD	$@"
-	@echo  ""
+	$(Q)$(LD) -r $^ -o $@
 	
 
 calc.s: $(CALC_DEPS)
-	$(Q)$(CC) $(CFLAGS) $(CALC_INC_DIRS) -S $< -o $@ $(LIBS)
 	@echo  "	CC	$@"
+	$(Q)$(CC) $(CFLAGS) $(CALC_INC_DIRS) -S $< -o $@ $(LIBS)
 calc.o: calc.s
-	$(Q)$(AS) $< -o $@
 	@echo  "	AS	$@"
+	$(Q)$(AS) $< -o $@
 
 
 ################################################################################

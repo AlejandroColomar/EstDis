@@ -119,6 +119,7 @@ void	snprint_share_file	(char *dest, int destsize, int share_file)
 
 	return;
 
+
 err_path:
 	printf("Path is too large and has been truncated\n");
 	printf("File could not be shown!\n");

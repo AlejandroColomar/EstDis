@@ -45,17 +45,16 @@ all: $(ALL)
 
 
 parse_mod.o: $(_ALL)
-	$(Q)$(LD) -r $^ -o $@
 	@echo  "	LD	$@"
-	@echo  ""
+	$(Q)$(LD) -r $^ -o $@
 
 
 parse.s: $(PARSE_DEPS)
-	$(Q)$(CC) $(CFLAGS) $(PARSE_INC_DIRS) -S $< -o $@ $(LIBS)
 	@echo  "	CC	$@"
+	$(Q)$(CC) $(CFLAGS) $(PARSE_INC_DIRS) -S $< -o $@ $(LIBS)
 parse.o: parse.s
-	$(Q)$(AS) $< -o $@
 	@echo  "	AS	$@"
+	$(Q)$(AS) $< -o $@
 
 
 ################################################################################

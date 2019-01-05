@@ -25,18 +25,24 @@ export	TUI_DIR
 #	action
 
 all:
-	$(Q)cd $(ABOUT_DIR) && $(MAKE) && cd ..
-	$(Q)cd $(CALC_DIR) && $(MAKE) && cd ..
-	$(Q)cd $(CTRL_DIR) && $(MAKE) && cd ..
-	$(Q)cd $(PARSE_DIR) && $(MAKE) && cd ..
-	$(Q)cd $(TUI_DIR) && $(MAKE) && cd ..
-	$(Q)cd $(TMP_DIR) && $(MAKE) && cd ..
+	@echo	'	MAKE	modules:	about'
+	$(Q)$(MAKE) -C $(ABOUT_DIR)
+	@echo	'	MAKE	modules:	calc'
+	$(Q)$(MAKE) -C $(CALC_DIR)
+	@echo	'	MAKE	modules:	ctrl'
+	$(Q)$(MAKE) -C $(CTRL_DIR)
+	@echo	'	MAKE	modules:	parse'
+	$(Q)$(MAKE) -C $(PARSE_DIR)
+	@echo	'	MAKE	modules:	tui'
+	$(Q)$(MAKE) -C $(TUI_DIR)
+	@echo	'	MAKE	modules.o'
+	$(Q)$(MAKE) -C $(TMP_DIR)
 
 
 clean:
+	@echo	"	RM	*.o *.s"
 	$(Q)find . -type f -name '*.o' -exec rm '{}' '+'
 	$(Q)find . -type f -name '*.s' -exec rm '{}' '+'
-	@echo  "Clean modules"
 
 ################################################################################
 ######## End of file ###########################################################

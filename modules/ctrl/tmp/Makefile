@@ -40,17 +40,16 @@ all: $(ALL)
 
 
 ctrl_mod.o: $(_ALL)
-	$(Q)$(LD) -r $^ -o $@
 	@echo  "	LD	$@"
-	@echo  ""
+	$(Q)$(LD) -r $^ -o $@
 
 
 start.s: $(STRT_DEPS)
-	$(Q)$(CC) $(CFLAGS) $(STRT_INC_DIRS) -S $< -o $@ $(LIBS)
 	@echo  "	CC	$@"
+	$(Q)$(CC) $(CFLAGS) $(STRT_INC_DIRS) -S $< -o $@ $(LIBS)
 start.o: start.s
-	$(Q)$(AS) $< -o $@
 	@echo  "	AS	$@"
+	$(Q)$(AS) $< -o $@
 
 
 ################################################################################

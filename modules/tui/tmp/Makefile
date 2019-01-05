@@ -55,24 +55,23 @@ all: $(ALL)
 
 
 tui_mod.o: $(_ALL)
-	$(Q)$(LD) -r $^ -o $@
 	@echo  "	LD	$@"
-	@echo  ""
+	$(Q)$(LD) -r $^ -o $@
 
 
 dist.s: $(DIST_DEPS)
-	$(Q)$(CC) $(CFLAGS) $(DIST_INC_DIRS) -S $< -o $@ $(LIBS)
 	@echo  "	CC	$@"
+	$(Q)$(CC) $(CFLAGS) $(DIST_INC_DIRS) -S $< -o $@ $(LIBS)
 dist.o: dist.s
-	$(Q)$(AS) $< -o $@
 	@echo  "	AS	$@"
+	$(Q)$(AS) $< -o $@
 
 menus.s: $(MENU_DEPS)
-	$(Q)$(CC) $(CFLAGS) $(MENU_INC_DIRS) -S $< -o $@ $(LIBS)
 	@echo  "	CC	$@"
+	$(Q)$(CC) $(CFLAGS) $(MENU_INC_DIRS) -S $< -o $@ $(LIBS)
 menus.o: menus.s
-	$(Q)$(AS) $< -o $@
 	@echo  "	AS	$@"
+	$(Q)$(AS) $< -o $@
 
 
 clean:
