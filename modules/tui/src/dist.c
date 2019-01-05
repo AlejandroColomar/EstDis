@@ -114,8 +114,6 @@ void		desc_2var		(void){
 	double	Exiyi = 0;
 	double	oxy;
 	double	r;
-	double	yiy2;
-	double	xix2;
 	double	Eyiy2 = 0;
 	double	Exix2 = 0;
 	double	Vr;
@@ -171,7 +169,7 @@ void		desc_2var		(void){
 
 	for (i = 0; i < param_i_N; i++) {
 		Eyiy2 +=	descrip_Eyiy2(param_x_dbl[i], param_y[i], a, b);
-		Exix2 +=	descrip_Eyiy2(param_y[i], param_x_dbl[i], c, d);;
+		Exix2 +=	descrip_Eyiy2(param_y[i], param_x_dbl[i], c, d);
 	}
 
 	Aa =	descrip_Aa(param_i_N, Exi, Exi2, Eyiy2);
@@ -362,8 +360,6 @@ void		dist_exponential	(void)
 
 void		dist_normal		(void)
 {
-	double	u;
-	double	o2;
 	double	o;
 	double	a;
 	double	b;

@@ -180,24 +180,24 @@ void	parser	(int argc, char *argv[])
 
 
 		case PARSE_S_PARAM_c:
-			err	= alx_sscan_int64(&param_i_c, 0, 0, 3, optarg);
+			err	= alx_sscan_i64(&param_i_c, 0, 0, 3, optarg);
 			error_handle(err, PARSE_L_PARAM_c, 0, 3);
 			break;
 
 		case PARSE_S_PARAM_n:
-			err	= alx_sscan_int64(&param_i_n, 0, 0, INFINITY,
+			err	= alx_sscan_i64(&param_i_n, 0, 0, INFINITY,
 							optarg);
 			error_handle(err, PARSE_L_PARAM_n, 0, INFINITY);
 			break;
 
 		case PARSE_S_PARAM_N:
-			err	= alx_sscan_int64(&param_i_N, 0, 0, INFINITY,
+			err	= alx_sscan_i64(&param_i_N, 0, 0, INFINITY,
 							optarg);
 			error_handle(err, PARSE_L_PARAM_N, 0, INFINITY);
 			break;
 
 		case PARSE_S_PARAM_r:
-			err	= alx_sscan_int64(&param_i_r, 0, 0, INFINITY,
+			err	= alx_sscan_i64(&param_i_r, 0, 0, INFINITY,
 							optarg);
 			error_handle(err, PARSE_L_PARAM_r, 0, INFINITY);
 			break;

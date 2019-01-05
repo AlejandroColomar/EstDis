@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 VERSION		= 3
-PATCHLEVEL	= ~a4
+PATCHLEVEL	= ~a5
 SUBLEVEL	= 
 EXTRAVERSION	=
 NAME		=
@@ -71,8 +71,52 @@ export	TST = false
 export	DBG = false
 
 ################################################################################
-PROGRAMVERSION	= $(VERSION)$(if $(PATCHLEVEL),$(PATCHLEVEL)$(if $(SUBLEVEL),$(SUBLEVEL)))$(EXTRAVERSION)
+PROGRAMVERSION	= $(VERSION)$(if $(PATCHLEVEL),.$(PATCHLEVEL)$(if $(SUBLEVEL),.$(SUBLEVEL)))$(EXTRAVERSION)
 export	PROGRAMVERSION
+
+################################################################################
+# Make variables (CC, etc...)
+  CC		= gcc
+  AS		= as
+  AR		= ar
+  LD		= ld
+
+export	CC
+export	AS
+export	AR
+export	LD
+
+################################################################################
+# cflags
+CFLAGS_STD	= -std=c11
+
+CFLAGS_OPT	= -O3
+CFLAGS_OPT     += -march=native
+
+CFLAGS_W	= -Wall
+CFLAGS_W       += -Wextra
+CFLAGS_W       += -Wstrict-prototypes
+CFLAGS_W       += -Werror
+CFLAGS_W       += -Wno-format-truncation
+CFLAGS_W       += -Wno-format-zero-length
+#CFLAGS_W       += -Wno-unused-function
+#CFLAGS_W       += -Wno-unused-parameter
+
+CFLAGS_PKG	= `pkg-config --cflags ncurses`
+
+CFLAGS_D	= -D 'PROG_VERSION="$(PROGRAMVERSION)"'
+CFLAGS_D       += -D 'INSTALL_SHARE_DIR="$(INSTALL_SHARE_DIR)"'
+CFLAGS_D       += -D 'SHARE_DIR="$(SHARE_DIR)"'
+CFLAGS_D       += -D 'INSTALL_VAR_DIR="$(INSTALL_VAR_DIR)"'
+CFLAGS_D       += -D 'VAR_DIR="$(VAR_DIR)"'
+
+CFLAGS		= $(CFLAGS_STD)
+#CFLAGS         += $(CFLAGS_OPT)
+CFLAGS         += $(CFLAGS_W)
+CFLAGS         += $(CFLAGS_PKG)
+CFLAGS         += $(CFLAGS_D)
+
+export	CFLAGS
 
 ################################################################################
 # directories
@@ -108,42 +152,6 @@ export	SHARE_DIR
 BIN_NAME	= estadistica3
 
 export	BIN_NAME
-
-################################################################################
-# Make variables (CC, etc...)
-  CC		= gcc
-  AS		= as
-  LD		= ld
-
-export	CC
-export	AS
-export	LD
-
-################################################################################
-# cflags
-CFLAGS_STD	= -std=c11
-
-CFLAGS_OPT	= -O3
-CFLAGS_OPT     += -march=native
-
-CFLAGS_W	= -Wno-format-truncation
-CFLAGS_W       += -Wno-format-zero-length
-
-CFLAGS_PKG	= `pkg-config --cflags ncurses`
-
-CFLAGS_D	= -D 'PROG_VERSION="$(PROGRAMVERSION)"'
-CFLAGS_D       += -D 'INSTALL_SHARE_DIR="$(INSTALL_SHARE_DIR)"'
-CFLAGS_D       += -D 'SHARE_DIR="$(SHARE_DIR)"'
-CFLAGS_D       += -D 'INSTALL_VAR_DIR="$(INSTALL_VAR_DIR)"'
-CFLAGS_D       += -D 'VAR_DIR="$(VAR_DIR)"'
-
-CFLAGS		= $(CFLAGS_STD)
-#CFLAGS         += $(CFLAGS_OPT)
-CFLAGS         += $(CFLAGS_W)
-CFLAGS         += $(CFLAGS_PKG)
-CFLAGS         += $(CFLAGS_D)
-
-export	CFLAGS
 
 ################################################################################
 # libs

@@ -33,7 +33,7 @@ static	void	cleanup		(void);
 /******************************************************************************
  ******* main *****************************************************************
  ******************************************************************************/
-int	main	(int argc, char *argv[], char *envp[])
+int	main	(int argc, char *argv[])
 {
 	init_all(argc, argv);
 
@@ -47,6 +47,9 @@ int	main	(int argc, char *argv[], char *envp[])
 		menu_main();
 		alx_pause_curses();
 //	}
+
+	cleanup();
+
 	return	0;
 }
 

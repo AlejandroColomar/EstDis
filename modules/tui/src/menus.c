@@ -78,21 +78,24 @@ void	menu_main		(void)
 {
 	int	sw;
 	bool	wh;
-	WINDOW	*win;
-	int	h =	23;
-	int	w =	80;
+	int	h;
+	int	w;
+	int	N;
 
-	int		N = 4;
-	struct Alx_Menu	mnu[4] =	{
+	h	= 23;
+	w	= 80;
+
+	N	= 4;
+	struct Alx_Menu	mnu[4]	= {
 		{8, 4, "[0]	Exit program"},
 		{2, 4, "[1]	Continue"},
 		{4, 4, "[2]	Disclaimer of warranty"},
 		{5, 4, "[3]	Terms & conditions"}
 	};
 
-	wh = true;
+	wh	= true;
 	while (wh) {
-		sw =	alx_menu(h, w, N, mnu, "MENU:");
+		sw	= alx_menu(h, w, N, mnu, "MENU:");
 
 		switch (sw) {
 		case 0:
@@ -128,12 +131,15 @@ static	void	menu_continue	(void)
 {
 	int	sw;
 	bool	wh;
-	WINDOW	*win;
-	int	h =	23;
-	int	w =	80;
+	int	h;
+	int	w;
+	int	N;
 
-	int		N = 5;
-	struct Alx_Menu	mnu[5] =	{
+	h	= 23;
+	w	= 80;
+
+	N	= 5;
+	struct Alx_Menu	mnu[5]	= {
 		{7, 4, "[0]	Back"},
 		{2, 4, "[1]	Run"},
 		{3, 4, "[2]	Help"},
@@ -141,9 +147,9 @@ static	void	menu_continue	(void)
 		{5, 4, "[4]	Change verbose"}
 	};
 
-	wh = true;
+	wh	= true;
 	while (wh) {
-		sw =	alx_menu(h, w, N, mnu, "CONTINUE:");
+		sw	= alx_menu(h, w, N, mnu, "CONTINUE:");
 
 		switch (sw) {
 		case 0:
@@ -176,12 +182,15 @@ static	void	menu_continue	(void)
 static	void	menu_select	(void)
 {
 	int	buff;
-	WINDOW	*win;
-	int	h =	23;
-	int	w =	80;
+	int	h;
+	int	w;
+	int	N;
 
-	int		N = 10;
-	struct Alx_Menu	mnu[10] =	{
+	h	= 23;
+	w	= 80;
+
+	N	= 10;
+	struct Alx_Menu	mnu[10]	= {
 		{13, 4, "[0]	Back"},
 		{2, 4, "[1]	1 Variable"},
 		{3, 4, "[2]	2 Variables"},
@@ -194,20 +203,24 @@ static	void	menu_select	(void)
 		{11, 4, "[9]	Gauss(Normal)"}
 	};
 
-	buff =	alx_menu(h, w, N, mnu, "SELECT:");
+	buff	= alx_menu(h, w, N, mnu, "SELECT:");
 
 	if (buff) {
-		start_mode =	buff;
+		start_mode	= buff;
 	}
 }
 
 static	void	menu_verbose	(void)
 {
-	int	h =	23;
-	int	w =	80;
+	int	h;
+	int	w;
+	int	N;
 
-	int		N = 5;
-	struct Alx_Menu	mnu[5] =	{
+	h	= 23;
+	w	= 80;
+
+	N	= 5;
+	struct Alx_Menu	mnu[5]	= {
 		{7, 4, "[0]	Show NOTHING"},
 		{2, 4, "[1]	Show only solution"},
 		{3, 4, "[2]	Show short help"},
@@ -219,5 +232,5 @@ static	void	menu_verbose	(void)
 # endif
 	};
 
-	flag_verbose =	alx_menu(h, w, N, mnu, "VERBOSE:");
+	flag_verbose	= alx_menu(h, w, N, mnu, "VERBOSE:");
 }
