@@ -89,6 +89,7 @@ export	LD
 ################################################################################
 # cflags
 CFLAGS_STD	= -std=c11
+CFLAGS_STD     += -Wpedantic
 
 CFLAGS_OPT	= -O3
 CFLAGS_OPT     += -march=native
@@ -97,26 +98,40 @@ CFLAGS_W	= -Wall
 CFLAGS_W       += -Wextra
 CFLAGS_W       += -Wstrict-prototypes
 CFLAGS_W       += -Werror
-CFLAGS_W       += -Wno-format-truncation
-CFLAGS_W       += -Wno-format-zero-length
-#CFLAGS_W       += -Wno-unused-function
-#CFLAGS_W       += -Wno-unused-parameter
+#CFLAGS_W       += -Wno-error=format-truncation
+#CFLAGS_W       += -Wno-error=format-zero-length
+#CFLAGS_W       += -Wno-error=unused-function
+#CFLAGS_W       += -Wno-error=unused-parameter
 
 CFLAGS_PKG	= `pkg-config --cflags ncurses`
 
-CFLAGS_D	= -D 'PROG_VERSION="$(PROGRAMVERSION)"'
-CFLAGS_D       += -D 'INSTALL_SHARE_DIR="$(INSTALL_SHARE_DIR)"'
-CFLAGS_D       += -D 'SHARE_DIR="$(SHARE_DIR)"'
-CFLAGS_D       += -D 'INSTALL_VAR_DIR="$(INSTALL_VAR_DIR)"'
-CFLAGS_D       += -D 'VAR_DIR="$(VAR_DIR)"'
+CFLAGS_D	= -D PROG_VERSION=\"$(PROGRAMVERSION)\"
+CFLAGS_D       += -D INSTALL_SHARE_DIR=\"$(INSTALL_SHARE_DIR)\"
+CFLAGS_D       += -D SHARE_DIR=\"$(SHARE_DIR)\"
+CFLAGS_D       += -D INSTALL_VAR_DIR=\"$(INSTALL_VAR_DIR)\"
+CFLAGS_D       += -D VAR_DIR=\"$(VAR_DIR)\"
 
 CFLAGS		= $(CFLAGS_STD)
-#CFLAGS         += $(CFLAGS_OPT)
+CFLAGS         += $(CFLAGS_OPT)
 CFLAGS         += $(CFLAGS_W)
 CFLAGS         += $(CFLAGS_PKG)
 CFLAGS         += $(CFLAGS_D)
 
 export	CFLAGS
+
+################################################################################
+# libs
+LIBS_STD	= -l m
+
+LIBS_PKG	= `pkg-config --libs ncurses`
+
+LIBS		= $(LIBS_STD)
+ifeq ($(OS), win)
+    LIBS       += -static
+endif
+LIBS           += $(LIBS_PKG)
+
+export	LIBS
 
 ################################################################################
 # directories
@@ -137,10 +152,10 @@ INSTALL_BIN_DIR		= /usr/local/bin/
 #INSTALL_BIN_DIR	= /usr/bin/
 INSTALL_SHARE_DIR	= /usr/local/share/
 #INSTALL_SHARE_DIR	= /usr/share/
-SHARE_DIR		= est-dis/
+SHARE_DIR		= estadistica/
 INSTALL_VAR_DIR		= /var/local/
 #INSTALL_VAR_DIR	= /var/lib/
-VAR_DIR			= est-dis/
+VAR_DIR			= estadistica/
 
 export	INSTALL_DIR
 export	INSTALL_SHARE_DIR
@@ -154,20 +169,6 @@ BIN_NAME	= estadistica3
 export	BIN_NAME
 
 ################################################################################
-# libs
-LIBS_STD	= -l m
-
-LIBS_PKG	= `pkg-config --libs ncurses`
-
-LIBS		= $(LIBS_STD)
-ifeq ($(OS), win)
-    LIBS       += -static
-endif
-LIBS           += $(LIBS_PKG)
-
-export	LIBS
-
-################################################################################
 # target: dependencies
 #	action
 
@@ -179,64 +180,70 @@ all: binary
 PHONY += libalx
 libalx:
 	@echo	'	MAKE	libalx'
-	$(Q)make base	-C $(LIBALX_DIR)
-	$(Q)make io	-C $(LIBALX_DIR)
-	$(Q)make curses	-C $(LIBALX_DIR)
+	$(Q)$(MAKE) base	-C $(LIBALX_DIR)
+	$(Q)$(MAKE) io		-C $(LIBALX_DIR)
+	$(Q)$(MAKE) curses	-C $(LIBALX_DIR)
 
 PHONY += modules
 modules: libalx
 	@echo	'	MAKE	modules'
-	$(Q)make -C $(MODULES_DIR)
+	$(Q)$(MAKE) -C $(MODULES_DIR)
 
 PHONY += object
 object: modules libalx
 	@echo	'	MAKE	obj'
-	$(Q)make -C $(TMP_DIR)
+	$(Q)$(MAKE) -C $(TMP_DIR)
 
 PHONY += binary
 binary: object
 	@echo	'	MAKE	bin'
-	$(Q)make -C $(BIN_DIR)
+	$(Q)$(MAKE) -C $(BIN_DIR)
 
 PHONY += install
 install: uninstall
-	@echo	"Create $(INSTALL_BIN_DIR)/"
+	@echo	"	Install:"
+	@echo	"	MKDIR	$(INSTALL_BIN_DIR)/"
 	$(Q)mkdir -p		$(DESTDIR)/$(INSTALL_BIN_DIR)/
-	@echo	"Copy $(BIN_NAME)"
+	@echo	"	CP	$(BIN_NAME)"
 	$(Q)cp			$(BIN_DIR)/$(BIN_NAME)	$(DESTDIR)/$(INSTALL_BIN_DIR)/
-	@echo	""
-	
-	@echo	"Create $(INSTALL_SHARE_DIR)/$(SHARE_DIR)/"
+	@echo	"	MKDIR	$(INSTALL_SHARE_DIR)/$(SHARE_DIR)/"
 	$(Q)mkdir -p		$(DESTDIR)/$(INSTALL_SHARE_DIR)/$(SHARE_DIR)/
-	@echo	"Copy share/*"
+	@echo	"	CP -r	share/*"
 	$(Q)cp -r		./share/*		$(DESTDIR)/$(INSTALL_SHARE_DIR)/$(SHARE_DIR)/
-	@echo	""
-	
-	@echo	"Done"
-	@echo	""
+	@echo	"	Done"
+	@echo
 
 PHONY += uninstall
 uninstall:
+	@echo	"	Uninstall:"
+	@echo	'	RM	bin'
 	$(Q)rm -f	$(DESTDIR)/$(INSTALL_BIN_DIR)/$(BIN_NAME)
+	@echo	'	RM	share/*'
 	$(Q)rm -f -r	$(DESTDIR)/$(INSTALL_SHARE_DIR)/$(SHARE_DIR)/
-	@echo  "Clean old installations"
-	@echo  ""
+	@echo	"	Done"
+	@echo
 
 PHONY += clean
 clean:
-	$(Q)cd $(LIBALX_DIR) && $(MAKE) clean && cd ..
-	$(Q)cd $(MODULES_DIR) && $(MAKE) clean && cd ..
-	$(Q)cd $(TMP_DIR) && $(MAKE) clean && cd ..
+	@echo	'	CLEAN	modules'
+	$(Q)$(MAKE) clean	-C $(MODULES_DIR)
+	@echo	'	CLEAN	tmp'
+	$(Q)$(MAKE) clean	-C $(TMP_DIR)
+	@echo	'	CLEAN	bin'
+	$(Q)$(MAKE) clean	-C $(BIN_DIR)
+	@echo
 
 PHONY += mrproper
 mrproper: clean
-	$(Q)cd $(BIN_DIR) && $(MAKE) clean && cd ..
+	@echo	'	CLEAN	libalx'
+	$(Q)$(MAKE) clean	-C $(LIBALX_DIR)
+	@echo
 
 PHONY += help
 help:
 	@echo  'Cleaning targets:'
-	@echo  '  clean		  - Remove all object files, but keep the binary'
-	@echo  '  mrproper	  - Remove all generated files'
+	@echo  '  clean		  - Remove all generated files'
+	@echo  '  mrproper	  - Remove all generated files (including libraries)'
 	@echo  ''
 	@echo  'Other generic targets:'
 	@echo  '  all		  - Build all targets marked with [*]'
