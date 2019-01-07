@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 VERSION		= 3
-PATCHLEVEL	= ~a5
-SUBLEVEL	= 
+PATCHLEVEL	= ~a6
+SUBLEVEL	=
 EXTRAVERSION	=
 NAME		=
 

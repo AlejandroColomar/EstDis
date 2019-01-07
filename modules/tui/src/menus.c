@@ -76,17 +76,17 @@ static	void	menu_verbose	(void);
  ******************************************************************************/
 void	menu_main		(void)
 {
-	int	sw;
-	bool	wh;
 	int	h;
 	int	w;
 	int	N;
+	bool	wh;
+	int	sw;
 
 	h	= 23;
 	w	= 80;
 
 	N	= 4;
-	struct Alx_Menu	mnu[4]	= {
+	const struct Alx_Menu	mnu[4]	= {
 		{8, 4, "[0]	Exit program"},
 		{2, 4, "[1]	Continue"},
 		{4, 4, "[2]	Disclaimer of warranty"},
@@ -129,17 +129,17 @@ void	menu_main		(void)
  ******************************************************************************/
 static	void	menu_continue	(void)
 {
-	int	sw;
-	bool	wh;
 	int	h;
 	int	w;
 	int	N;
+	bool	wh;
+	int	sw;
 
 	h	= 23;
 	w	= 80;
 
 	N	= 5;
-	struct Alx_Menu	mnu[5]	= {
+	const struct Alx_Menu	mnu[5]	= {
 		{7, 4, "[0]	Back"},
 		{2, 4, "[1]	Run"},
 		{3, 4, "[2]	Help"},
@@ -181,16 +181,16 @@ static	void	menu_continue	(void)
 
 static	void	menu_select	(void)
 {
-	int	buff;
 	int	h;
 	int	w;
 	int	N;
+	int	buff;
 
 	h	= 23;
 	w	= 80;
 
 	N	= 10;
-	struct Alx_Menu	mnu[10]	= {
+	const struct Alx_Menu	mnu[10]	= {
 		{13, 4, "[0]	Back"},
 		{2, 4, "[1]	1 Variable"},
 		{3, 4, "[2]	2 Variables"},
@@ -220,7 +220,7 @@ static	void	menu_verbose	(void)
 	w	= 80;
 
 	N	= 5;
-	struct Alx_Menu	mnu[5]	= {
+	const struct Alx_Menu	mnu[5]	= {
 		{7, 4, "[0]	Show NOTHING"},
 		{2, 4, "[1]	Show only solution"},
 		{3, 4, "[2]	Show short help"},

@@ -39,29 +39,29 @@
  ******************************************************************************/
 	# define	OPT_LIST		"hls:V:vx"
 
-	# define	PARSE_L_HELP 		"help"
-	# define	PARSE_L_LICENSE 	"license"
-	# define	PARSE_L_START 		"start"
-	# define	PARSE_L_VERBOSE 	"Verbose"
-	# define	PARSE_L_VERSION 	"version"
-	# define	PARSE_L_EXIT 		"exit"
+	# define	PARSE_L_HELP		"help"
+	# define	PARSE_L_LICENSE		"license"
+	# define	PARSE_L_START		"start"
+	# define	PARSE_L_VERBOSE		"Verbose"
+	# define	PARSE_L_VERSION		"version"
+	# define	PARSE_L_EXIT		"exit"
 
-	# define	PARSE_L_CPRIGHT 	"copyright"
-	# define	PARSE_L_WARRANTY 	"warranty"
+	# define	PARSE_L_CPRIGHT		"copyright"
+	# define	PARSE_L_WARRANTY	"warranty"
 
-	# define	PARSE_L_PARAM_c 	"param-c"
-	# define	PARSE_L_PARAM_n 	"param-n"
-	# define	PARSE_L_PARAM_N 	"param-N"
-	# define	PARSE_L_PARAM_r 	"param-r"
+	# define	PARSE_L_PARAM_c		"param-c"
+	# define	PARSE_L_PARAM_n		"param-n"
+	# define	PARSE_L_PARAM_N		"param-N"
+	# define	PARSE_L_PARAM_r		"param-r"
 
-	# define	PARSE_L_PARAM_a 	"param-a"
-	# define	PARSE_L_PARAM_b 	"param-b"
-	# define	PARSE_L_PARAM_p 	"param-p"
-	# define	PARSE_L_PARAM_x0 	"param-x0"
-	# define	PARSE_L_PARAM_x1 	"param-x1"
-	# define	PARSE_L_PARAM_x2 	"param-x2"
-	# define	PARSE_L_PARAM_beta 	"param-beta"
-	# define	PARSE_L_PARAM_lambda 	"param-lambda"
+	# define	PARSE_L_PARAM_a		"param-a"
+	# define	PARSE_L_PARAM_b		"param-b"
+	# define	PARSE_L_PARAM_p		"param-p"
+	# define	PARSE_L_PARAM_x0	"param-x0"
+	# define	PARSE_L_PARAM_x1	"param-x1"
+	# define	PARSE_L_PARAM_x2	"param-x2"
+	# define	PARSE_L_PARAM_beta	"param-beta"
+	# define	PARSE_L_PARAM_lambda	"param-lambda"
 
 
 /******************************************************************************
@@ -108,7 +108,7 @@ void	parser	(int argc, char *argv[])
 	int	opt =		0;
 	int	opt_index =	0;
 
-	struct option long_options[] = {
+	const struct option long_options[] = {
 		{PARSE_L_HELP,		no_argument,		0, PARSE_S_HELP},
 		{PARSE_L_LICENSE,	no_argument,		0, PARSE_S_LICENSE},
 		{PARSE_L_START,		required_argument,	0, PARSE_S_START},
@@ -138,7 +138,7 @@ void	parser	(int argc, char *argv[])
 	int	err;
 
 	while ((opt = getopt_long(argc, argv, OPT_LIST, long_options,
-						&opt_index )) != -1) {
+							&opt_index)) != -1) {
 		switch (opt) {
 		case PARSE_S_HELP:
 			print_share_file(SHARE_HELP);

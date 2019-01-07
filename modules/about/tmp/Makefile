@@ -33,7 +33,7 @@ all: $(ALL)
 about_mod.o: $(_ALL)
 	@echo  "	LD	$@"
 	$(Q)$(LD) -r $^ -o $@
-	
+
 
 about.s: $(ABOU_DEPS)
 	@echo  "	CC	$@"

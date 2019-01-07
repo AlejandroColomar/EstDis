@@ -29,7 +29,7 @@ all: $(ALL)
 calc_mod.o: $(_ALL)
 	@echo  "	LD	$@"
 	$(Q)$(LD) -r $^ -o $@
-	
+
 
 calc.s: $(CALC_DEPS)
 	@echo  "	CC	$@"
