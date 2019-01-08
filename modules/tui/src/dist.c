@@ -2,15 +2,11 @@
  *	Copyright (C) 2015	Alejandro Colomar Andrés		      *
  ******************************************************************************/
 
-		/* int64_t & PRNi64 */
 	#include <inttypes.h>
-		/* printf() */
 	#include <stdio.h>
 
-		/* alx_getint() & alx_getdbl() */
-	#include "alx_input.h"
+	#include "libalx/alx_input.h"
 
-		/* calculations */
 	#include "calc.h"
 
 	#include "dist.h"

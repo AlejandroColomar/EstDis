@@ -12,7 +12,7 @@ TST_DIR = $(CALC_DIR)/tst/
 _ALL	= calc.o
 ALL	= $(_ALL) calc_mod.o
 
-CALC_INC_LIBALX	= alx_math.h
+CALC_INC_LIBALX	= libalx/alx_math.h
 CALC_INC	= calc.h
 CALC_DEPS	= $(SRC_DIR)/calc.c \
 			$(patsubst %,$(LIBALX_INC_DIR)/%,$(CALC_INC_LIBALX)) \

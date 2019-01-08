@@ -20,7 +20,7 @@ SRC_DIR = $(TUI_DIR)/src/
 _ALL	= dist.o menus.o
 ALL	= $(_ALL) tui_mod.o
 
-DIST_INC_LIBALX	= alx_input.h
+DIST_INC_LIBALX	= libalx/alx_input.h
 DIST_INC_CALC	= calc.h
 DIST_INC	= dist.h
 DIST_DEPS	= $(SRC_DIR)/dist.c \
@@ -31,7 +31,7 @@ DIST_INC_DIRS	= -I $(LIBALX_INC_DIR) \
 			-I $(CALC_INC_DIR) \
 			-I $(INC_DIR)
 
-MENU_INC_LIBALX	= alx_ncur.h
+MENU_INC_LIBALX	= libalx/alx_ncur.h
 MENU_INC_GLOBAL	= macros.h
 MENU_INC_ABOUT	= about.h
 MENU_INC_CTRL	= start.h

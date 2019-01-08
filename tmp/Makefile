@@ -21,7 +21,7 @@ SRC_DIR	= $(MAIN_DIR)/src/
 
 ALL	= main.o
 
-MAIN_INC_LIBALX	= alx_ncur.h
+MAIN_INC_LIBALX	= libalx/alx_ncur.h
 MAIN_INC_ABOUT	= about.h
 MAIN_INC_PARSE	= parse.h
 MAIN_INC_TUI	= menus.h

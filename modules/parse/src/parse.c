@@ -8,29 +8,18 @@
  ******************************************************************************/
 /* Standard C ----------------------------------------------------------------*/
 	#include <getopt.h>
-		/* int64_t & SCNi64 */
 	#include <inttypes.h>
-		/* INFINITY */
 	#include <math.h>
-		/* printf() */
 	#include <stdio.h>
-		/* exit? */
 	#include <stdlib.h>
-
 /* libalx --------------------------------------------------------------------*/
-	#include "alx_input.h"
-
+	#include "libalx/alx_input.h"
 /* Project -------------------------------------------------------------------*/
-		/* print functions */
 	#include "about.h"
-		/* statistics variables */
 	#include "calc.h"
-		/* flag_verbose */
 	#include "menus.h"
-		/* start_mode */
 	#include "start.h"
 
-/* Module --------------------------------------------------------------------*/
 	#include "parse.h"
 
 

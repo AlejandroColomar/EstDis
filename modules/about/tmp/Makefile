@@ -13,7 +13,7 @@ SRC_DIR = $(ABOUT_DIR)/src/
 _ALL	= about.o
 ALL	= $(_ALL) about_mod.o
 
-ABOU_INC_LIBALX	= alx_file.h
+ABOU_INC_LIBALX	= libalx/alx_file.h
 ABOU_INC_GLOBAL	= macros.h
 ABOU_INC	= about.h
 ABOU_DEPS	= $(SRC_DIR)/about.c \

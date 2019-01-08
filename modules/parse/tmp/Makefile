@@ -18,7 +18,7 @@ SRC_DIR = $(PARSE_DIR)/src/
 _ALL	= parse.o
 ALL	= $(_ALL) parse_mod.o
 
-PARSE_INC_LIBALX	= alx_input.h
+PARSE_INC_LIBALX	= libalx/alx_input.h
 PARSE_INC_ABOUT		= about.h
 PARSE_INC_CALC		= calc.h
 PARSE_INC_CTRL		= start.h

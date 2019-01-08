@@ -17,7 +17,7 @@ TST_DIR = $(CTRL_DIR)/tst/
 _ALL	= start.o
 ALL	= $(_ALL) ctrl_mod.o
 
-STRT_INC_LIBALX	= alx_ncur.h
+STRT_INC_LIBALX	= libalx/alx_ncur.h
 STRT_INC_ABOUT	= about.h
 STRT_INC_TUI	= dist.h
 STRT_INC	= start.h

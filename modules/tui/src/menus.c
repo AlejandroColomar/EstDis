@@ -6,23 +6,16 @@
 /******************************************************************************
  ******* headers **************************************************************
  ******************************************************************************/
-		/* curses interface */
-	#include <ncurses.h>
-		/* bool */
 	#include <stdbool.h>
-		/* int64_t */
 	#include <stdint.h>
 
-		/* menu & curses */
-	#include "alx_ncur.h"
+	#include <ncurses.h>
 
-		/* print functions */
-	#include "about.h"
-		/* start */
-	#include "start.h"
+	#include "libalx/alx_ncur.h"
 
-		/* DBG */
 	#include "macros.h"
+	#include "about.h"
+	#include "start.h"
 
 	#include "menus.h"
 
