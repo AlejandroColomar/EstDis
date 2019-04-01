@@ -173,7 +173,7 @@ export	BIN_NAME
 
 # That's the default target when none is given on the command line
 PHONY := all
-all: libalx bin
+all: bin
 
 
 PHONY += libalx
@@ -187,12 +187,12 @@ libalx:
 
 PHONY += tmp
 tmp:
-	@echo	'	MAKE	main'
+	@echo	'	MAKE	tmp'
 	$(Q)$(MAKE)	-C $(TMP_DIR)
 	@echo
 
 PHONY += binary
-bin: tmp
+bin: tmp libalx
 	@echo	'	MAKE	bin'
 	$(Q)$(MAKE)	-C $(BIN_DIR)
 	@echo
