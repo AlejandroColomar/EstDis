@@ -1,48 +1,49 @@
-# -*- MakeFile -*-
+#! /usr/bin/make -f
 
-# directories
-
-LIBALX_LIB_DIR	= $(LIBALX_DIR)/lib/
-
-MODULES_TMP_DIR	= $(MODULES_DIR)/tmp/
-
-TMP_DIR	= $(MAIN_DIR)/tmp/
+# MACRO = substitute with this
 
 # dependencies
-_ALL	= $(BIN_NAME) $(BIN_NAME).exe
+
+OBJS		=							\
+		$(TMP_DIR)/about.o					\
+		$(TMP_DIR)/dist.o					\
+		$(TMP_DIR)/main.o					\
+		$(TMP_DIR)/menus.o					\
+		$(TMP_DIR)/parse.o					\
+		$(TMP_DIR)/start.o
+DEPS_LIBS	= 							\
+		$(LIBALX_LIB_DIR)/libalx-ncurses.a			\
+		$(LIBALX_LIB_DIR)/libalx-stdio.a			\
+		$(LIBALX_LIB_DIR)/libalx-math.a				\
+		$(LIBALX_LIB_DIR)/libalx-stdlib.a
 
 ALL	= $(BIN_NAME)
 
-MAIN_OBJ_MODULES	= modules.o
-MAIN_OBJS	= $(TMP_DIR)/main.o \
-			$(patsubst %,$(MODULES_TMP_DIR)/%,$(MAIN_OBJ_MODULES))
-
 # static libs
-STATIC_LIB_LIBALX	= -L $(LIBALX_LIB_DIR) \
-				-l alx-curses \
-				-l alx-io \
-				-l alx-base
 
-STATIC_LIBS	= $(STATIC_LIB_LIBALX)
+STATIC_LIBS	= -L $(LIBALX_LIB_DIR)					\
+		-l alx-ncurses						\
+		-l alx-stdio						\
+		-l alx-math						\
+		-l alx-stdlib
 
 
 # target: dependencies
 #	action
 
+PHONY := all
 all: $(ALL)
 
 
-ifeq ($(OS), linux)
-$(BIN_NAME): $(MAIN_OBJS)
+$(BIN_NAME): $(OBJS) $(DEPS_LIBS)
 	@echo	"	CC	$@"
-	$(Q)$(CC) $^ -o $@ $(STATIC_LIBS) $(LIBS)
-else ifeq ($(OS), win)
-$(BIN_NAME).exe: $(MAIN_OBJS)
-	@echo	"	CC	$@"
-	$(Q)$(CC) $^ -o $@ $(STATIC_LIBS) $(LIBS)
-endif
+	$(Q)$(CC) $(OBJS) -o $@ $(STATIC_LIBS) $(LIBS)
 
 
 clean:
-	@echo  "	RM	$(_ALL)"
-	$(Q)rm -f $(_ALL)
+	@echo	"	RM	$(ALL)"
+	$(Q)rm -f	$(ALL)
+
+################################################################################
+######## End of file ###########################################################
+################################################################################

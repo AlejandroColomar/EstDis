@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 VERSION		= 3
-PATCHLEVEL	= ~a6
+PATCHLEVEL	= ~b1
 SUBLEVEL	=
 EXTRAVERSION	=
 NAME		=
@@ -75,6 +75,40 @@ PROGRAMVERSION	= $(VERSION)$(if $(PATCHLEVEL),.$(PATCHLEVEL)$(if $(SUBLEVEL),.$(
 export	PROGRAMVERSION
 
 ################################################################################
+# directories
+
+MAIN_DIR	= $(CURDIR)
+
+LIBALX_DIR	= $(CURDIR)/libalx/
+LIBALX_INC_DIR	= $(LIBALX_DIR)/inc/
+LIBALX_LIB_DIR	= $(LIBALX_DIR)/lib/libalx/
+
+BIN_DIR		= $(CURDIR)/bin/
+INC_DIR		= $(CURDIR)/inc/
+SRC_DIR		= $(CURDIR)/src/
+TMP_DIR		= $(CURDIR)/tmp/
+
+export	MAIN_DIR
+export	LIBALX_DIR
+export	LIBALX_INC_DIR
+export	LIBALX_LIB_DIR
+export	BIN_DIR
+export	INC_DIR
+export	SRC_DIR
+export	TMP_DIR
+
+# FIXME: Set local or not local when building a package
+INSTALL_BIN_DIR		= /usr/local/bin/
+#INSTALL_BIN_DIR	= /usr/bin/
+INSTALL_SHARE_DIR	= /usr/local/share/
+#INSTALL_SHARE_DIR	= /usr/share/
+INSTALL_VAR_DIR		= /var/local/
+#INSTALL_VAR_DIR	= /var/lib/
+
+export	INSTALL_DIR
+export	INSTALL_SHARE_DIR
+
+################################################################################
 # Make variables (CC, etc...)
   CC		= gcc
   AS		= as
@@ -105,9 +139,7 @@ CFLAGS_PKG	= `pkg-config --cflags ncurses`
 
 CFLAGS_D	= -D PROG_VERSION=\"$(PROGRAMVERSION)\"
 CFLAGS_D       += -D INSTALL_SHARE_DIR=\"$(INSTALL_SHARE_DIR)\"
-CFLAGS_D       += -D SHARE_DIR=\"$(SHARE_DIR)\"
 CFLAGS_D       += -D INSTALL_VAR_DIR=\"$(INSTALL_VAR_DIR)\"
-CFLAGS_D       += -D VAR_DIR=\"$(VAR_DIR)\"
 
 CFLAGS		= $(CFLAGS_STD)
 CFLAGS         += $(CFLAGS_OPT)
@@ -124,40 +156,9 @@ LIBS_STD	= -l m
 LIBS_PKG	= `pkg-config --libs ncurses`
 
 LIBS		= $(LIBS_STD)
-ifeq ($(OS), win)
-    LIBS       += -static
-endif
 LIBS           += $(LIBS_PKG)
 
 export	LIBS
-
-################################################################################
-# directories
-
-MAIN_DIR	= $(CURDIR)
-
-LIBALX_DIR	= $(CURDIR)/libalx/
-MODULES_DIR	= $(CURDIR)/modules/
-TMP_DIR		= $(CURDIR)/tmp/
-BIN_DIR		= $(CURDIR)/bin/
-
-export	MAIN_DIR
-export	LIBALX_DIR
-export	MODULES_DIR
-
-# FIXME: Set local or not local when building a package
-INSTALL_BIN_DIR		= /usr/local/bin/
-#INSTALL_BIN_DIR	= /usr/bin/
-INSTALL_SHARE_DIR	= /usr/local/share/
-#INSTALL_SHARE_DIR	= /usr/share/
-SHARE_DIR		= estadistica/
-INSTALL_VAR_DIR		= /var/local/
-#INSTALL_VAR_DIR	= /var/lib/
-VAR_DIR			= estadistica/
-
-export	INSTALL_DIR
-export	INSTALL_SHARE_DIR
-export	SHARE_DIR
 
 ################################################################################
 # executables
@@ -172,33 +173,28 @@ export	BIN_NAME
 
 # That's the default target when none is given on the command line
 PHONY := all
-all: binary
+all: libalx bin
 
 
 PHONY += libalx
 libalx:
 	@echo	'	MAKE	libalx'
-	$(Q)$(MAKE) base	-C $(LIBALX_DIR)
-	$(Q)$(MAKE) io		-C $(LIBALX_DIR)
-	$(Q)$(MAKE) curses	-C $(LIBALX_DIR)
+	$(Q)$(MAKE) math	-C $(LIBALX_DIR)
+	$(Q)$(MAKE) stdio	-C $(LIBALX_DIR)
+	$(Q)$(MAKE) stdlib	-C $(LIBALX_DIR)
+	$(Q)$(MAKE) ncurses	-C $(LIBALX_DIR)
 	@echo
 
-PHONY += modules
-modules: libalx
-	@echo	'	MAKE	modules'
-	$(Q)$(MAKE) -C $(MODULES_DIR)
-	@echo
-
-PHONY += main
-main: modules libalx
+PHONY += tmp
+tmp:
 	@echo	'	MAKE	main'
-	$(Q)$(MAKE) -C $(TMP_DIR)
+	$(Q)$(MAKE)	-C $(TMP_DIR)
 	@echo
 
 PHONY += binary
-binary: main
+bin: tmp
 	@echo	'	MAKE	bin'
-	$(Q)$(MAKE) -C $(BIN_DIR)
+	$(Q)$(MAKE)	-C $(BIN_DIR)
 	@echo
 
 PHONY += install
@@ -206,12 +202,12 @@ install: uninstall
 	@echo	"	Install:"
 	@echo	"	MKDIR	$(INSTALL_BIN_DIR)/"
 	$(Q)mkdir -p		$(DESTDIR)/$(INSTALL_BIN_DIR)/
-	@echo	"	CP	$(BIN_NAME)"
-	$(Q)cp			$(BIN_DIR)/$(BIN_NAME)	$(DESTDIR)/$(INSTALL_BIN_DIR)/
-	@echo	"	MKDIR	$(INSTALL_SHARE_DIR)/$(SHARE_DIR)/"
-	$(Q)mkdir -p		$(DESTDIR)/$(INSTALL_SHARE_DIR)/$(SHARE_DIR)/
-	@echo	"	CP -r	share/*"
-	$(Q)cp -r		./share/*		$(DESTDIR)/$(INSTALL_SHARE_DIR)/$(SHARE_DIR)/
+	@echo	"	CP -v	$(BIN_NAME)"
+	$(Q)cp -v			$(BIN_DIR)/$(BIN_NAME)	$(DESTDIR)/$(INSTALL_BIN_DIR)/
+	@echo	"	MKDIR	$(INSTALL_SHARE_DIR)/estadistica/"
+	$(Q)mkdir -p		$(DESTDIR)/$(INSTALL_SHARE_DIR)/estadistica/
+	@echo	"	CP -rv	share/estadistica/*"
+	$(Q)cp -r -v		./share/estadistica/*	$(DESTDIR)/$(INSTALL_SHARE_DIR)/estadistica/
 	@echo	"	Done"
 	@echo
 
@@ -220,20 +216,17 @@ uninstall:
 	@echo	"	Uninstall:"
 	@echo	'	RM	bin'
 	$(Q)rm -f	$(DESTDIR)/$(INSTALL_BIN_DIR)/$(BIN_NAME)
-	@echo	'	RM	share/*'
-	$(Q)rm -f -r	$(DESTDIR)/$(INSTALL_SHARE_DIR)/$(SHARE_DIR)/
+	@echo	'	RM -r	share/estadistica/'
+	$(Q)rm -f -r	$(DESTDIR)/$(INSTALL_SHARE_DIR)/estadistica/
 	@echo	"	Done"
 	@echo
 
 PHONY += clean
 clean:
-	@echo	'	CLEAN	modules'
-	$(Q)$(MAKE) clean	-C $(MODULES_DIR)
-	@echo	'	CLEAN	tmp'
-	$(Q)$(MAKE) clean	-C $(TMP_DIR)
-	@echo	'	CLEAN	bin'
-	$(Q)$(MAKE) clean	-C $(BIN_DIR)
-	@echo
+	@echo	"	RM	*.o *.s *.a $(BIN_NAME)"
+	$(Q)find $(TMP_DIR) -type f -name '*.o' -exec rm '{}' '+'
+	$(Q)find $(TMP_DIR) -type f -name '*.s' -exec rm '{}' '+'
+	$(Q)find $(BIN_DIR) -type f -name '*$(BIN_NAME)' -exec rm '{}' '+'
 
 PHONY += mrproper
 mrproper: clean

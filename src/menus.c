@@ -1,63 +1,74 @@
 /******************************************************************************
  *	Copyright (C) 2015	Alejandro Colomar Andrés		      *
+ *	SPDX-License-Identifier:	GPL-2.0-only			      *
  ******************************************************************************/
+/*
+ * + Menu:
+ *	+ Continue:
+ *		- Run
+ *		- Help
+ *		+ Select:
+ *			- 1 Var
+ *			- 2 Var
+ *			- Binomial
+ *			- Poisson
+ *			- Geometrica
+ *			- Hipergeometrica
+ *			- Uniforme
+ *			- Exponencial
+ *			- Gauss(Normal)
+ *			- ..
+ *		+ Verbose: Not yet
+ *			- ..
+ *		- ..
+ *	- Disclaimer
+ *	- Terms & conditions
+ *	- Exit program
+ */
 
 
 /******************************************************************************
  ******* headers **************************************************************
  ******************************************************************************/
-	#include <stdbool.h>
-	#include <stdint.h>
+#include "estadistica/menus.h"
 
-	#include <ncurses.h>
+#include <stdbool.h>
+#include <stdint.h>
 
-	#include "libalx/alx_ncur.h"
+#include <ncurses.h>
 
-	#include "macros.h"
-	#include "about.h"
-	#include "start.h"
+#include "libalx/extra/ncurses/common.h"
+#include "libalx/extra/ncurses/menu.h"
 
-	#include "menus.h"
+#include "estadistica/about.h"
+#include "estadistica/start.h"
+
+
+/******************************************************************************
+ ******* macros ***************************************************************
+ ******************************************************************************/
+
+
+/******************************************************************************
+ ******* enums ****************************************************************
+ ******************************************************************************/
+
+
+/******************************************************************************
+ ******* structs / unions *****************************************************
+ ******************************************************************************/
 
 
 /******************************************************************************
  ******* variables ************************************************************
  ******************************************************************************/
-	bool	flag_exit;
-	int	flag_verbose;
-	int	menu_iface_mode;
+bool	flag_exit;
+int	flag_verbose;
+int	menu_iface_mode;
 
 
 /******************************************************************************
- ******| menu |****************************************************************
- ******************************************************************************/
-	/*
-	 * + Menu:
-	 *	+ Continue:
-	 *		- Run
-	 *		- Help
-	 *		+ Select:
-	 *			- 1 Var
-	 *			- 2 Var
-	 *			- Binomial
-	 *			- Poisson
-	 *			- Geometrica
-	 *			- Hipergeometrica
-	 *			- Uniforme
-	 *			- Exponencial
-	 *			- Gauss(Normal)
-	 *			- ..
-	 *		+ Verbose: Not yet
-	 *			- ..
-	 *		- ..
-	 *	- Disclaimer
-	 *	- Terms & conditions
-	 *	- Exit program
-	 */
-
-
-/******************************************************************************
- ******| submenus |************************************************************
+ ******* static functions (prototypes) ****************************************
  ******************************************************************************/
 static	void	menu_continue	(void);
 static	void	menu_select	(void);
@@ -65,21 +76,20 @@ static	void	menu_verbose	(void);
 
 
 /******************************************************************************
- ******| main menu |***********************************************************
+ ******* global functions *****************************************************
  ******************************************************************************/
 void	menu_main		(void)
 {
-	int	h;
-	int	w;
-	int	N;
-	bool	wh;
-	int	sw;
+	int_fast8_t	h, w;
+	int_fast8_t	N;
+	bool		wh;
+	int_fast8_t	sw;
 
 	h	= 23;
 	w	= 80;
 
 	N	= 4;
-	const struct Alx_Menu	mnu[4]	= {
+	const struct Alx_Ncurses_Menu	mnu[4]	= {
 		{8, 4, "[0]	Exit program"},
 		{2, 4, "[1]	Continue"},
 		{4, 4, "[2]	Disclaimer of warranty"},
@@ -88,29 +98,26 @@ void	menu_main		(void)
 
 	wh	= true;
 	while (wh) {
-		sw	= alx_menu(h, w, N, mnu, "MENU:");
+		sw	= alx_ncurses_menu(h, w, N, mnu, "MENU:");
 
 		switch (sw) {
 		case 0:
 			wh = false;
 			break;
-
 		case 1:
 			menu_continue();
 			break;
-
 		case 2:
-			alx_pause_curses();
+			alx_ncurses_pause();
 			print_share_file(SHARE_DISCLAIMER);
 			getchar();
-			alx_resume_curses();
+			alx_ncurses_resume();
 			break;
-
 		case 3:
-			alx_pause_curses();
+			alx_ncurses_pause();
 			print_share_file(SHARE_LICENSE);
 			getchar();
-			alx_resume_curses();
+			alx_ncurses_resume();
 			break;
 		}
 	}
@@ -118,21 +125,20 @@ void	menu_main		(void)
 
 
 /******************************************************************************
- ******| submenus |************************************************************
+ ******* static functions (definitions) ***************************************
  ******************************************************************************/
 static	void	menu_continue	(void)
 {
-	int	h;
-	int	w;
-	int	N;
-	bool	wh;
-	int	sw;
+	int_fast8_t	h, w;
+	int_fast8_t	N;
+	bool		wh;
+	int_fast8_t	sw;
 
 	h	= 23;
 	w	= 80;
 
 	N	= 5;
-	const struct Alx_Menu	mnu[5]	= {
+	const struct Alx_Ncurses_Menu	mnu[5]	= {
 		{7, 4, "[0]	Back"},
 		{2, 4, "[1]	Run"},
 		{3, 4, "[2]	Help"},
@@ -142,7 +148,7 @@ static	void	menu_continue	(void)
 
 	wh	= true;
 	while (wh) {
-		sw	= alx_menu(h, w, N, mnu, "CONTINUE:");
+		sw	= alx_ncurses_menu(h, w, N, mnu, "CONTINUE:");
 
 		switch (sw) {
 		case 0:
@@ -150,15 +156,15 @@ static	void	menu_continue	(void)
 			break;
 
 		case 1:
-			alx_pause_curses();
+			alx_ncurses_pause();
 			start_switch();
-			alx_resume_curses();
+			alx_ncurses_resume();
 			break;
 
 		case 2:
-			alx_pause_curses();
+			alx_ncurses_pause();
 			help_switch();
-			alx_resume_curses();
+			alx_ncurses_resume();
 			break;
 
 		case 3:
@@ -174,16 +180,15 @@ static	void	menu_continue	(void)
 
 static	void	menu_select	(void)
 {
-	int	h;
-	int	w;
-	int	N;
-	int	buff;
+	int_fast8_t	h, w;
+	int_fast8_t	N;
+	int_fast8_t	opt;
 
 	h	= 23;
 	w	= 80;
 
 	N	= 10;
-	const struct Alx_Menu	mnu[10]	= {
+	const struct Alx_Ncurses_Menu	mnu[10]	= {
 		{13, 4, "[0]	Back"},
 		{2, 4, "[1]	1 Variable"},
 		{3, 4, "[2]	2 Variables"},
@@ -196,24 +201,21 @@ static	void	menu_select	(void)
 		{11, 4, "[9]	Gauss(Normal)"}
 	};
 
-	buff	= alx_menu(h, w, N, mnu, "SELECT:");
-
-	if (buff) {
-		start_mode	= buff;
-	}
+	opt	= alx_ncurses_menu(h, w, N, mnu, "SELECT:");
+	if (opt)
+		start_mode	= opt;
 }
 
 static	void	menu_verbose	(void)
 {
-	int	h;
-	int	w;
-	int	N;
+	int_fast8_t	h, w;
+	int_fast8_t	N;
 
 	h	= 23;
 	w	= 80;
 
 	N	= 5;
-	const struct Alx_Menu	mnu[5]	= {
+	const struct Alx_Ncurses_Menu	mnu[5]	= {
 		{7, 4, "[0]	Show NOTHING"},
 		{2, 4, "[1]	Show only solution"},
 		{3, 4, "[2]	Show short help"},
@@ -225,5 +227,10 @@ static	void	menu_verbose	(void)
 # endif
 	};
 
-	flag_verbose	= alx_menu(h, w, N, mnu, "VERBOSE:");
+	flag_verbose	= alx_ncurses_menu(h, w, N, mnu, "VERBOSE:");
 }
+
+
+/******************************************************************************
+ ******* end of file **********************************************************
+ ******************************************************************************/

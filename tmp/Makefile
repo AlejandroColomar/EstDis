@@ -1,57 +1,138 @@
-# -*- MakeFile -*-
+#! /usr/bin/make -f
 
-# MACRO = substitute with this
+################################################################################
+# Copyright (C) 2019	Alejandro Colomar Andrés
+# SPDX-License-Identifier:	GPL-2.0-only
+################################################################################
+# *AUTHOR*
+# FULL NAME	"Alejandro Colomar Andrés"
+# EMAIL		"1903716@gmail.com"
+################################################################################
 
-# directories
-
-LIBALX_INC_DIR = $(LIBALX_DIR)/inc/
-
-ABOUT_DIR = $(MODULES_DIR)/about/
-ABOUT_INC_DIR = $(ABOUT_DIR)/inc/
-
-PARSE_DIR = $(MODULES_DIR)/parse/
-PARSE_INC_DIR = $(PARSE_DIR)/inc/
-
-TUI_DIR = $(MODULES_DIR)/tui/
-TUI_INC_DIR = $(TUI_DIR)/inc/
-
-SRC_DIR	= $(MAIN_DIR)/src/
-
+################################################################################
 # dependencies
 
-ALL	= main.o
+OBJ		=							\
+		about.o							\
+		dist.o							\
+		main.o							\
+		menus.o							\
+		parse.o							\
+		start.o
 
-MAIN_INC_LIBALX	= libalx/alx_ncur.h
-MAIN_INC_ABOUT	= about.h
-MAIN_INC_PARSE	= parse.h
-MAIN_INC_TUI	= menus.h
-MAIN_DEPS	= $(SRC_DIR)/main.c \
-			$(patsubst %,$(LIBALX_INC_DIR)/%,$(MAIN_INC_LIBALX)) \
-			$(patsubst %,$(ABOUT_INC_DIR)/%,$(MAIN_INC_ABOUT)) \
-			$(patsubst %,$(PARSE_INC_DIR)/%,$(MAIN_INC_PARSE)) \
-			$(patsubst %,$(TUI_INC_DIR)/%,$(MAIN_INC_TUI)) \
-			$(patsubst %,$(INC_DIR)/%,$(MAIN_INC))
-MAIN_INC_DIRS	= -I $(LIBALX_INC_DIR) \
-			-I $(ABOUT_INC_DIR) \
-			-I $(PARSE_INC_DIR) \
-			-I $(TUI_INC_DIR)
+ABOUT_INC	=							\
+		$(INC_DIR)/estadistica/about.h				\
+		$(LIBALX_INC_DIR)/libalx/base/stdio/sprint_file.h
+ABOUT_SRC	=							\
+		$(SRC_DIR)/about.c
 
+DIST_INC	=							\
+		$(INC_DIR)/estadistica/dist.h				\
+		$(LIBALX_INC_DIR)/libalx/base/math/descriptive_statistics_1var.h \
+		$(LIBALX_INC_DIR)/libalx/base/math/descriptive_statistics_2var.h \
+		$(LIBALX_INC_DIR)/libalx/base/math/distribution_binomial.h \
+		$(LIBALX_INC_DIR)/libalx/base/math/distribution_exponential.h \
+		$(LIBALX_INC_DIR)/libalx/base/math/distribution_geometric.h \
+		$(LIBALX_INC_DIR)/libalx/base/math/distribution_normal.h \
+		$(LIBALX_INC_DIR)/libalx/base/math/distribution_poisson.h \
+		$(LIBALX_INC_DIR)/libalx/base/math/distribution_uniform.h \
+		$(LIBALX_INC_DIR)/libalx/base/math/fast.h		\
+		$(LIBALX_INC_DIR)/libalx/base/stdio/get.h
+DIST_SRC	=							\
+		$(SRC_DIR)/dist.c
+
+MAIN_INC	=							\
+		$(LIBALX_INC_DIR)/libalx/extra/ncurses/common.h		\
+		$(INC_DIR)/estadistica/about.h				\
+		$(INC_DIR)/estadistica/menus.h				\
+		$(INC_DIR)/estadistica/parse.h
+MAIN_SRC	=							\
+		$(SRC_DIR)/main.c
+
+MENUS_INC	=							\
+		$(INC_DIR)/estadistica/menus.h				\
+		$(LIBALX_INC_DIR)/libalx/extra/ncurses/common.h		\
+		$(LIBALX_INC_DIR)/libalx/extra/ncurses/menu.h		\
+		$(INC_DIR)/estadistica/about.h				\
+		$(INC_DIR)/estadistica/start.h
+MENUS_SRC	=							\
+		$(SRC_DIR)/menus.c
+
+PARSE_INC	=							\
+		$(INC_DIR)/estadistica/parse.h				\
+		$(LIBALX_INC_DIR)/libalx/base/stdio/sscan.h		\
+		$(INC_DIR)/estadistica/about.h				\
+		$(INC_DIR)/estadistica/menus.h				\
+		$(INC_DIR)/estadistica/start.h
+PARSE_SRC	=							\
+		$(SRC_DIR)/parse.c
+
+START_INC	=							\
+		$(INC_DIR)/estadistica/start.h				\
+		$(INC_DIR)/estadistica/about.h				\
+		$(INC_DIR)/estadistica/dist.h
+START_SRC	=							\
+		$(SRC_DIR)/start.c
+
+################################################################################
 # target: dependencies
 #	action
 
-all: $(ALL)
+PHONY := all
+all: $(OBJ)
 
 
-main.s: $(MAIN_DEPS)
-	@echo	"	CC	$@"
-	$(Q)$(CC) $(CFLAGS) $(MAIN_INC_DIRS) -S $< -o $@ $(LIBS)
+about.s: $(ABOUT_SRC) $(ABOUT_INC)
+	@echo	"	CC	estadistica/tmp/$@"
+	$(Q)$(CC) $(CFLAGS) -I $(INC_DIR) -I $(LIBALX_INC_DIR) -S $< -o $@
+about.o: about.s
+	@echo	"	AS	estadistica/tmp/$@"
+	$(Q)$(AS) $< -o $@
+
+dist.s: $(DIST_SRC) $(DIST_INC)
+	@echo	"	CC	estadistica/tmp/$@"
+	$(Q)$(CC) $(CFLAGS) -I $(INC_DIR) -I $(LIBALX_INC_DIR) -S $< -o $@
+dist.o: dist.s
+	@echo	"	AS	estadistica/tmp/$@"
+	$(Q)$(AS) $< -o $@
+
+main.s: $(MAIN_SRC) $(MAIN_INC)
+	@echo	"	CC	estadistica/tmp/$@"
+	$(Q)$(CC) $(CFLAGS) -I $(INC_DIR) -I $(LIBALX_INC_DIR) -S $< -o $@
 main.o: main.s
-	@echo	"	AS	$@"
+	@echo	"	AS	estadistica/tmp/$@"
+	$(Q)$(AS) $< -o $@
+
+menus.s: $(MENUS_SRC) $(MENUS_INC)
+	@echo	"	CC	estadistica/tmp/$@"
+	$(Q)$(CC) $(CFLAGS) -I $(INC_DIR) -I $(LIBALX_INC_DIR) -S $< -o $@
+menus.o: menus.s
+	@echo	"	AS	estadistica/tmp/$@"
+	$(Q)$(AS) $< -o $@
+
+parse.s: $(PARSE_SRC) $(PARSE_INC)
+	@echo	"	CC	estadistica/tmp/$@"
+	$(Q)$(CC) $(CFLAGS) -I $(INC_DIR) -I $(LIBALX_INC_DIR) -S $< -o $@
+parse.o: parse.s
+	@echo	"	AS	estadistica/tmp/$@"
+	$(Q)$(AS) $< -o $@
+
+start.s: $(START_SRC) $(START_INC)
+	@echo	"	CC	estadistica/tmp/$@"
+	$(Q)$(CC) $(CFLAGS) -I $(INC_DIR) -I $(LIBALX_INC_DIR) -S $< -o $@
+start.o: start.s
+	@echo	"	AS	estadistica/tmp/$@"
 	$(Q)$(AS) $< -o $@
 
 
+PHONY += clean
 clean:
 	$(Q)rm -f *.o *.s
+
+################################################################################
+# Declare the contents of the .PHONY variable as phony.
+.PHONY: $(PHONY)
+
 
 ################################################################################
 ######## End of file ###########################################################

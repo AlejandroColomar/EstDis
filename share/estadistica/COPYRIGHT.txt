@@ -1,5 +1,4 @@
 
-
 	estadistica	Copyright (C) 2015	Alejandro COLOMAR ANDRES
 
 	This program comes with ABSOLUTELY NO WARRANTY.

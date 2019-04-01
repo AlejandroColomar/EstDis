@@ -33,14 +33,13 @@
  * SERVICING, REPAIR OR CORRECTION.					      *
  ******************************************************************************/
 
-https://github.com/AlejandroColomar/EstDis/
+https://github.com/alejandro-colomar/estadistica
 
 compiling on linux:
 	$ make
-compiling on windows (mingw with msys):
-	$ make OS=win
+
+installing on linux:
+	# make install
 
 running on linux:
-	.../EstDis/ $ cd bin/ && ./estdis && cd ..
-running on windows:
-	run 'estdis.exe' which is in ...\EstDis\win\
+	$ estadistica3
