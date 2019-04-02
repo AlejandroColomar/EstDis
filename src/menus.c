@@ -158,12 +158,14 @@ static	void	menu_continue	(void)
 		case 1:
 			alx_ncurses_pause();
 			start_switch();
+			getchar();
 			alx_ncurses_resume();
 			break;
 
 		case 2:
 			alx_ncurses_pause();
 			help_switch();
+			getchar();
 			alx_ncurses_resume();
 			break;
 
