@@ -37,6 +37,7 @@
 
 #include <ncurses.h>
 
+#include "libalx/base/stdio/wait.h"
 #include "libalx/extra/ncurses/common.h"
 #include "libalx/extra/ncurses/menu.h"
 
@@ -110,13 +111,13 @@ void	menu_main		(void)
 		case 2:
 			alx_ncurses_pause();
 			print_share_file(SHARE_DISCLAIMER);
-			getchar();
+			alx_wait4enter();
 			alx_ncurses_resume();
 			break;
 		case 3:
 			alx_ncurses_pause();
 			print_share_file(SHARE_LICENSE);
-			getchar();
+			alx_wait4enter();
 			alx_ncurses_resume();
 			break;
 		}
@@ -158,14 +159,14 @@ static	void	menu_continue	(void)
 		case 1:
 			alx_ncurses_pause();
 			start_switch();
-			getchar();
+			alx_wait4enter();
 			alx_ncurses_resume();
 			break;
 
 		case 2:
 			alx_ncurses_pause();
 			help_switch();
-			getchar();
+			alx_wait4enter();
 			alx_ncurses_resume();
 			break;
 

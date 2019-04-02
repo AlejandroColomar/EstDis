@@ -42,6 +42,7 @@ DIST_SRC	=							\
 		$(SRC_DIR)/dist.c
 
 MAIN_INC	=							\
+		$(LIBALX_INC_DIR)/libalx/base/stdio/wait.h		\
 		$(LIBALX_INC_DIR)/libalx/extra/ncurses/common.h		\
 		$(INC_DIR)/estadistica/about.h				\
 		$(INC_DIR)/estadistica/menus.h				\
@@ -51,6 +52,7 @@ MAIN_SRC	=							\
 
 MENUS_INC	=							\
 		$(INC_DIR)/estadistica/menus.h				\
+		$(LIBALX_INC_DIR)/libalx/base/stdio/wait.h		\
 		$(LIBALX_INC_DIR)/libalx/extra/ncurses/common.h		\
 		$(LIBALX_INC_DIR)/libalx/extra/ncurses/menu.h		\
 		$(INC_DIR)/estadistica/about.h				\
