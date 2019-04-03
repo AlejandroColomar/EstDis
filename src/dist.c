@@ -50,14 +50,14 @@
 /******************************************************************************
  ******* static functions (prototypes) ****************************************
  ******************************************************************************/
-static	void		dist_normal_normalize	(double_t a, double_t b);
-static	void		dist_normal_x2z		(double_t a, double_t b);
-static	void		dist_normal_z2x		(double_t a, double_t b);
-static	double_t	dist_binomial_P		(ptrdiff_t c,
-						int_fast16_t n, double_t p);
-static	double_t	dist_poisson_P		(ptrdiff_t c, double_t l);
-static	double_t	dist_geometric_P	(ptrdiff_t c,
-						double_t p);
+static	void		dist_normal_normalize	(long double a, long double b);
+static	void		dist_normal_x2z		(long double a, long double b);
+static	void		dist_normal_z2x		(long double a, long double b);
+static	long double	dist_binomial_P		(ptrdiff_t c,
+						int_fast16_t n, long double p);
+static	long double	dist_poisson_P		(ptrdiff_t c, long double l);
+static	long double	dist_geometric_P	(ptrdiff_t c,
+						long double p);
 
 
 /******************************************************************************
@@ -66,7 +66,7 @@ static	double_t	dist_geometric_P	(ptrdiff_t c,
 void	desc_1var	(void)
 {
 	ptrdiff_t	N;
-	struct Alx_Descriptive_Statistics_1var	stats;
+	struct Alx_Descriptive_Statistics_1var_Ldbl	stats;
 
 	printf("\n________________________________________________________________________________\n");
 	printf("mu (u)		= E(ni*xi) / n		--Media.\n");
@@ -79,33 +79,33 @@ void	desc_1var	(void)
 
 	N = alx_get_ptrdiff(ALX_DS1V_N_MIN, 2, PTRDIFF_MAX, "N:", NULL, 3);
 
-	double	x[N];
-	double	n[N];
+	long double	x[N];
+	long double	n[N];
 
 	for (ptrdiff_t i = 0; i < N; i++) {
 		printf("x_%ti:", i);
-		x[i]	= alx_get_dbl(-INFINITY, 0, INFINITY, NULL, NULL, 3);
+		x[i]	= alx_get_ldbl(-INFINITY, 0, INFINITY, NULL, NULL, 3);
 		printf("n_%ti:", i);
-		n[i]	= alx_get_dbl(-INFINITY, 1, INFINITY, NULL, NULL, 3);
+		n[i]	= alx_get_ldbl(-INFINITY, 1, INFINITY, NULL, NULL, 3);
 		printf("\n");
 	}
 
-	stats	= alx_descriptive_statistics_1var(N, x, n);
+	stats	= alx_descriptive_statistics_1var_ldbl(N, x, n);
 
 	printf("\n");
-	printf("u	= %lf\n", stats.u);
-	printf("o2	= %lf\n", stats.o2);
-	printf("o	= %lf\n", stats.o);
-	printf("s2	= %lf\n", stats.s2);
-	printf("s	= %lf\n", stats.s);
-	printf("CV	= %lf\n", stats.CV);
+	printf("u	= %Le\n", stats.u);
+	printf("o2	= %Le\n", stats.o2);
+	printf("o	= %Le\n", stats.o);
+	printf("s2	= %Le\n", stats.s2);
+	printf("s	= %Le\n", stats.s);
+	printf("CV	= %Le\n", stats.CV);
 	printf("\n");
 }
 
 void	desc_2var	(void)
 {
 	ptrdiff_t	N;
-	struct Alx_Descriptive_Statistics_2var	stats;
+	struct Alx_Descriptive_Statistics_2var_Ldbl	stats;
 
 	printf("\n");
 	printf("________________________________________________________________________________\n");
@@ -123,38 +123,38 @@ void	desc_2var	(void)
 
 	N = alx_get_ptrdiff(ALX_DS1V_N_MIN, 2, PTRDIFF_MAX, "n:", NULL, 3);
 
-	double	x[N];
-	double	y[N];
+	long double	x[N];
+	long double	y[N];
 
 	for (ptrdiff_t i = 0; i < N; i++) {
 		printf("x_%ti:", i);
-		x[i] = alx_get_dbl(-INFINITY, 0, INFINITY, NULL, NULL, 3);
+		x[i] = alx_get_ldbl(-INFINITY, 0, INFINITY, NULL, NULL, 3);
 		printf("y_%ti:", i);
-		y[i] = alx_get_dbl(-INFINITY, 0, INFINITY, NULL, NULL, 3);
+		y[i] = alx_get_ldbl(-INFINITY, 0, INFINITY, NULL, NULL, 3);
 		printf("\n");
 	}
 
-	stats	= alx_descriptive_statistics_2var(N, x, y);
+	stats	= alx_descriptive_statistics_2var_ldbl(N, x, y);
 
 	printf("\n");
-	printf("ux	= %lf\n", stats.ux);
-	printf("ox2	= %lf\n", stats.ox2);
-	printf("ox	= %lf\n", stats.ox);
-	printf("uy	= %lf\n", stats.uy);
-	printf("oy2	= %lf\n", stats.oy2);
-	printf("oy	= %lf\n", stats.oy);
-	printf("oxy	= %lf\n", stats.oxy);
-	printf("a	= %lf\n", stats.a);
-	printf("Aa	= %lf\n", stats.Aa);
-	printf("b	= %lf\n", stats.b);
-	printf("Ab	= %lf\n", stats.Ab);
-	printf("c	= %lf\n", stats.c);
-	printf("Ac	= %lf\n", stats.Ac);
-	printf("d	= %lf\n", stats.d);
-	printf("Ad	= %lf\n", stats.Ad);
-	printf("r	= %lf\n", stats.r);
-	printf("Vr	= %lf\n", stats.Vr);
-	printf("R2	= %lf\n", stats.R2);
+	printf("ux	= %Le\n", stats.ux);
+	printf("ox2	= %Le\n", stats.ox2);
+	printf("ox	= %Le\n", stats.ox);
+	printf("uy	= %Le\n", stats.uy);
+	printf("oy2	= %Le\n", stats.oy2);
+	printf("oy	= %Le\n", stats.oy);
+	printf("oxy	= %Le\n", stats.oxy);
+	printf("a	= %Le\n", stats.a);
+	printf("Aa	= %Le\n", stats.Aa);
+	printf("b	= %Le\n", stats.b);
+	printf("Ab	= %Le\n", stats.Ab);
+	printf("c	= %Le\n", stats.c);
+	printf("Ac	= %Le\n", stats.Ac);
+	printf("d	= %Le\n", stats.d);
+	printf("Ad	= %Le\n", stats.Ad);
+	printf("r	= %Le\n", stats.r);
+	printf("Vr	= %Le\n", stats.Vr);
+	printf("R2	= %Le\n", stats.R2);
 	printf("\n");
 }
 
@@ -162,9 +162,9 @@ void	desc_2var	(void)
 void	dist_binomial	(void)
 {
 	int_fast16_t	n;
-	double_t	p;
+	long double	p;
 	ptrdiff_t	c;
-	double_t	P, E, Var;
+	long double	P, E, Var;
 
 	printf("\n");
 	printf("________________________________________________________________________________\n");
@@ -177,33 +177,35 @@ void	dist_binomial	(void)
 	printf("\n");
 
 	n	= alx_get_s16(DIST_BINOMIAL_n_MIN, 1, INT16_MAX, "n:", NULL, 3);
-	p	= alx_get_dbl(DIST_BINOMIAL_p_MIN, 0.5, DIST_BINOMIAL_p_MAX,
+	p	= alx_get_ldbl(DIST_BINOMIAL_p_MIN, 0.5, DIST_BINOMIAL_p_MAX,
 								"p:", NULL, 3);
-	c	= alx_get_ptrdiff(0, 1, INT16_MAX, "c:", NULL, 3);
 
-	P	= dist_binomial_P(c, n, p);
-	E	= alx_distribution_binomial_E(n, p);
-	Var	= alx_distribution_binomial_Var(n, p);
-
-	printf("\n");
-	printf("P{X}	= %"PRIdbl"\n", P);
-	printf("E(X)	= %"PRIdbl"\n", E);
-	printf("Var(X)	= %"PRIdbl"\n", Var);
+	E	= alx_ldbl_distribution_binomial_E(n, p);
+	Var	= alx_ldbl_distribution_binomial_Var(n, p);
 
 	if (((n * p) > 5)  &&  ((n * (1 - p)) > 5)) {
 		printf("\n");
 		printf("Aproximacion a Distribucion Normal N(u = np, o2 = np(1-p))\n");
-		printf("u	= %"PRIdbl"\n", E);
-		printf("o2	= %"PRIdbl"\n", Var);
+		printf("u	= %Le\n", E);
+		printf("o2	= %Le\n", Var);
+		printf("\n");
 	}
+
+	c	= alx_get_ptrdiff(0, 1, INT16_MAX, "c:", NULL, 3);
+	P	= dist_binomial_P(c, n, p);
+
+	printf("\n");
+	printf("P{X}	= %Le\n", P);
+	printf("E(X)	= %Le\n", E);
+	printf("Var(X)	= %Le\n", Var);
 	printf("\n");
 }
 
 void	dist_poisson	(void)
 {
-	double_t	l;
+	long double	l;
 	ptrdiff_t	c;
-	double_t	P, E, Var;
+	long double	P, E, Var;
 
 	printf("\n");
 	printf("________________________________________________________________________________\n");
@@ -214,25 +216,25 @@ void	dist_poisson	(void)
 	printf("c	= cantidad de x que interesan (inroducir [0] para intervalo [a U b])\n");
 	printf("\n");
 
-	l	= alx_get_dbl(DIST_POISSON_l_MIN, 1, INFINITY, "l:", NULL, 3);
+	l	= alx_get_ldbl(DIST_POISSON_l_MIN, 1, INFINITY, "l:", NULL, 3);
 	c	= alx_get_ptrdiff(0, 1, INT16_MAX, "c:", NULL, 3);
 
 	P	= dist_poisson_P(c, l);
-	E	= alx_distribution_poisson_E(l);
-	Var	= alx_distribution_poisson_Var(l);
+	E	= alx_ldbl_distribution_poisson_E(l);
+	Var	= alx_ldbl_distribution_poisson_Var(l);
 
 	printf("\n");
-	printf("P{X}	= %"PRIdbl"\n", P);
-	printf("E(X)	= %"PRIdbl"\n", E);
-	printf("Var(X)	= %"PRIdbl"\n", Var);
+	printf("P{X}	= %Le\n", P);
+	printf("E(X)	= %Le\n", E);
+	printf("Var(X)	= %Le\n", Var);
 	printf("\n");
 }
 
 void	dist_geometric	(void)
 {
-	double_t	p;
+	long double	p;
 	ptrdiff_t	c;
-	double_t	P, E, Var;
+	long double	P, E, Var;
 
 	printf("\n");
 	printf("________________________________________________________________________________\n");
@@ -243,27 +245,27 @@ void	dist_geometric	(void)
 	printf("c	= cantidad de x que interesan (inroducir [0] para intervalo [a U b])\n");
 	printf("\n");
 
-	p	= alx_get_dbl(DIST_GEOMETRIC_p_MIN, 0.5, DIST_GEOMETRIC_p_MAX,
+	p	= alx_get_ldbl(DIST_GEOMETRIC_p_MIN, 0.5, DIST_GEOMETRIC_p_MAX,
 							"p:", NULL, 3);
 	c	= alx_get_ptrdiff(0, 1, INT32_MAX, "c:", NULL, 3);
 
 	P	= dist_geometric_P(c, p);
-	E	= alx_distribution_geometric_E(p);
-	Var	= alx_distribution_geometric_Var(p);
+	E	= alx_ldbl_distribution_geometric_E(p);
+	Var	= alx_ldbl_distribution_geometric_Var(p);
 
 	printf("\n");
-	printf("P{X=x}	= %"PRIdbl"\n", P);
-	printf("E(X)	= %"PRIdbl"\n", E);
-	printf("Var(X)	= %"PRIdbl"\n", Var);
+	printf("P{X=x}	= %Le\n", P);
+	printf("E(X)	= %Le\n", E);
+	printf("Var(X)	= %Le\n", Var);
 	printf("\n");
 }
 
 
 void	dist_uniform	(void)
 {
-	double_t	a, b;
-	double_t	x1, x2;
-	double_t	P, E, Var;
+	long double	a, b;
+	long double	x1, x2;
+	long double	P, E, Var;
 
 	printf("\n");
 	printf("________________________________________________________________________________\n");
@@ -275,28 +277,28 @@ void	dist_uniform	(void)
 	printf("x2	= limite superior de interes.\n");
 	printf("\n");
 
-	a	= alx_get_dbl(-INFINITY, 0, INFINITY, "a:", NULL, 3);
-	b	= alx_get_dbl(a, a, INFINITY, "b:", NULL, 3);
-	x1	= alx_get_dbl(a, a, b, "x1:", NULL, 3);
-	x2	= alx_get_dbl(x1, x1, b, "x2:", NULL, 3);
+	a	= alx_get_ldbl(-INFINITY, 0, INFINITY, "a:", NULL, 3);
+	b	= alx_get_ldbl(a, a, INFINITY, "b:", NULL, 3);
+	x1	= alx_get_ldbl(a, a, b, "x1:", NULL, 3);
+	x2	= alx_get_ldbl(x1, x1, b, "x2:", NULL, 3);
 
-	P	= alx_distribution_uniform_P(a, b, x1, x2);
-	E	= alx_distribution_uniform_E(a, b);
-	Var	= alx_distribution_uniform_Var(a, b);
+	P	= alx_ldbl_distribution_uniform_P(a, b, x1, x2);
+	E	= alx_ldbl_distribution_uniform_E(a, b);
+	Var	= alx_ldbl_distribution_uniform_Var(a, b);
 
 	printf("\n");
-	printf("P{x1<X<x2}	= %"PRIdbl"\n", P);
-	printf("E(X)		= %"PRIdbl"\n", E);
-	printf("Var(X)		= %"PRIdbl"\n", Var);
+	printf("P{x1<X<x2}	= %Le\n", P);
+	printf("E(X)		= %Le\n", E);
+	printf("Var(X)		= %Le\n", Var);
 	printf("\n");
 }
 
 
 void	dist_exponential(void)
 {
-	double_t	b;
-	double_t	x1, x2;
-	double_t	P, E, Var;
+	long double	b;
+	long double	x1, x2;
+	long double	P, E, Var;
 
 	printf("\n");
 	printf("________________________________________________________________________________\n");
@@ -308,25 +310,25 @@ void	dist_exponential(void)
 	printf("x2		= limite superior de interes.\n");
 	printf("\n");
 
-	b	= alx_get_dbl(DIST_BINOMIAL_b_MIN, 1, INFINITY, "b:", NULL, 3);
-	x1	= alx_get_dbl(DIST_BINOMIAL_x_MIN, 1, INFINITY, "x1:", NULL, 3);
-	x2	= alx_get_dbl(x1, x1 + 1, INFINITY, "x2:", NULL, 3);
+	b	= alx_get_ldbl(DIST_BINOMIAL_b_MIN, 1, INFINITY, "b:", NULL, 3);
+	x1	= alx_get_ldbl(DIST_BINOMIAL_x_MIN, 1, INFINITY, "x1:", NULL, 3);
+	x2	= alx_get_ldbl(x1, x1 + 1, INFINITY, "x2:", NULL, 3);
 
-	P	= alx_distribution_exponential_P(b, x1, x2);
-	E	= alx_distribution_exponential_E(b);
-	Var	= alx_distribution_exponential_Var(b);
+	P	= alx_ldbl_distribution_exponential_P(b, x1, x2);
+	E	= alx_ldbl_distribution_exponential_E(b);
+	Var	= alx_ldbl_distribution_exponential_Var(b);
 
 	printf("\n");
-	printf("P{x1<X<x2}	= %"PRIdbl"\n", P);
-	printf("E(X)		= %"PRIdbl"\n", E);
-	printf("Var(X)		= %"PRIdbl"\n", Var);
+	printf("P{x1<X<x2}	= %Le\n", P);
+	printf("E(X)		= %Le\n", E);
+	printf("Var(X)		= %Le\n", Var);
 	printf("\n");
 }
 
 void	dist_normal	(void)
 {
-	double_t	u, o2;
-	double_t	o, a, b;
+	long double	u, o2;
+	long double	o, a, b;
 
 	printf("\n");
 	printf("________________________________________________________________________________\n");
@@ -343,16 +345,16 @@ void	dist_normal	(void)
 	printf("b	= -u/o\n");
 	printf("\n");
 
-	u	= alx_get_dbl(-INFINITY, 0, INFINITY, "u:", NULL, 3);
-	o2	= alx_get_dbl(DIST_NORMAL_o2_MIN, 1, INFINITY, "o2:", NULL, 3);
+	u	= alx_get_ldbl(-INFINITY, 0, INFINITY, "u:", NULL, 3);
+	o2	= alx_get_ldbl(DIST_NORMAL_o2_MIN, 1, INFINITY, "o2:", NULL, 3);
 
 	o	= sqrt(o2);
-	a	= alx_distribution_normal_A(o);
-	b	= alx_distribution_normal_B(u, o);
+	a	= alx_ldbl_distribution_normal_A(o);
+	b	= alx_ldbl_distribution_normal_B(u, o);
 
 	printf("\n");
-	printf("a	= %"PRIdbl"\n", a);
-	printf("b	= %"PRIdbl"\n", b);
+	printf("a	= %Le\n", a);
+	printf("b	= %Le\n", b);
 	printf("\n");
 
 	dist_normal_normalize(a, b);
@@ -362,7 +364,7 @@ void	dist_normal	(void)
 /******************************************************************************
  ******* static functions (definitions) ***************************************
  ******************************************************************************/
-static	void		dist_normal_normalize	(double_t a, double_t b)
+static	void		dist_normal_normalize	(long double a, long double b)
 {
 	int_fast8_t	sw;
 	bool		wh;
@@ -388,33 +390,33 @@ static	void		dist_normal_normalize	(double_t a, double_t b)
 	}
 }
 
-static	void		dist_normal_x2z		(double_t a, double_t b)
+static	void		dist_normal_x2z		(long double a, long double b)
 {
-	double_t	x;
-	double_t	z;
+	long double	x;
+	long double	z;
 
-	printf("Z = %"PRIdbl" * X + %"PRIdbl"\n", a, b);
-	x	= alx_get_dbl(-INFINITY, 1, INFINITY, "x:", NULL, 3);
-	z	= alx_distribution_normal_X2Z(a, b, x);
-	printf("\nz = %"PRIdbl"\n", z);
+	printf("Z = %Le * X + %Le\n", a, b);
+	x	= alx_get_ldbl(-INFINITY, 1, INFINITY, "x:", NULL, 3);
+	z	= alx_ldbl_distribution_normal_X2Z(a, b, x);
+	printf("\nz = %Le\n", z);
 }
 
-static	void		dist_normal_z2x	(double_t a, double_t b)
+static	void		dist_normal_z2x	(long double a, long double b)
 {
-	double_t	z;
-	double_t	x;
+	long double	z;
+	long double	x;
 
-	printf("X = (Z - %"PRIdbl") / %"PRIdbl"\n", b, a);
-	z	= alx_get_dbl(-INFINITY, 1, INFINITY, "z:", NULL, 3);
-	x	= alx_distribution_normal_Z2X(a, b, z);
-	printf("\nx = %"PRIdbl"\n", x);
+	printf("X = (Z - %Le) / %Le\n", b, a);
+	z	= alx_get_ldbl(-INFINITY, 1, INFINITY, "z:", NULL, 3);
+	x	= alx_ldbl_distribution_normal_Z2X(a, b, z);
+	printf("\nx = %Le\n", x);
 }
 
-static	double_t	dist_binomial_P		(ptrdiff_t c,
-						int_fast16_t n, double_t p)
+static	long double	dist_binomial_P		(ptrdiff_t c,
+						int_fast16_t n, long double p)
 {
 	int_fast16_t	x[c];
-	double_t	Pi, P;
+	long double	Pi, P;
 	int_fast16_t	a, b;
 	char		txt[80];
 
@@ -432,14 +434,14 @@ static	double_t	dist_binomial_P		(ptrdiff_t c,
 	P = 0;
 	if (c) {
 		for (ptrdiff_t i = 0; i < c; i++) {
-			Pi	= alx_distribution_binomial_P(n, p, x[i]);
-			printf("P_%"PRIiFAST16"\t= %"PRIdbl"\n", x[i], Pi);
+			Pi	= alx_ldbl_distribution_binomial_P(n, p, x[i]);
+			printf("P_%"PRIiFAST16"\t= %Le\n", x[i], Pi);
 			P += Pi;
 		}
 	} else {
 		for (int_fast16_t i = b; i >= a; i--) {
-			Pi	= alx_distribution_binomial_P(n, p, i);
-			printf("P_%"PRIiFAST16"\t= %"PRIdbl"\n", i, Pi);
+			Pi	= alx_ldbl_distribution_binomial_P(n, p, i);
+			printf("P_%"PRIiFAST16"\t= %Le\n", i, Pi);
 			P += Pi;
 		}
 	}
@@ -447,10 +449,10 @@ static	double_t	dist_binomial_P		(ptrdiff_t c,
 	return	P;
 }
 
-static	double_t	dist_poisson_P		(ptrdiff_t c, double_t l)
+static	long double	dist_poisson_P		(ptrdiff_t c, long double l)
 {
 	int_fast16_t	x[c];
-	double_t	Pi, P;
+	long double	Pi, P;
 	int_fast16_t	a, b;
 	char	txt[80];
 
@@ -468,14 +470,14 @@ static	double_t	dist_poisson_P		(ptrdiff_t c, double_t l)
 	P = 0;
 	if (c) {
 		for (ptrdiff_t i = 0; i < c; i++) {
-			Pi	= alx_distribution_poisson_P(l, x[i]);
-			printf("P_%"PRIiFAST16"\t= %"PRIdbl"\n", x[i], Pi);
+			Pi	= alx_ldbl_distribution_poisson_P(l, x[i]);
+			printf("P_%"PRIiFAST16"\t= %Le\n", x[i], Pi);
 			P += Pi;
 		}
 	} else {
 		for (int_fast16_t i = b; i >= a; i--) {
-			Pi	= alx_distribution_poisson_P(l, i);
-			printf("P_%"PRIiFAST16"\t= %"PRIdbl"\n", i, Pi);
+			Pi	= alx_ldbl_distribution_poisson_P(l, i);
+			printf("P_%"PRIiFAST16"\t= %Le\n", i, Pi);
 			P += Pi;
 		}
 	}
@@ -483,11 +485,11 @@ static	double_t	dist_poisson_P		(ptrdiff_t c, double_t l)
 	return	P;
 }
 
-static	double_t	dist_geometric_P	(ptrdiff_t c,
-						double_t p)
+static	long double	dist_geometric_P	(ptrdiff_t c,
+						long double p)
 {
 	int_fast32_t	x[c];
-	double_t	Pi, P;
+	long double	Pi, P;
 	int_fast32_t	a, b;
 	char		txt[80];
 
@@ -506,14 +508,14 @@ static	double_t	dist_geometric_P	(ptrdiff_t c,
 	P = 0;
 	if (c) {
 		for (ptrdiff_t i = 0; i < c; i++) {
-			Pi	= alx_distribution_geometric_P(p, x[i]);
-			printf("P_%"PRIiFAST32"\t= %"PRIdbl"\n", x[i], Pi);
+			Pi	= alx_ldbl_distribution_geometric_P(p, x[i]);
+			printf("P_%"PRIiFAST32"\t= %Le\n", x[i], Pi);
 			P += Pi;
 		}
 	} else {
 		for (int_fast32_t i = b; i >= a; i--) {
-			Pi	= alx_distribution_geometric_P(p, i);
-			printf("P_%"PRIiFAST32"\t= %"PRIdbl"\n", i, Pi);
+			Pi	= alx_ldbl_distribution_geometric_P(p, i);
+			printf("P_%"PRIiFAST32"\t= %Le\n", i, Pi);
 			P += Pi;
 		}
 	}

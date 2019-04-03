@@ -53,6 +53,7 @@ int	main	(int argc, char *argv[])
 	init_all(argc, argv);
 
 	print_share_file(SHARE_COPYRIGHT);
+	printf("Press ENTER to continue");
 	alx_wait4enter();
 
 	alx_ncurses_resume();

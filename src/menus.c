@@ -111,12 +111,14 @@ void	menu_main		(void)
 		case 2:
 			alx_ncurses_pause();
 			print_share_file(SHARE_DISCLAIMER);
+			printf("Press ENTER to continue");
 			alx_wait4enter();
 			alx_ncurses_resume();
 			break;
 		case 3:
 			alx_ncurses_pause();
 			print_share_file(SHARE_LICENSE);
+			printf("Press ENTER to continue");
 			alx_wait4enter();
 			alx_ncurses_resume();
 			break;
@@ -159,6 +161,7 @@ static	void	menu_continue	(void)
 		case 1:
 			alx_ncurses_pause();
 			start_switch();
+			printf("Press ENTER to continue");
 			alx_wait4enter();
 			alx_ncurses_resume();
 			break;
@@ -166,6 +169,7 @@ static	void	menu_continue	(void)
 		case 2:
 			alx_ncurses_pause();
 			help_switch();
+			printf("Press ENTER to continue");
 			alx_wait4enter();
 			alx_ncurses_resume();
 			break;
