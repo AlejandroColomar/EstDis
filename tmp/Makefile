@@ -22,6 +22,7 @@ OBJ		=							\
 
 ABOUT_INC	=							\
 		$(INC_DIR)/estadistica/about.h				\
+		$(LIBALX_INC_DIR)/libalx/base/errno/errno_str.h		\
 		$(LIBALX_INC_DIR)/libalx/base/stdio/sprint_file.h
 ABOUT_SRC	=							\
 		$(SRC_DIR)/about.c
@@ -129,7 +130,8 @@ start.o: start.s
 
 PHONY += clean
 clean:
-	$(Q)rm -f *.o *.s
+	@echo	"	RM	*.o *.s"
+	$(Q)rm -f	*.o *.s
 
 ################################################################################
 # Declare the contents of the .PHONY variable as phony.

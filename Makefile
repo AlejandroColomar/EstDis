@@ -1,4 +1,4 @@
-#!/usr/bin/make -f
+#! /usr/bin/make -f
 VERSION		= 3
 PATCHLEVEL	= ~b1
 SUBLEVEL	= 1
@@ -66,11 +66,6 @@ export	BUILD_VERBOSE
 MAKEFLAGS += --no-print-directory
 
 ################################################################################
-export	OS = linux
-export	TST = false
-export	DBG = false
-
-################################################################################
 PROGRAMVERSION	= $(VERSION)$(if $(PATCHLEVEL),.$(PATCHLEVEL)$(if $(SUBLEVEL),.$(SUBLEVEL)))$(EXTRAVERSION)
 export	PROGRAMVERSION
 
@@ -110,19 +105,21 @@ export	INSTALL_SHARE_DIR
 
 ################################################################################
 # Make variables (CC, etc...)
-  CC		= gcc
-  AS		= as
-  AR		= ar
-  LD		= ld
+  CC	= gcc
+  AS	= as
+  AR	= ar
+  LD	= ld
+  SZ	= size
 
 export	CC
 export	AS
 export	AR
 export	LD
+export	SZ
 
 ################################################################################
 # cflags
-CFLAGS_STD	= -std=c11
+CFLAGS_STD	= -std=c17
 CFLAGS_STD     += -Wpedantic
 
 CFLAGS_OPT	= -O3
@@ -178,7 +175,8 @@ all: bin
 
 PHONY += libalx
 libalx:
-	@echo	'	MAKE	libalx'
+	@echo	"	MAKE	$@"
+	$(Q)$(MAKE) errno	-C $(LIBALX_DIR)
 	$(Q)$(MAKE) math	-C $(LIBALX_DIR)
 	$(Q)$(MAKE) stdio	-C $(LIBALX_DIR)
 	$(Q)$(MAKE) stdlib	-C $(LIBALX_DIR)
@@ -187,13 +185,13 @@ libalx:
 
 PHONY += tmp
 tmp:
-	@echo	'	MAKE	tmp'
+	@echo	"	MAKE	$@"
 	$(Q)$(MAKE)	-C $(TMP_DIR)
 	@echo
 
-PHONY += binary
+PHONY += bin
 bin: tmp libalx
-	@echo	'	MAKE	bin'
+	@echo	"	MAKE	$@"
 	$(Q)$(MAKE)	-C $(BIN_DIR)
 	@echo
 
@@ -202,22 +200,22 @@ install: uninstall
 	@echo	"	Install:"
 	@echo	"	MKDIR	$(INSTALL_BIN_DIR)/"
 	$(Q)mkdir -p		$(DESTDIR)/$(INSTALL_BIN_DIR)/
-	@echo	"	CP -v	$(BIN_NAME)"
-	$(Q)cp -v			$(BIN_DIR)/$(BIN_NAME)	$(DESTDIR)/$(INSTALL_BIN_DIR)/
+	@echo	"	CP	$(BIN_NAME)"
+	$(Q)cp -v		$(BIN_DIR)/$(BIN_NAME)	$(DESTDIR)/$(INSTALL_BIN_DIR)/
 	@echo	"	MKDIR	$(INSTALL_SHARE_DIR)/estadistica/"
 	$(Q)mkdir -p		$(DESTDIR)/$(INSTALL_SHARE_DIR)/estadistica/
-	@echo	"	CP -rv	share/estadistica/*"
+	@echo	"	CP -r	share/estadistica/*"
 	$(Q)cp -r -v		./share/estadistica/*	$(DESTDIR)/$(INSTALL_SHARE_DIR)/estadistica/
 	@echo	"	Done"
 	@echo
 
 PHONY += uninstall
 uninstall:
-	@echo	"	Uninstall:"
-	@echo	'	RM	bin'
-	$(Q)rm -f	$(DESTDIR)/$(INSTALL_BIN_DIR)/$(BIN_NAME)
-	@echo	'	RM -r	share/estadistica/'
-	$(Q)rm -f -r	$(DESTDIR)/$(INSTALL_SHARE_DIR)/estadistica/
+	@echo	"	Clean old installations:"
+	@echo	"	RM	bin"
+	$(Q)rm -f		$(DESTDIR)/$(INSTALL_BIN_DIR)/$(BIN_NAME)
+	@echo	"	RM -r	$(INSTALL_SHARE_DIR)/estadistica/"
+	$(Q)rm -f -r		$(DESTDIR)/$(INSTALL_SHARE_DIR)/estadistica/
 	@echo	"	Done"
 	@echo
 
@@ -228,8 +226,8 @@ clean:
 	$(Q)find $(TMP_DIR) -type f -name '*.s' -exec rm '{}' '+'
 	$(Q)find $(BIN_DIR) -type f -name '*$(BIN_NAME)' -exec rm '{}' '+'
 
-PHONY += mrproper
-mrproper: clean
+PHONY += distclean
+distclean: clean
 	@echo	'	CLEAN	libalx'
 	$(Q)$(MAKE) clean	-C $(LIBALX_DIR)
 	@echo
@@ -238,14 +236,13 @@ PHONY += help
 help:
 	@echo  'Cleaning targets:'
 	@echo  '  clean		  - Remove all generated files'
-	@echo  '  mrproper	  - Remove all generated files (including libraries)'
+	@echo  '  distclean	  - Remove all generated files (including libraries)'
 	@echo  ''
 	@echo  'Other generic targets:'
 	@echo  '  all		  - Build all targets marked with [*]'
 	@echo  '* libalx	  - Build the libalx library'
-	@echo  '* modules	  - Build all modules'
-	@echo  '* object	  - Build the main object'
-	@echo  '* binary	  - Build the binary'
+	@echo  '* tmp		  - Compile all files'
+	@echo  '* bin		  - Build the binary'
 	@echo  '  install	  - Install the program into the filesystem'
 	@echo  '  uninstall	  - Uninstall the program off the filesystem'
 	@echo  ''
@@ -257,8 +254,6 @@ help:
 ################################################################################
 # Declare the contents of the .PHONY variable as phony.
 .PHONY: $(PHONY)
-
-
 
 
 ################################################################################

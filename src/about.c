@@ -12,7 +12,9 @@
 #include <errno.h>
 #include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
 
+#include "libalx/base/errno/errno_str.h"
 #include "libalx/base/stdio/sprint_file.h"
 
 
@@ -51,7 +53,14 @@ char	share_path [FILENAME_MAX];
 void	about_init		(void)
 {
 
-	snprintf(share_path, FILENAME_MAX, "%s/estadistica/", INSTALL_SHARE_DIR);
+	if (snprintf(share_path, FILENAME_MAX, "%s/estadistica/",
+					INSTALL_SHARE_DIR)  >=  FILENAME_MAX) {
+		goto err;
+	}
+	return;
+err:
+	printf("Path is too large and has been truncated\n");
+	exit(EXIT_FAILURE);
 }
 
 void	snprint_share_file	(ptrdiff_t size, char buff[restrict size],
@@ -141,7 +150,7 @@ void	snprint_share_file	(ptrdiff_t size, char buff[restrict size],
 	}
 
 	if (alx_snprint_file(size, buff, fname) < 0)
-		printf("errno: %i", errno);
+		printf("%s: %s\n", errno_str[errno][0], errno_str[errno][1]);
 
 	return;
 
@@ -163,6 +172,7 @@ void	print_share_file	(int file)
 
 void	print_version		(void)
 {
+
 	printf(""PROG_NAME" "PROG_VERSION"\n\n");
 }
 
