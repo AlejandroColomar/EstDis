@@ -19,7 +19,7 @@ DEPS_LIBS	= 							\
 		$(LIBALX_LIB_DIR)/libalx-stdlib.a			\
 		$(LIBALX_LIB_DIR)/libalx-string.a
 
-ALL	= $(BIN_NAME)
+ALL	= $(BIN_NAME) size
 
 # static libs
 
@@ -43,10 +43,19 @@ $(BIN_NAME): $(OBJS) $(DEPS_LIBS)
 	@echo	"	CC	$@"
 	$(Q)$(CC) $(OBJS) -o $@ $(STATIC_LIBS) $(LIBS)
 
+size: $(BIN_NAME)
+	@echo	"	SZ	$(BIN_NAME)"
+	$(Q)$(SZ) $(BIN_NAME)
+
 
 clean:
 	@echo	"	RM	$(ALL)"
 	$(Q)rm -f	$(ALL)
+
+################################################################################
+# Declare the contents of the .PHONY variable as phony.
+.PHONY: $(PHONY)
+
 
 ################################################################################
 ######## End of file ###########################################################
