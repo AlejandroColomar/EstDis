@@ -154,6 +154,7 @@ LIBS_STD	= -l m
 LIBS_OPT	= -O3
 LIBS_OPT       += -march=native
 LIBS_OPT       += -flto
+LIBS_OPT       += -fuse-linker-plugin
 
 LIBS_PKG	= `pkg-config --libs ncurses`
 
