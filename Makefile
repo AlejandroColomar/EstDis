@@ -109,7 +109,7 @@ export	INSTALL_SHARE_DIR
   AS	= as
   AR	= ar
   LD	= ld
-  SZ	= size
+  SZ	= size --format=SysV
 
 export	CC
 export	AS
@@ -124,6 +124,7 @@ CFLAGS_STD     += -Wpedantic
 
 CFLAGS_OPT	= -O3
 CFLAGS_OPT     += -march=native
+CFLAGS_OPT     += -flto
 
 CFLAGS_W	= -Wall
 CFLAGS_W       += -Wextra
@@ -150,9 +151,14 @@ export	CFLAGS
 # libs
 LIBS_STD	= -l m
 
+LIBS_OPT	= -O3
+LIBS_OPT       += -march=native
+LIBS_OPT       += -flto
+
 LIBS_PKG	= `pkg-config --libs ncurses`
 
 LIBS		= $(LIBS_STD)
+LIBS           += $(LIBS_OPT)
 LIBS           += $(LIBS_PKG)
 
 export	LIBS
