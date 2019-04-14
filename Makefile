@@ -1,4 +1,5 @@
 #! /usr/bin/make -f
+
 VERSION		= 3
 PATCHLEVEL	= ~b1
 SUBLEVEL	= 3
@@ -105,11 +106,11 @@ export	INSTALL_SHARE_DIR
 
 ################################################################################
 # Make variables (CC, etc...)
-  CC	= gcc
-  AS	= as
-  AR	= ar
-  LD	= ld
-  SZ	= size --format=SysV
+CC	= gcc
+AS	= as
+AR	= ar
+LD	= ld
+SZ	= size --format=SysV
 
 export	CC
 export	AS
@@ -130,6 +131,7 @@ CFLAGS_W	= -Wall
 CFLAGS_W       += -Wextra
 CFLAGS_W       += -Wstrict-prototypes
 CFLAGS_W       += -Werror
+#CFLAGS_W       += -Wno-error=format-truncation
 #CFLAGS_W       += -Wno-error=unused-function
 #CFLAGS_W       += -Wno-error=unused-parameter
 
@@ -206,11 +208,11 @@ bin: tmp libalx
 PHONY += install
 install: uninstall
 	@echo	"	Install:"
-	@echo	"	MKDIR	$(INSTALL_BIN_DIR)/"
+	@echo	"	MKDIR	$(DESTDIR)/$(INSTALL_BIN_DIR)/"
 	$(Q)mkdir -p		$(DESTDIR)/$(INSTALL_BIN_DIR)/
 	@echo	"	CP	$(BIN_NAME)"
 	$(Q)cp -v		$(BIN_DIR)/$(BIN_NAME)	$(DESTDIR)/$(INSTALL_BIN_DIR)/
-	@echo	"	MKDIR	$(INSTALL_SHARE_DIR)/estadistica/"
+	@echo	"	MKDIR	$(DESTDIR)/$(INSTALL_SHARE_DIR)/estadistica/"
 	$(Q)mkdir -p		$(DESTDIR)/$(INSTALL_SHARE_DIR)/estadistica/
 	@echo	"	CP -r	share/estadistica/*"
 	$(Q)cp -r -v		./share/estadistica/*	$(DESTDIR)/$(INSTALL_SHARE_DIR)/estadistica/
@@ -222,7 +224,7 @@ uninstall:
 	@echo	"	Clean old installations:"
 	@echo	"	RM	bin"
 	$(Q)rm -f		$(DESTDIR)/$(INSTALL_BIN_DIR)/$(BIN_NAME)
-	@echo	"	RM -r	$(INSTALL_SHARE_DIR)/estadistica/"
+	@echo	"	RM -r	$(DESTDIR)/$(INSTALL_SHARE_DIR)/estadistica/"
 	$(Q)rm -f -r		$(DESTDIR)/$(INSTALL_SHARE_DIR)/estadistica/
 	@echo	"	Done"
 	@echo

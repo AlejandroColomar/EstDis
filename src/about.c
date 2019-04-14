@@ -10,12 +10,15 @@
 #include "estadistica/about.h"
 
 #include <errno.h>
+#include <limits.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "libalx/base/errno/errno_str.h"
+#include "libalx/base/stddef/size.h"
 #include "libalx/base/stdio/sprint_file.h"
+
 
 
 /******************************************************************************
@@ -53,8 +56,8 @@ char	share_path [FILENAME_MAX];
 void	about_init		(void)
 {
 
-	if (snprintf(share_path, FILENAME_MAX, "%s/estadistica/",
-					INSTALL_SHARE_DIR)  >=  FILENAME_MAX) {
+	if (snprintf(share_path, sizeof(share_path), "%s/estadistica/",
+				INSTALL_SHARE_DIR)  >=  SSIZEOF(share_path)) {
 		goto err;
 	}
 	return;
@@ -63,111 +66,100 @@ err:
 	exit(EXIT_FAILURE);
 }
 
-void	snprint_share_file	(ptrdiff_t size, char buff[restrict size],
-				int file)
+void	print_share_file	(int file)
 {
-	char	fname [FILENAME_MAX];
+	char	cmd[_POSIX_ARG_MAX];
+	char	fname[FILENAME_MAX];
 
 	switch (file) {
 	case SHARE_COPYRIGHT:
-		if (snprintf(fname, FILENAME_MAX, "%s/%s",
+		if (snprintf(fname, sizeof(fname), "%s/%s",
 				share_path,
-				"COPYRIGHT.txt")  >=  FILENAME_MAX) {
+				"COPYRIGHT.txt")  >=  SSIZEOF(fname)) {
 			goto err;
 		}
 		break;
 	case SHARE_DISCLAIMER:
-		if (snprintf(fname, FILENAME_MAX, "%s/%s",
+		if (snprintf(fname, sizeof(fname), "%s/%s",
 				share_path,
-				"DISCLAIMER.txt")  >=  FILENAME_MAX) {
+				"DISCLAIMER.txt")  >=  SSIZEOF(fname)) {
 			goto err;
 		}
 		break;
 	case SHARE_HELP:
-		if (snprintf(fname, FILENAME_MAX, "%s/%s",
+		if (snprintf(fname, sizeof(fname), "%s/%s",
 				share_path,
-				"HELP.txt")  >=  FILENAME_MAX) {
+				"HELP.txt")  >=  SSIZEOF(fname)) {
 			goto err;
 		}
 		break;
 	case SHARE_LICENSE:
-		if (snprintf(fname, FILENAME_MAX, "%s/%s",
+		if (snprintf(fname, sizeof(fname), "%s/%s",
 				share_path,
-				"LICENSE.txt")  >=  FILENAME_MAX) {
+				"LICENSE.txt")  >=  SSIZEOF(fname)) {
 			goto err;
 		}
 		break;
 	case SHARE_USAGE:
-		if (snprintf(fname, FILENAME_MAX, "%s/%s",
+		if (snprintf(fname, sizeof(fname), "%s/%s",
 				share_path,
-				"USAGE.txt")  >=  FILENAME_MAX) {
+				"USAGE.txt")  >=  SSIZEOF(fname)) {
 			goto err;
 		}
 		break;
 
 	case SHARE_DIST_BINOMIAL:
-		if (snprintf(fname, FILENAME_MAX, "%s/%s",
+		if (snprintf(fname, sizeof(fname), "%s/%s",
 				share_path,
-				"dist/binomial.txt")  >=  FILENAME_MAX) {
+				"dist/binomial.txt")  >=  SSIZEOF(fname)) {
 			goto err;
 		}
 		break;
 	case SHARE_DIST_POISSON:
-		if (snprintf(fname, FILENAME_MAX, "%s/%s",
+		if (snprintf(fname, sizeof(fname), "%s/%s",
 				share_path,
-				"dist/poisson.txt")  >=  FILENAME_MAX) {
+				"dist/poisson.txt")  >=  SSIZEOF(fname)) {
 			goto err;
 		}
 		break;
 	case SHARE_DIST_GEOMETRIC:
-		if (snprintf(fname, FILENAME_MAX, "%s/%s",
+		if (snprintf(fname, sizeof(fname), "%s/%s",
 				share_path,
-				"dist/geometric.txt")  >=  FILENAME_MAX) {
+				"dist/geometric.txt")  >=  SSIZEOF(fname)) {
 			goto err;
 		}
 		break;
 	case SHARE_DIST_HYPERGEOMETRIC:
-		if (snprintf(fname, FILENAME_MAX, "%s/%s",
+		if (snprintf(fname, sizeof(fname), "%s/%s",
 				share_path,
-				"dist/hypergeometric.txt")  >=  FILENAME_MAX) {
+				"dist/hypergeometric.txt")  >=  SSIZEOF(fname)) {
 			goto err;
 		}
 		break;
 	case SHARE_DIST_UNIFORM:
-		if (snprintf(fname, FILENAME_MAX, "%s/%s",
+		if (snprintf(fname, sizeof(fname), "%s/%s",
 				share_path,
-				"dist/uniform.txt")  >=  FILENAME_MAX) {
+				"dist/uniform.txt")  >=  SSIZEOF(fname)) {
 			goto err;
 		}
 		break;
 	case SHARE_DIST_EXPONENTIAL:
-		if (snprintf(fname, FILENAME_MAX, "%s/%s",
+		if (snprintf(fname, sizeof(fname), "%s/%s",
 				share_path,
-				"dist/exponential.txt")  >=  FILENAME_MAX) {
+				"dist/exponential.txt")  >=  SSIZEOF(fname)) {
 			goto err;
 		}
 		break;
 	}
 
-	if (alx_snprint_file(size, buff, fname) < 0)
-		printf("%s: %s\n", errno_str[errno][0], errno_str[errno][1]);
+	if (snprintf(cmd, sizeof(cmd), "less %s", fname)  >=  SSIZEOF(cmd))
+		goto err;
+	system(cmd);
 
 	return;
-
 err:
 	printf("Path is too large and has been truncated\n");
 	printf("File could not be shown!\n");
-}
-
-void	print_share_file	(int file)
-{
-	char	str [BUFF_SIZE_TEXT];
-
-	snprint_share_file(BUFF_SIZE_TEXT, str, file);
-
-	printf(BEGINNING);
-	printf("%s", str);
-	printf(ENDING);
 }
 
 void	print_version		(void)

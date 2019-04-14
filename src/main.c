@@ -9,7 +9,6 @@
  ******************************************************************************/
 #include <stdio.h>
 
-#include "libalx/base/stdio/wait.h"
 #include "libalx/extra/ncurses/common.h"
 
 #include "estadistica/about.h"
@@ -53,8 +52,6 @@ int	main	(int argc, char *argv[])
 	init_all(argc, argv);
 
 	print_share_file(SHARE_COPYRIGHT);
-	printf("Press ENTER to continue");
-	alx_wait4enter();
 
 	alx_ncurses_resume();
 	menu_main();
