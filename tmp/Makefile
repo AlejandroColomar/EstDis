@@ -22,8 +22,7 @@ OBJ		=							\
 
 ABOUT_INC	=							\
 		$(INC_DIR)/estadistica/about.h				\
-		$(LIBALX_INC_DIR)/libalx/base/errno/errno_str.h		\
-		$(LIBALX_INC_DIR)/libalx/base/stdio/sprint_file.h
+		$(LIBALX_INC_DIR)/libalx/base/errno/errno_str.h
 ABOUT_SRC	=							\
 		$(SRC_DIR)/about.c
 

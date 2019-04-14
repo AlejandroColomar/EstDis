@@ -17,7 +17,6 @@
 
 #include "libalx/base/errno/errno_str.h"
 #include "libalx/base/stddef/size.h"
-#include "libalx/base/stdio/sprint_file.h"
 
 
 
