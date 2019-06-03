@@ -138,8 +138,8 @@ void	print_share_file	(int file)
 	if (snprintf(cmd, sizeof(cmd), "less %s", fname)  >=  SSIZEOF(cmd))
 		goto err;
 	if (system(cmd)) {
-		fprintf(stderr, "%s[%i]: %s(): %s", __FILE__, __LINE__,
-						__func__, strerror(errno));
+		fprintf(stderr, "%s:%i: %s(): %s", __FILE__, __LINE__, __func__,
+							strerror(errno));
 	}
 
 	return;

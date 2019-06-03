@@ -21,7 +21,8 @@ OBJ		=							\
 		start.o
 
 ABOUT_INC	=							\
-		$(INC_DIR)/estadistica/about.h
+		$(INC_DIR)/estadistica/about.h				\
+		$(LIBALX_INC_DIR)/libalx/base/stddef/size.h
 ABOUT_SRC	=							\
 		$(SRC_DIR)/about.c
 
