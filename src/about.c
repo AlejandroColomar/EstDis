@@ -151,7 +151,7 @@ err:
 void	print_version		(void)
 {
 
-	printf(""PROG_NAME" "PROG_VERSION"\n\n");
+	printf("%s %s\n\n", PROG_NAME, PROG_VERSION);
 }
 
 

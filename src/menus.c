@@ -37,6 +37,7 @@
 
 #include <ncurses.h>
 
+#include "libalx/base/stddef/size.h"
 #include "libalx/base/stdio/wait.h"
 #include "libalx/extra/ncurses/common.h"
 #include "libalx/extra/ncurses/menu.h"
@@ -82,15 +83,13 @@ static	void	menu_verbose	(void);
 void	menu_main		(void)
 {
 	int_fast8_t	h, w;
-	int_fast8_t	N;
 	bool		wh;
 	int_fast8_t	sw;
 
 	h	= 23;
 	w	= 80;
 
-	N	= 4;
-	const struct Alx_Ncurses_Menu	mnu[4]	= {
+	const struct Alx_Ncurses_Menu	mnu[]	= {
 		{8, 4, "[0]	Exit program"},
 		{2, 4, "[1]	Continue"},
 		{4, 4, "[2]	Disclaimer of warranty"},
@@ -99,7 +98,7 @@ void	menu_main		(void)
 
 	wh	= true;
 	while (wh) {
-		sw	= alx_ncurses_menu(h, w, N, mnu, "MENU:");
+		sw	= alx_ncurses_menu(h, w, ARRAY_SIZE(mnu), mnu, "MENU:");
 
 		switch (sw) {
 		case 0:
@@ -129,15 +128,13 @@ void	menu_main		(void)
 static	void	menu_continue	(void)
 {
 	int_fast8_t	h, w;
-	int_fast8_t	N;
 	bool		wh;
 	int_fast8_t	sw;
 
 	h	= 23;
 	w	= 80;
 
-	N	= 5;
-	const struct Alx_Ncurses_Menu	mnu[5]	= {
+	const struct Alx_Ncurses_Menu	mnu[]	= {
 		{7, 4, "[0]	Back"},
 		{2, 4, "[1]	Run"},
 		{3, 4, "[2]	Help"},
@@ -147,7 +144,7 @@ static	void	menu_continue	(void)
 
 	wh	= true;
 	while (wh) {
-		sw	= alx_ncurses_menu(h, w, N, mnu, "CONTINUE:");
+		sw = alx_ncurses_menu(h, w, ARRAY_SIZE(mnu), mnu, "CONTINUE:");
 
 		switch (sw) {
 		case 0:
@@ -184,14 +181,12 @@ static	void	menu_continue	(void)
 static	void	menu_select	(void)
 {
 	int_fast8_t	h, w;
-	int_fast8_t	N;
 	int_fast8_t	opt;
 
 	h	= 23;
 	w	= 80;
 
-	N	= 10;
-	const struct Alx_Ncurses_Menu	mnu[10]	= {
+	const struct Alx_Ncurses_Menu	mnu[]	= {
 		{13, 4, "[0]	Back"},
 		{2, 4, "[1]	1 Variable"},
 		{3, 4, "[2]	2 Variables"},
@@ -204,7 +199,7 @@ static	void	menu_select	(void)
 		{11, 4, "[9]	Gauss(Normal)"}
 	};
 
-	opt	= alx_ncurses_menu(h, w, N, mnu, "SELECT:");
+	opt	= alx_ncurses_menu(h, w, ARRAY_SIZE(mnu), mnu, "SELECT:");
 	if (opt)
 		start_mode	= opt;
 }
@@ -212,13 +207,11 @@ static	void	menu_select	(void)
 static	void	menu_verbose	(void)
 {
 	int_fast8_t	h, w;
-	int_fast8_t	N;
 
 	h	= 23;
 	w	= 80;
 
-	N	= 5;
-	const struct Alx_Ncurses_Menu	mnu[5]	= {
+	const struct Alx_Ncurses_Menu	mnu[]	= {
 		{7, 4, "[0]	Show NOTHING"},
 		{2, 4, "[1]	Show only solution"},
 		{3, 4, "[2]	Show short help"},
@@ -230,7 +223,7 @@ static	void	menu_verbose	(void)
 # endif
 	};
 
-	flag_verbose	= alx_ncurses_menu(h, w, N, mnu, "VERBOSE:");
+	flag_verbose = alx_ncurses_menu(h, w, ARRAY_SIZE(mnu), mnu, "VERBOSE:");
 }
 
 

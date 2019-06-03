@@ -1,9 +1,9 @@
 #! /usr/bin/make -f
 
 VERSION		= 3
-PATCHLEVEL	= ~b1
-SUBLEVEL	= 3
-EXTRAVERSION	=
+PATCHLEVEL	= 0
+SUBLEVEL	= 0
+EXTRAVERSION	= ~b1.3
 NAME		=
 
 export	VERSION
@@ -93,7 +93,7 @@ export	INC_DIR
 export	SRC_DIR
 export	TMP_DIR
 
-# FIXME: Set local or not local when building a package
+# XXX: Set local or not local when building a package
 INSTALL_BIN_DIR		= /usr/local/bin/
 #INSTALL_BIN_DIR	= /usr/bin/
 INSTALL_SHARE_DIR	= /usr/local/share/
@@ -136,6 +136,7 @@ CFLAGS_W       += -Werror
 #CFLAGS_W       += -Wno-error=unused-parameter
 
 CFLAGS_PKG	= `pkg-config --cflags ncurses`
+CFLAGS_PKG     += -I $(LIBALX_INC_DIR)
 
 CFLAGS_D	= -D PROG_VERSION=\"$(PROGRAMVERSION)\"
 CFLAGS_D       += -D INSTALL_SHARE_DIR=\"$(INSTALL_SHARE_DIR)\"
@@ -246,7 +247,7 @@ help:
 	@echo  'Cleaning targets:'
 	@echo  '  clean		  - Remove all generated files'
 	@echo  '  distclean	  - Remove all generated files (including libraries)'
-	@echo  ''
+	@echo
 	@echo  'Other generic targets:'
 	@echo  '  all		  - Build all targets marked with [*]'
 	@echo  '* libalx	  - Build the libalx library'
@@ -254,9 +255,9 @@ help:
 	@echo  '* bin		  - Build the binary'
 	@echo  '  install	  - Install the program into the filesystem'
 	@echo  '  uninstall	  - Uninstall the program off the filesystem'
-	@echo  ''
+	@echo
 	@echo  '  make V=0|1 [targets] 0 => quiet build (default), 1 => verbose build'
-	@echo  ''
+	@echo
 	@echo  'Execute "make" or "make all" to build all targets marked with [*] '
 	@echo  'For further info see the ./README file'
 
