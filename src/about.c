@@ -9,9 +9,11 @@
  ******************************************************************************/
 #include "estadistica/about.h"
 
+#include <errno.h>
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "libalx/base/stddef/size.h"
 
@@ -54,7 +56,7 @@ void	about_init		(void)
 	}
 	return;
 err:
-	printf("Path is too large and has been truncated\n");
+	fprintf(stderr, "Path is too large and has been truncated\n");
 	exit(EXIT_FAILURE);
 }
 
@@ -65,79 +67,68 @@ void	print_share_file	(int file)
 
 	switch (file) {
 	case SHARE_COPYRIGHT:
-		if (snprintf(fname, sizeof(fname), "%s/%s",
-				share_path,
+		if (snprintf(fname, sizeof(fname), "%s/%s", share_path,
 				"COPYRIGHT.txt")  >=  SSIZEOF(fname)) {
 			goto err;
 		}
 		break;
 	case SHARE_DISCLAIMER:
-		if (snprintf(fname, sizeof(fname), "%s/%s",
-				share_path,
+		if (snprintf(fname, sizeof(fname), "%s/%s", share_path,
 				"DISCLAIMER.txt")  >=  SSIZEOF(fname)) {
 			goto err;
 		}
 		break;
 	case SHARE_HELP:
-		if (snprintf(fname, sizeof(fname), "%s/%s",
-				share_path,
+		if (snprintf(fname, sizeof(fname), "%s/%s", share_path,
 				"HELP.txt")  >=  SSIZEOF(fname)) {
 			goto err;
 		}
 		break;
 	case SHARE_LICENSE:
-		if (snprintf(fname, sizeof(fname), "%s/%s",
-				share_path,
+		if (snprintf(fname, sizeof(fname), "%s/%s", share_path,
 				"LICENSE.txt")  >=  SSIZEOF(fname)) {
 			goto err;
 		}
 		break;
 	case SHARE_USAGE:
-		if (snprintf(fname, sizeof(fname), "%s/%s",
-				share_path,
+		if (snprintf(fname, sizeof(fname), "%s/%s", share_path,
 				"USAGE.txt")  >=  SSIZEOF(fname)) {
 			goto err;
 		}
 		break;
 
 	case SHARE_DIST_BINOMIAL:
-		if (snprintf(fname, sizeof(fname), "%s/%s",
-				share_path,
+		if (snprintf(fname, sizeof(fname), "%s/%s", share_path,
 				"dist/binomial.txt")  >=  SSIZEOF(fname)) {
 			goto err;
 		}
 		break;
 	case SHARE_DIST_POISSON:
-		if (snprintf(fname, sizeof(fname), "%s/%s",
-				share_path,
+		if (snprintf(fname, sizeof(fname), "%s/%s", share_path,
 				"dist/poisson.txt")  >=  SSIZEOF(fname)) {
 			goto err;
 		}
 		break;
 	case SHARE_DIST_GEOMETRIC:
-		if (snprintf(fname, sizeof(fname), "%s/%s",
-				share_path,
+		if (snprintf(fname, sizeof(fname), "%s/%s", share_path,
 				"dist/geometric.txt")  >=  SSIZEOF(fname)) {
 			goto err;
 		}
 		break;
 	case SHARE_DIST_HYPERGEOMETRIC:
-		if (snprintf(fname, sizeof(fname), "%s/%s",
-				share_path,
+		if (snprintf(fname, sizeof(fname), "%s/%s", share_path,
 				"dist/hypergeometric.txt")  >=  SSIZEOF(fname)) {
 			goto err;
 		}
 		break;
 	case SHARE_DIST_UNIFORM:
-		if (snprintf(fname, sizeof(fname), "%s/%s",
-				share_path,
+		if (snprintf(fname, sizeof(fname), "%s/%s", share_path,
 				"dist/uniform.txt")  >=  SSIZEOF(fname)) {
 			goto err;
 		}
 		break;
 	case SHARE_DIST_EXPONENTIAL:
-		if (snprintf(fname, sizeof(fname), "%s/%s",
-				share_path,
+		if (snprintf(fname, sizeof(fname), "%s/%s", share_path,
 				"dist/exponential.txt")  >=  SSIZEOF(fname)) {
 			goto err;
 		}
@@ -146,12 +137,15 @@ void	print_share_file	(int file)
 
 	if (snprintf(cmd, sizeof(cmd), "less %s", fname)  >=  SSIZEOF(cmd))
 		goto err;
-	system(cmd);
+	if (system(cmd)) {
+		fprintf(stderr, "%s[%i]: %s(): %s", __FILE__, __LINE__,
+						__func__, strerror(errno));
+	}
 
 	return;
 err:
-	printf("Path is too large and has been truncated\n");
-	printf("File could not be shown!\n");
+	fprintf(stderr, "Path is too large and has been truncated\n");
+	fprintf(stderr, "File could not be shown!\n");
 }
 
 void	print_version		(void)
