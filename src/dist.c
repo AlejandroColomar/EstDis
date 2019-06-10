@@ -77,7 +77,7 @@ void	desc_1var	(void)
 	printf("CV		= o / u			--Coeficiente de variacion.\n");
 	printf("\n");
 
-	N = alx_get_ptrdiff(ALX_DS1V_N_MIN, 2, PTRDIFF_MAX, "N:", NULL, 3);
+	N = alx_get_pdif(ALX_DS1V_N_MIN, 2, PTRDIFF_MAX, "N:", NULL, 3);
 
 	long double	x[N];
 	long double	n[N];
@@ -121,7 +121,7 @@ void	desc_2var	(void)
 	printf("n	=			--Numero de puntos.\n");
 	printf("\n");
 
-	N = alx_get_ptrdiff(ALX_DS1V_N_MIN, 2, PTRDIFF_MAX, "n:", NULL, 3);
+	N = alx_get_pdif(ALX_DS1V_N_MIN, 2, PTRDIFF_MAX, "n:", NULL, 3);
 
 	long double	x[N];
 	long double	y[N];
@@ -191,7 +191,7 @@ void	dist_binomial	(void)
 		printf("\n");
 	}
 
-	c	= alx_get_ptrdiff(0, 1, INT16_MAX, "c:", NULL, 3);
+	c	= alx_get_pdif(0, 1, INT16_MAX, "c:", NULL, 3);
 	P	= dist_binomial_P(c, n, p);
 
 	printf("\n");
@@ -217,7 +217,7 @@ void	dist_poisson	(void)
 	printf("\n");
 
 	l	= alx_get_ldbl(DIST_POISSON_l_MIN, 1, INFINITY, "l:", NULL, 3);
-	c	= alx_get_ptrdiff(0, 1, INT16_MAX, "c:", NULL, 3);
+	c	= alx_get_pdif(0, 1, INT16_MAX, "c:", NULL, 3);
 
 	P	= dist_poisson_P(c, l);
 	E	= alx_ldbl_distribution_poisson_E(l);
@@ -247,7 +247,7 @@ void	dist_geometric	(void)
 
 	p	= alx_get_ldbl(DIST_GEOMETRIC_p_MIN, 0.5, DIST_GEOMETRIC_p_MAX,
 							"p:", NULL, 3);
-	c	= alx_get_ptrdiff(0, 1, INT32_MAX, "c:", NULL, 3);
+	c	= alx_get_pdif(0, 1, INT32_MAX, "c:", NULL, 3);
 
 	P	= dist_geometric_P(c, p);
 	E	= alx_ldbl_distribution_geometric_E(p);

@@ -1,7 +1,8 @@
 #! /usr/bin/make -f
+
 VERSION		= 3
-PATCHLEVEL	= ~b1
-SUBLEVEL	= 3
+PATCHLEVEL	= 0
+SUBLEVEL	= 0
 EXTRAVERSION	=
 NAME		=
 
@@ -92,7 +93,7 @@ export	INC_DIR
 export	SRC_DIR
 export	TMP_DIR
 
-# FIXME: Set local or not local when building a package
+# XXX: Set local or not local when building a package
 INSTALL_BIN_DIR		= /usr/local/bin/
 #INSTALL_BIN_DIR	= /usr/bin/
 INSTALL_SHARE_DIR	= /usr/local/share/
@@ -105,11 +106,11 @@ export	INSTALL_SHARE_DIR
 
 ################################################################################
 # Make variables (CC, etc...)
-  CC	= gcc
-  AS	= as
-  AR	= ar
-  LD	= ld
-  SZ	= size
+CC	= gcc
+AS	= as
+AR	= ar
+LD	= ld
+SZ	= size --format=SysV
 
 export	CC
 export	AS
@@ -124,15 +125,18 @@ CFLAGS_STD     += -Wpedantic
 
 CFLAGS_OPT	= -O3
 CFLAGS_OPT     += -march=native
+CFLAGS_OPT     += -flto
 
 CFLAGS_W	= -Wall
 CFLAGS_W       += -Wextra
 CFLAGS_W       += -Wstrict-prototypes
 CFLAGS_W       += -Werror
+#CFLAGS_W       += -Wno-error=format-truncation
 #CFLAGS_W       += -Wno-error=unused-function
 #CFLAGS_W       += -Wno-error=unused-parameter
 
 CFLAGS_PKG	= `pkg-config --cflags ncurses`
+CFLAGS_PKG     += -I $(LIBALX_INC_DIR)
 
 CFLAGS_D	= -D PROG_VERSION=\"$(PROGRAMVERSION)\"
 CFLAGS_D       += -D INSTALL_SHARE_DIR=\"$(INSTALL_SHARE_DIR)\"
@@ -150,9 +154,15 @@ export	CFLAGS
 # libs
 LIBS_STD	= -l m
 
+LIBS_OPT	= -O3
+LIBS_OPT       += -march=native
+LIBS_OPT       += -flto
+LIBS_OPT       += -fuse-linker-plugin
+
 LIBS_PKG	= `pkg-config --libs ncurses`
 
 LIBS		= $(LIBS_STD)
+LIBS           += $(LIBS_OPT)
 LIBS           += $(LIBS_PKG)
 
 export	LIBS
@@ -176,7 +186,6 @@ all: bin
 PHONY += libalx
 libalx:
 	@echo	"	MAKE	$@"
-	$(Q)$(MAKE) errno	-C $(LIBALX_DIR)
 	$(Q)$(MAKE) math	-C $(LIBALX_DIR)
 	$(Q)$(MAKE) stdio	-C $(LIBALX_DIR)
 	$(Q)$(MAKE) stdlib	-C $(LIBALX_DIR)
@@ -199,11 +208,11 @@ bin: tmp libalx
 PHONY += install
 install: uninstall
 	@echo	"	Install:"
-	@echo	"	MKDIR	$(INSTALL_BIN_DIR)/"
+	@echo	"	MKDIR	$(DESTDIR)/$(INSTALL_BIN_DIR)/"
 	$(Q)mkdir -p		$(DESTDIR)/$(INSTALL_BIN_DIR)/
 	@echo	"	CP	$(BIN_NAME)"
 	$(Q)cp -v		$(BIN_DIR)/$(BIN_NAME)	$(DESTDIR)/$(INSTALL_BIN_DIR)/
-	@echo	"	MKDIR	$(INSTALL_SHARE_DIR)/estadistica/"
+	@echo	"	MKDIR	$(DESTDIR)/$(INSTALL_SHARE_DIR)/estadistica/"
 	$(Q)mkdir -p		$(DESTDIR)/$(INSTALL_SHARE_DIR)/estadistica/
 	@echo	"	CP -r	share/estadistica/*"
 	$(Q)cp -r -v		./share/estadistica/*	$(DESTDIR)/$(INSTALL_SHARE_DIR)/estadistica/
@@ -215,7 +224,7 @@ uninstall:
 	@echo	"	Clean old installations:"
 	@echo	"	RM	bin"
 	$(Q)rm -f		$(DESTDIR)/$(INSTALL_BIN_DIR)/$(BIN_NAME)
-	@echo	"	RM -r	$(INSTALL_SHARE_DIR)/estadistica/"
+	@echo	"	RM -r	$(DESTDIR)/$(INSTALL_SHARE_DIR)/estadistica/"
 	$(Q)rm -f -r		$(DESTDIR)/$(INSTALL_SHARE_DIR)/estadistica/
 	@echo	"	Done"
 	@echo
@@ -238,7 +247,7 @@ help:
 	@echo  'Cleaning targets:'
 	@echo  '  clean		  - Remove all generated files'
 	@echo  '  distclean	  - Remove all generated files (including libraries)'
-	@echo  ''
+	@echo
 	@echo  'Other generic targets:'
 	@echo  '  all		  - Build all targets marked with [*]'
 	@echo  '* libalx	  - Build the libalx library'
@@ -246,9 +255,9 @@ help:
 	@echo  '* bin		  - Build the binary'
 	@echo  '  install	  - Install the program into the filesystem'
 	@echo  '  uninstall	  - Uninstall the program off the filesystem'
-	@echo  ''
+	@echo
 	@echo  '  make V=0|1 [targets] 0 => quiet build (default), 1 => verbose build'
-	@echo  ''
+	@echo
 	@echo  'Execute "make" or "make all" to build all targets marked with [*] '
 	@echo  'For further info see the ./README file'
 

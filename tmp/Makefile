@@ -22,8 +22,7 @@ OBJ		=							\
 
 ABOUT_INC	=							\
 		$(INC_DIR)/estadistica/about.h				\
-		$(LIBALX_INC_DIR)/libalx/base/errno/errno_str.h		\
-		$(LIBALX_INC_DIR)/libalx/base/stdio/sprint_file.h
+		$(LIBALX_INC_DIR)/libalx/base/stddef/size.h
 ABOUT_SRC	=							\
 		$(SRC_DIR)/about.c
 
@@ -43,7 +42,6 @@ DIST_SRC	=							\
 		$(SRC_DIR)/dist.c
 
 MAIN_INC	=							\
-		$(LIBALX_INC_DIR)/libalx/base/stdio/wait.h		\
 		$(LIBALX_INC_DIR)/libalx/extra/ncurses/common.h		\
 		$(INC_DIR)/estadistica/about.h				\
 		$(INC_DIR)/estadistica/menus.h				\
@@ -53,6 +51,7 @@ MAIN_SRC	=							\
 
 MENUS_INC	=							\
 		$(INC_DIR)/estadistica/menus.h				\
+		$(LIBALX_INC_DIR)/libalx/base/stddef/size.h		\
 		$(LIBALX_INC_DIR)/libalx/base/stdio/wait.h		\
 		$(LIBALX_INC_DIR)/libalx/extra/ncurses/common.h		\
 		$(LIBALX_INC_DIR)/libalx/extra/ncurses/menu.h		\
@@ -87,42 +86,42 @@ all: $(OBJ)
 
 about.s: $(ABOUT_SRC) $(ABOUT_INC)
 	@echo	"	CC	estadistica/tmp/$@"
-	$(Q)$(CC) $(CFLAGS) -I $(INC_DIR) -I $(LIBALX_INC_DIR) -S $< -o $@
+	$(Q)$(CC) $(CFLAGS) -I $(INC_DIR) -S $< -o $@
 about.o: about.s
 	@echo	"	AS	estadistica/tmp/$@"
 	$(Q)$(AS) $< -o $@
 
 dist.s: $(DIST_SRC) $(DIST_INC)
 	@echo	"	CC	estadistica/tmp/$@"
-	$(Q)$(CC) $(CFLAGS) -I $(INC_DIR) -I $(LIBALX_INC_DIR) -S $< -o $@
+	$(Q)$(CC) $(CFLAGS) -I $(INC_DIR) -S $< -o $@
 dist.o: dist.s
 	@echo	"	AS	estadistica/tmp/$@"
 	$(Q)$(AS) $< -o $@
 
 main.s: $(MAIN_SRC) $(MAIN_INC)
 	@echo	"	CC	estadistica/tmp/$@"
-	$(Q)$(CC) $(CFLAGS) -I $(INC_DIR) -I $(LIBALX_INC_DIR) -S $< -o $@
+	$(Q)$(CC) $(CFLAGS) -I $(INC_DIR) -S $< -o $@
 main.o: main.s
 	@echo	"	AS	estadistica/tmp/$@"
 	$(Q)$(AS) $< -o $@
 
 menus.s: $(MENUS_SRC) $(MENUS_INC)
 	@echo	"	CC	estadistica/tmp/$@"
-	$(Q)$(CC) $(CFLAGS) -I $(INC_DIR) -I $(LIBALX_INC_DIR) -S $< -o $@
+	$(Q)$(CC) $(CFLAGS) -I $(INC_DIR) -S $< -o $@
 menus.o: menus.s
 	@echo	"	AS	estadistica/tmp/$@"
 	$(Q)$(AS) $< -o $@
 
 parse.s: $(PARSE_SRC) $(PARSE_INC)
 	@echo	"	CC	estadistica/tmp/$@"
-	$(Q)$(CC) $(CFLAGS) -I $(INC_DIR) -I $(LIBALX_INC_DIR) -S $< -o $@
+	$(Q)$(CC) $(CFLAGS) -I $(INC_DIR) -S $< -o $@
 parse.o: parse.s
 	@echo	"	AS	estadistica/tmp/$@"
 	$(Q)$(AS) $< -o $@
 
 start.s: $(START_SRC) $(START_INC)
 	@echo	"	CC	estadistica/tmp/$@"
-	$(Q)$(CC) $(CFLAGS) -I $(INC_DIR) -I $(LIBALX_INC_DIR) -S $< -o $@
+	$(Q)$(CC) $(CFLAGS) -I $(INC_DIR) -S $< -o $@
 start.o: start.s
 	@echo	"	AS	estadistica/tmp/$@"
 	$(Q)$(AS) $< -o $@
