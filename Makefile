@@ -1,9 +1,9 @@
 #! /usr/bin/make -f
 
-VERSION		= 3
+VERSION		= 4
 PATCHLEVEL	= 0
 SUBLEVEL	= 0
-EXTRAVERSION	=
+EXTRAVERSION	= ~a1
 NAME		=
 
 export	VERSION
@@ -121,7 +121,6 @@ export	SZ
 ################################################################################
 # cflags
 CFLAGS_STD	= -std=c17
-CFLAGS_STD     += -Wpedantic
 
 CFLAGS_OPT	= -O3
 CFLAGS_OPT     += -march=native
@@ -131,9 +130,6 @@ CFLAGS_W	= -Wall
 CFLAGS_W       += -Wextra
 CFLAGS_W       += -Wstrict-prototypes
 CFLAGS_W       += -Werror
-#CFLAGS_W       += -Wno-error=format-truncation
-#CFLAGS_W       += -Wno-error=unused-function
-#CFLAGS_W       += -Wno-error=unused-parameter
 
 CFLAGS_PKG	= `pkg-config --cflags ncurses`
 CFLAGS_PKG     += -I $(LIBALX_INC_DIR)
@@ -152,18 +148,19 @@ export	CFLAGS
 
 ################################################################################
 # libs
-LIBS_STD	= -l m
-
 LIBS_OPT	= -O3
 LIBS_OPT       += -march=native
 LIBS_OPT       += -flto
 LIBS_OPT       += -fuse-linker-plugin
 
 LIBS_PKG	= `pkg-config --libs ncurses`
+LIBS_PKG       += -l gsl -l cblas -l atlas
 
-LIBS		= $(LIBS_STD)
-LIBS           += $(LIBS_OPT)
+LIBS_STD	= -l m
+
+LIBS		= $(LIBS_OPT)
 LIBS           += $(LIBS_PKG)
+LIBS           += $(LIBS_STD)
 
 export	LIBS
 

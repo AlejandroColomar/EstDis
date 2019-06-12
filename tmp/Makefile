@@ -28,8 +28,6 @@ ABOUT_SRC	=							\
 
 DIST_INC	=							\
 		$(INC_DIR)/estadistica/dist.h				\
-		$(LIBALX_INC_DIR)/libalx/base/math/descriptive_statistics_1var.h \
-		$(LIBALX_INC_DIR)/libalx/base/math/descriptive_statistics_2var.h \
 		$(LIBALX_INC_DIR)/libalx/base/math/distribution_binomial.h \
 		$(LIBALX_INC_DIR)/libalx/base/math/distribution_exponential.h \
 		$(LIBALX_INC_DIR)/libalx/base/math/distribution_geometric.h \
