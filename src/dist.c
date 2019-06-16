@@ -19,14 +19,14 @@
 #include <gsl/gsl_randist.h>
 #include <gsl/gsl_statistics_double.h>
 
-#include "libalx/base/math/distribution_binomial.h"
-#include "libalx/base/math/distribution_exponential.h"
-#include "libalx/base/math/distribution_geometric.h"
-#include "libalx/base/math/distribution_normal.h"
-#include "libalx/base/math/distribution_poisson.h"
-#include "libalx/base/math/distribution_uniform.h"
 #include "libalx/base/math/fast.h"
 #include "libalx/base/stdio/get.h"
+#include "libalx/extra/gsl/distributions/binomial.h"
+#include "libalx/extra/gsl/distributions/exponential.h"
+#include "libalx/extra/gsl/distributions/geometric.h"
+#include "libalx/extra/gsl/distributions/normal.h"
+#include "libalx/extra/gsl/distributions/poisson.h"
+#include "libalx/extra/gsl/distributions/uniform.h"
 
 
 /******************************************************************************
@@ -191,8 +191,8 @@ void	dist_binomial	(void)
 	n	= alx_get_u32(0, 1, UINT32_MAX, "n:", NULL, 3);
 	p	= alx_get_dbl(0.0, 0.5, 1.0, "p:", NULL, 3);
 
-	E	= alx_distribution_binomial_E(n, p);
-	Var	= alx_distribution_binomial_Var(n, p);
+	E	= alx_gsl_dist_binomial_E(n, p);
+	Var	= alx_gsl_dist_binomial_Var(n, p);
 
 	if (((n * p) > 5)  &&  ((n * (1 - p)) > 5)) {
 		printf("\n");
@@ -231,8 +231,8 @@ void	dist_poisson	(void)
 	c	= alx_get_pdif(0, 1, UINT32_MAX, "c:", NULL, 3);
 
 	P	= dist_poisson_P(c, l);
-	E	= alx_distribution_poisson_E(l);
-	Var	= alx_distribution_poisson_Var(l);
+	E	= alx_gsl_dist_poisson_E(l);
+	Var	= alx_gsl_dist_poisson_Var(l);
 
 	printf("\n");
 	printf("P{X}	= %e\n", P);
@@ -260,8 +260,8 @@ void	dist_geometric	(void)
 	c	= alx_get_pdif(0, 1, UINT32_MAX, "c:", NULL, 3);
 
 	P	= dist_geometric_P(c, p);
-	E	= alx_distribution_geometric_E(p);
-	Var	= alx_distribution_geometric_Var(p);
+	E	= alx_gsl_dist_geometric_E(p);
+	Var	= alx_gsl_dist_geometric_Var(p);
 
 	printf("\n");
 	printf("P{X=x}	= %e\n", P);
@@ -293,8 +293,8 @@ void	dist_uniform	(void)
 	x2	= alx_get_dbl(x1, x1, b, "x2:", NULL, 3);
 
 	P	= gsl_cdf_flat_P(x2, a, b) - gsl_cdf_flat_P(x1, a, b);
-	E	= alx_distribution_uniform_E(a, b);
-	Var	= alx_distribution_uniform_Var(a, b);
+	E	= alx_gsl_dist_uniform_E(a, b);
+	Var	= alx_gsl_dist_uniform_Var(a, b);
 
 	printf("\n");
 	printf("P{x1<X<x2}	= %e\n", P);
@@ -320,14 +320,14 @@ void	dist_exponential(void)
 	printf("x2		= limite superior de interes.\n");
 	printf("\n");
 
-	b	= alx_get_dbl(DIST_BINOMIAL_b_MIN, 1.0, INFINITY, "b:", NULL, 3);
-	x1	= alx_get_dbl(DIST_BINOMIAL_x_MIN, 1.0, INFINITY, "x1:", NULL, 3);
+	b	= alx_get_dbl(0.0, 1.0, INFINITY, "b:", NULL, 3);
+	x1	= alx_get_dbl(0.0, 1.0, INFINITY, "x1:", NULL, 3);
 	x2	= alx_get_dbl(x1, x1 + 1.0, INFINITY, "x2:", NULL, 3);
 
 	mu	= 1.0 / b;
 	P	= gsl_cdf_exponential_P(x2, mu) - gsl_cdf_exponential_P(x1, mu);
-	E	= alx_distribution_exponential_E(b);
-	Var	= alx_distribution_exponential_Var(b);
+	E	= alx_gsl_dist_exponential_E(b);
+	Var	= alx_gsl_dist_exponential_Var(b);
 
 	printf("\n");
 	printf("P{x1<X<x2}	= %e\n", P);
@@ -357,11 +357,11 @@ void	dist_normal	(void)
 	printf("\n");
 
 	u	= alx_get_dbl(-INFINITY, 0.0, INFINITY, "u:", NULL, 3);
-	o2	= alx_get_dbl(DIST_NORMAL_o2_MIN, 1.0, INFINITY, "o2:", NULL, 3);
+	o2	= alx_get_dbl(0.0, 1.0, INFINITY, "o2:", NULL, 3);
 
 	o	= sqrt(o2);
-	a	= alx_distribution_normal_A(o);
-	b	= alx_distribution_normal_B(u, o);
+	a	= alx_gsl_dist_normal_A(o);
+	b	= alx_gsl_dist_normal_B(u, o);
 
 	printf("\n");
 	printf("a	= %e\n", a);
@@ -408,7 +408,7 @@ static	void	dist_normal_x2z		(double a, double b)
 
 	printf("Z = %e * X + %e\n", a, b);
 	x	= alx_get_dbl(-INFINITY, 1.0, INFINITY, "x:", NULL, 3);
-	z	= alx_distribution_normal_X2Z(a, b, x);
+	z	= alx_gsl_dist_normal_X2Z(a, b, x);
 	printf("\nz = %e\n", z);
 }
 
@@ -419,7 +419,7 @@ static	void	dist_normal_z2x		(double a, double b)
 
 	printf("X = (Z - %e) / %e\n", b, a);
 	z	= alx_get_dbl(-INFINITY, 1.0, INFINITY, "z:", NULL, 3);
-	x	= alx_distribution_normal_Z2X(a, b, z);
+	x	= alx_gsl_dist_normal_Z2X(a, b, z);
 	printf("\nx = %e\n", x);
 }
 

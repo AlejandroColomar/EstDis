@@ -187,6 +187,7 @@ libalx:
 	$(Q)$(MAKE) stdio	-C $(LIBALX_DIR)
 	$(Q)$(MAKE) stdlib	-C $(LIBALX_DIR)
 	$(Q)$(MAKE) string	-C $(LIBALX_DIR)
+	$(Q)$(MAKE) gsl		-C $(LIBALX_DIR)
 	$(Q)$(MAKE) ncurses	-C $(LIBALX_DIR)
 	@echo
 

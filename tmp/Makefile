@@ -28,14 +28,14 @@ ABOUT_SRC	=							\
 
 DIST_INC	=							\
 		$(INC_DIR)/estadistica/dist.h				\
-		$(LIBALX_INC_DIR)/libalx/base/math/distribution_binomial.h \
-		$(LIBALX_INC_DIR)/libalx/base/math/distribution_exponential.h \
-		$(LIBALX_INC_DIR)/libalx/base/math/distribution_geometric.h \
-		$(LIBALX_INC_DIR)/libalx/base/math/distribution_normal.h \
-		$(LIBALX_INC_DIR)/libalx/base/math/distribution_poisson.h \
-		$(LIBALX_INC_DIR)/libalx/base/math/distribution_uniform.h \
 		$(LIBALX_INC_DIR)/libalx/base/math/fast.h		\
-		$(LIBALX_INC_DIR)/libalx/base/stdio/get.h
+		$(LIBALX_INC_DIR)/libalx/base/stdio/get.h		\
+		$(LIBALX_INC_DIR)/libalx/extra/gsl/distributions/binomial.h \
+		$(LIBALX_INC_DIR)/libalx/extra/gsl/distributions/exponential.h \
+		$(LIBALX_INC_DIR)/libalx/extra/gsl/distributions/geometric.h \
+		$(LIBALX_INC_DIR)/libalx/extra/gsl/distributions/normal.h \
+		$(LIBALX_INC_DIR)/libalx/extra/gsl/distributions/poisson.h \
+		$(LIBALX_INC_DIR)/libalx/extra/gsl/distributions/uniform.h
 DIST_SRC	=							\
 		$(SRC_DIR)/dist.c
 
