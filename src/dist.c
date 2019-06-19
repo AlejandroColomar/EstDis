@@ -19,7 +19,6 @@
 #include <gsl/gsl_randist.h>
 #include <gsl/gsl_statistics_double.h>
 
-#include "libalx/base/math/fast.h"
 #include "libalx/base/stdio/get.h"
 #include "libalx/extra/gsl/distributions/binomial.h"
 #include "libalx/extra/gsl/distributions/exponential.h"
