@@ -187,7 +187,7 @@ void	dist_binomial	(void)
 	printf("c	= cantidad de x que interesan (inroducir [0] para intervalo [a U b])\n");
 	printf("\n");
 
-	n	= alx_get_u32(0, 1, UINT32_MAX, "n:", NULL, 3);
+	n	= alx_get_u32(1, 1, UINT32_MAX, "n:", NULL, 3);
 	p	= alx_get_dbl(0.0, 0.5, 1.0, "p:", NULL, 3);
 
 	E	= alx_gsl_dist_binomial_E(n, p);
@@ -201,7 +201,7 @@ void	dist_binomial	(void)
 		printf("\n");
 	}
 
-	c	= alx_get_pdif(0, 1, UINT32_MAX, "c:", NULL, 3);
+	c	= alx_get_pdif(0, 1, n + 1, "c:", NULL, 3);
 	P	= dist_binomial_P(c, n, p);
 
 	printf("\n");
@@ -242,9 +242,9 @@ void	dist_poisson	(void)
 
 void	dist_geometric	(void)
 {
-	double	p;
+	double		p;
 	ptrdiff_t	c;
-	double	P, E, Var;
+	double		P, E, Var;
 
 	printf("\n");
 	printf("________________________________________________________________________________\n");
@@ -447,9 +447,9 @@ static	double	dist_binomial_P		(ptrdiff_t c, uint32_t n, double p)
 			P += Pi;
 		}
 	} else {
-		for (uint32_t i = b; i >= a; i--) {
+		for (int64_t i = b; i >= a; i--) {
 			Pi	= gsl_ran_binomial_pdf(i, p, n);
-			printf("P_%"PRIu32"\t= %e\n", i, Pi);
+			printf("P_%"PRIi64"\t= %e\n", i, Pi);
 			P += Pi;
 		}
 	}
@@ -482,9 +482,9 @@ static	double	dist_poisson_P		(ptrdiff_t c, double l)
 			P += Pi;
 		}
 	} else {
-		for (uint32_t i = b; i >= a; i--) {
+		for (int64_t i = b; i >= a; i--) {
 			Pi	= gsl_ran_poisson_pdf(i, l);
-			printf("P_%"PRIu32"\t= %e\n", i, Pi);
+			printf("P_%"PRIi64"\t= %e\n", i, Pi);
 			P += Pi;
 		}
 	}
@@ -517,9 +517,9 @@ static	double	dist_geometric_P	(ptrdiff_t c, double p)
 			P += Pi;
 		}
 	} else {
-		for (uint32_t i = b; i >= a; i--) {
+		for (int64_t i = b; i >= a; i--) {
 			Pi	= gsl_ran_geometric_pdf(i, p);
-			printf("P_%"PRIu32"\t= %e\n", i, Pi);
+			printf("P_%"PRIi64"\t= %e\n", i, Pi);
 			P += Pi;
 		}
 	}
