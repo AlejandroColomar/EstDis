@@ -7,20 +7,34 @@
 /******************************************************************************
  ******* headers **************************************************************
  ******************************************************************************/
-#include "estadistica/about.h"
+#include "estadistica/share.h"
 
-#include <errno.h>
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
+#include "libalx/base/errno/perror.h"
 #include "libalx/base/stddef/size.h"
 
 
 /******************************************************************************
  ******* macros ***************************************************************
  ******************************************************************************/
+#define PROG_NAME	"estadistica"
+#define PROG_YEAR	"2015"
+
+#define SHARE_DIR			"" INSTALL_SHARE_DIR "/estadistica/"
+#define SHARE_COPYRIGHT_FILE		"" SHARE_DIR "/COPYRIGHT.txt"
+#define SHARE_DISCLAIMER_FILE		"" SHARE_DIR "/DISCLAIMER.txt"
+#define SHARE_HELP_FILE			"" SHARE_DIR "/HELP.txt"
+#define SHARE_LICENSE_FILE		"" SHARE_DIR "/LICENSE.txt"
+#define SHARE_USAGE_FILE		"" SHARE_DIR "/USAGE.txt"
+#define SHARE_DIST_BINOMIAL_FILE	"" SHARE_DIR "/dist/binomial.txt"
+#define SHARE_DIST_POISSON_FILE		"" SHARE_DIR "/dist/poisson.txt"
+#define SHARE_DIST_GEOMETRIC_FILE	"" SHARE_DIR "/dist/geometric.txt"
+#define SHARE_DIST_HYPERGEOMETRIC_FILE	"" SHARE_DIR "/dist/hypergeometric.txt"
+#define SHARE_DIST_UNIFORM_FILE		"" SHARE_DIR "/dist/uniform.txt"
+#define SHARE_DIST_EXPONENTIAL_FILE	"" SHARE_DIR "/dist/exponential.txt"
 
 
 /******************************************************************************
@@ -36,7 +50,6 @@
 /******************************************************************************
  ******* variables ************************************************************
  ******************************************************************************/
-char	share_path[FILENAME_MAX];
 
 
 /******************************************************************************
@@ -47,105 +60,55 @@ char	share_path[FILENAME_MAX];
 /******************************************************************************
  ******* global functions *****************************************************
  ******************************************************************************/
-void	about_init		(void)
-{
-
-	if (snprintf(share_path, sizeof(share_path), "%s/estadistica/",
-				INSTALL_SHARE_DIR)  >=  SSIZEOF(share_path)) {
-		goto err;
-	}
-	return;
-err:
-	fprintf(stderr, "Path is too large and has been truncated\n");
-	exit(EXIT_FAILURE);
-}
-
 void	print_share_file	(int file)
 {
-	char	fname[FILENAME_MAX];
+	char	*fname;
 	char	cmd[_POSIX_ARG_MAX];
 
 	switch (file) {
 	case SHARE_COPYRIGHT:
-		if (snprintf(fname, sizeof(fname), "%s/%s", share_path,
-				"COPYRIGHT.txt")  >=  SSIZEOF(fname)) {
-			goto err;
-		}
+		fname	= SHARE_COPYRIGHT_FILE;
 		break;
 	case SHARE_DISCLAIMER:
-		if (snprintf(fname, sizeof(fname), "%s/%s", share_path,
-				"DISCLAIMER.txt")  >=  SSIZEOF(fname)) {
-			goto err;
-		}
+		fname	= SHARE_DISCLAIMER_FILE;
 		break;
 	case SHARE_HELP:
-		if (snprintf(fname, sizeof(fname), "%s/%s", share_path,
-				"HELP.txt")  >=  SSIZEOF(fname)) {
-			goto err;
-		}
+		fname	= SHARE_HELP_FILE;
 		break;
 	case SHARE_LICENSE:
-		if (snprintf(fname, sizeof(fname), "%s/%s", share_path,
-				"LICENSE.txt")  >=  SSIZEOF(fname)) {
-			goto err;
-		}
+		fname	= SHARE_LICENSE_FILE;
 		break;
 	case SHARE_USAGE:
-		if (snprintf(fname, sizeof(fname), "%s/%s", share_path,
-				"USAGE.txt")  >=  SSIZEOF(fname)) {
-			goto err;
-		}
+		fname	= SHARE_USAGE_FILE;
 		break;
-
 	case SHARE_DIST_BINOMIAL:
-		if (snprintf(fname, sizeof(fname), "%s/%s", share_path,
-				"dist/binomial.txt")  >=  SSIZEOF(fname)) {
-			goto err;
-		}
+		fname	= SHARE_DIST_BINOMIAL_FILE;
 		break;
 	case SHARE_DIST_POISSON:
-		if (snprintf(fname, sizeof(fname), "%s/%s", share_path,
-				"dist/poisson.txt")  >=  SSIZEOF(fname)) {
-			goto err;
-		}
+		fname	= SHARE_DIST_POISSON_FILE;
 		break;
 	case SHARE_DIST_GEOMETRIC:
-		if (snprintf(fname, sizeof(fname), "%s/%s", share_path,
-				"dist/geometric.txt")  >=  SSIZEOF(fname)) {
-			goto err;
-		}
+		fname	= SHARE_DIST_GEOMETRIC_FILE;
 		break;
 	case SHARE_DIST_HYPERGEOMETRIC:
-		if (snprintf(fname, sizeof(fname), "%s/%s", share_path,
-				"dist/hypergeometric.txt")  >=  SSIZEOF(fname)) {
-			goto err;
-		}
+		fname	= SHARE_DIST_HYPERGEOMETRIC_FILE;
 		break;
 	case SHARE_DIST_UNIFORM:
-		if (snprintf(fname, sizeof(fname), "%s/%s", share_path,
-				"dist/uniform.txt")  >=  SSIZEOF(fname)) {
-			goto err;
-		}
+		fname	= SHARE_DIST_UNIFORM_FILE;
 		break;
 	case SHARE_DIST_EXPONENTIAL:
-		if (snprintf(fname, sizeof(fname), "%s/%s", share_path,
-				"dist/exponential.txt")  >=  SSIZEOF(fname)) {
-			goto err;
-		}
+		fname	= SHARE_DIST_EXPONENTIAL_FILE;
 		break;
 	}
 
 	if (snprintf(cmd, sizeof(cmd), "less %s", fname)  >=  SSIZEOF(cmd))
 		goto err;
-	if (system(cmd)) {
-		fprintf(stderr, "%s:%i: %s(): %s", __FILE__, __LINE__, __func__,
-							strerror(errno));
-	}
+	if (system(cmd))
+		alx_perror(cmd);
 
 	return;
 err:
-	fprintf(stderr, "Path is too large and has been truncated\n");
-	fprintf(stderr, "File could not be shown!\n");
+	alx_perror(cmd);
 }
 
 void	print_version		(void)

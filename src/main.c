@@ -11,7 +11,7 @@
 
 #include "libalx/extra/ncurses/common.h"
 
-#include "estadistica/about.h"
+#include "estadistica/share.h"
 #include "estadistica/menus.h"
 #include "estadistica/parse.h"
 
@@ -71,8 +71,6 @@ static	void	init_all	(int argc, char *argv[])
 
 	alx_ncurses_init();
 	alx_ncurses_pause();
-
-	about_init();
 
 	parser(argc, argv);
 }

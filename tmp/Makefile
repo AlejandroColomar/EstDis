@@ -13,18 +13,12 @@
 # dependencies
 
 OBJ		=							\
-		about.o							\
 		dist.o							\
 		main.o							\
 		menus.o							\
 		parse.o							\
+		share.o							\
 		start.o
-
-ABOUT_INC	=							\
-		$(INC_DIR)/estadistica/about.h				\
-		$(LIBALX_INC_DIR)/libalx/base/stddef/size.h
-ABOUT_SRC	=							\
-		$(SRC_DIR)/about.c
 
 DIST_INC	=							\
 		$(INC_DIR)/estadistica/dist.h				\
@@ -40,9 +34,9 @@ DIST_SRC	=							\
 
 MAIN_INC	=							\
 		$(LIBALX_INC_DIR)/libalx/extra/ncurses/common.h		\
-		$(INC_DIR)/estadistica/about.h				\
 		$(INC_DIR)/estadistica/menus.h				\
-		$(INC_DIR)/estadistica/parse.h
+		$(INC_DIR)/estadistica/parse.h				\
+		$(INC_DIR)/estadistica/share.h
 MAIN_SRC	=							\
 		$(SRC_DIR)/main.c
 
@@ -52,7 +46,7 @@ MENUS_INC	=							\
 		$(LIBALX_INC_DIR)/libalx/base/stdio/wait.h		\
 		$(LIBALX_INC_DIR)/libalx/extra/ncurses/common.h		\
 		$(LIBALX_INC_DIR)/libalx/extra/ncurses/menu.h		\
-		$(INC_DIR)/estadistica/about.h				\
+		$(INC_DIR)/estadistica/share.h				\
 		$(INC_DIR)/estadistica/start.h
 MENUS_SRC	=							\
 		$(SRC_DIR)/menus.c
@@ -60,16 +54,23 @@ MENUS_SRC	=							\
 PARSE_INC	=							\
 		$(INC_DIR)/estadistica/parse.h				\
 		$(LIBALX_INC_DIR)/libalx/base/stdio/sscan.h		\
-		$(INC_DIR)/estadistica/about.h				\
 		$(INC_DIR)/estadistica/menus.h				\
+		$(INC_DIR)/estadistica/share.h				\
 		$(INC_DIR)/estadistica/start.h
 PARSE_SRC	=							\
 		$(SRC_DIR)/parse.c
 
+SHARE_INC	=							\
+		$(INC_DIR)/estadistica/share.h				\
+		$(LIBALX_INC_DIR)/libalx/base/errno/perror.h		\
+		$(LIBALX_INC_DIR)/libalx/base/stddef/size.h
+SHARE_SRC	=							\
+		$(SRC_DIR)/share.c
+
 START_INC	=							\
 		$(INC_DIR)/estadistica/start.h				\
-		$(INC_DIR)/estadistica/about.h				\
-		$(INC_DIR)/estadistica/dist.h
+		$(INC_DIR)/estadistica/dist.h				\
+		$(INC_DIR)/estadistica/share.h
 START_SRC	=							\
 		$(SRC_DIR)/start.c
 
@@ -80,13 +81,6 @@ START_SRC	=							\
 PHONY := all
 all: $(OBJ)
 
-
-about.s: $(ABOUT_SRC) $(ABOUT_INC)
-	@echo	"	CC	estadistica/tmp/$@"
-	$(Q)$(CC) $(CFLAGS) -I $(INC_DIR) -S $< -o $@
-about.o: about.s
-	@echo	"	AS	estadistica/tmp/$@"
-	$(Q)$(AS) $< -o $@
 
 dist.s: $(DIST_SRC) $(DIST_INC)
 	@echo	"	CC	estadistica/tmp/$@"
@@ -113,6 +107,13 @@ parse.s: $(PARSE_SRC) $(PARSE_INC)
 	@echo	"	CC	estadistica/tmp/$@"
 	$(Q)$(CC) $(CFLAGS) -I $(INC_DIR) -S $< -o $@
 parse.o: parse.s
+	@echo	"	AS	estadistica/tmp/$@"
+	$(Q)$(AS) $< -o $@
+
+share.s: $(SHARE_SRC) $(SHARE_INC)
+	@echo	"	CC	estadistica/tmp/$@"
+	$(Q)$(CC) $(CFLAGS) -I $(INC_DIR) -S $< -o $@
+share.o: share.s
 	@echo	"	AS	estadistica/tmp/$@"
 	$(Q)$(AS) $< -o $@
 

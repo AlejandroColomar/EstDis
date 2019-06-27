@@ -9,8 +9,8 @@
  ******************************************************************************/
 #include "estadistica/start.h"
 
-#include "estadistica/about.h"
 #include "estadistica/dist.h"
+#include "estadistica/share.h"
 
 
 /******************************************************************************

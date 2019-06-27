@@ -16,8 +16,8 @@
 
 #include "libalx/base/stdio/sscan.h"
 
-#include "estadistica/about.h"
 #include "estadistica/menus.h"
+#include "estadistica/share.h"
 #include "estadistica/start.h"
 
 

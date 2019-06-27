@@ -5,11 +5,11 @@
 # dependencies
 
 OBJS		=							\
-		$(TMP_DIR)/about.o					\
 		$(TMP_DIR)/dist.o					\
 		$(TMP_DIR)/main.o					\
 		$(TMP_DIR)/menus.o					\
 		$(TMP_DIR)/parse.o					\
+		$(TMP_DIR)/share.o					\
 		$(TMP_DIR)/start.o
 DEPS_LIBS	= 							\
 		$(LIBALX_LIB_DIR)/libalx-ncurses.a			\

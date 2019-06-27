@@ -42,7 +42,7 @@
 #include "libalx/extra/ncurses/common.h"
 #include "libalx/extra/ncurses/menu.h"
 
-#include "estadistica/about.h"
+#include "estadistica/share.h"
 #include "estadistica/start.h"
 
 
