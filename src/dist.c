@@ -20,6 +20,7 @@
 #include <gsl/gsl_statistics_double.h>
 
 #include "libalx/base/stdio/get.h"
+#include "libalx/base/stdio/printf/sbprintf.h"
 #include "libalx/extra/gsl/distributions/binomial.h"
 #include "libalx/extra/gsl/distributions/exponential.h"
 #include "libalx/extra/gsl/distributions/geometric.h"
@@ -431,7 +432,7 @@ static	double	dist_binomial_P		(ptrdiff_t c, uint32_t n, double p)
 
 	if (c) {
 		for (ptrdiff_t i = 0; i < c; i++) {
-			snprintf(txt, 80, "x_%ti:", i);
+			alx_sbprintf__(txt, NULL, "x_%ti:", i);
 			x[i]	= alx_get_u32(0, 0, n, txt, NULL, 3);
 		}
 	} else {
@@ -466,7 +467,7 @@ static	double	dist_poisson_P		(ptrdiff_t c, double l)
 
 	if (c) {
 		for (ptrdiff_t i = 0; i < c; i++) {
-			snprintf(txt, 80, "x_%ti:", i);
+			alx_sbprintf__(txt, NULL, "x_%ti:", i);
 			x[i]	= alx_get_u32(0, i, UINT32_MAX, txt, NULL, 3);
 		}
 	} else {
@@ -501,7 +502,7 @@ static	double	dist_geometric_P	(ptrdiff_t c, double p)
 
 	if (c) {
 		for (ptrdiff_t i = 0; i < c; i++) {
-			snprintf(txt, 80, "x_%ti:", i);
+			alx_sbprintf__(txt, NULL, "x_%ti:", i);
 			x[i] = alx_get_u32(0, 0, UINT32_MAX, txt, NULL, 3);
 		}
 	} else {

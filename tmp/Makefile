@@ -23,6 +23,7 @@ OBJ		=							\
 DIST_INC	=							\
 		$(INC_DIR)/estadistica/dist.h				\
 		$(LIBALX_INC_DIR)/libalx/base/stdio/get.h		\
+		$(LIBALX_INC_DIR)/libalx/base/stdio/printf/sbprintf.h	\
 		$(LIBALX_INC_DIR)/libalx/extra/gsl/distributions/binomial.h \
 		$(LIBALX_INC_DIR)/libalx/extra/gsl/distributions/exponential.h \
 		$(LIBALX_INC_DIR)/libalx/extra/gsl/distributions/geometric.h \
@@ -42,7 +43,7 @@ MAIN_SRC	=							\
 
 MENUS_INC	=							\
 		$(INC_DIR)/estadistica/menus.h				\
-		$(LIBALX_INC_DIR)/libalx/base/stddef/size.h		\
+		$(LIBALX_INC_DIR)/libalx/base/compiler/size.h		\
 		$(LIBALX_INC_DIR)/libalx/base/stdio/wait.h		\
 		$(LIBALX_INC_DIR)/libalx/extra/ncurses/common.h		\
 		$(LIBALX_INC_DIR)/libalx/extra/ncurses/menu.h		\
@@ -62,8 +63,8 @@ PARSE_SRC	=							\
 
 SHARE_INC	=							\
 		$(INC_DIR)/estadistica/share.h				\
-		$(LIBALX_INC_DIR)/libalx/base/errno/perror.h		\
-		$(LIBALX_INC_DIR)/libalx/base/stddef/size.h
+		$(LIBALX_INC_DIR)/libalx/base/compiler/size.h		\
+		$(LIBALX_INC_DIR)/libalx/base/errno/perror.h
 SHARE_SRC	=							\
 		$(SRC_DIR)/share.c
 
