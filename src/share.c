@@ -102,7 +102,7 @@ void	print_share_file	(int file)
 		break;
 	}
 
-	if (alx_sbprintf__(cmd, NULL, "less %s", fname))
+	if (alx_sbprintf(cmd, NULL, "less %s", fname))
 		goto err;
 	if (system(cmd))
 		goto err;

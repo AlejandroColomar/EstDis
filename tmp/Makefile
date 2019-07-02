@@ -64,7 +64,8 @@ PARSE_SRC	=							\
 SHARE_INC	=							\
 		$(INC_DIR)/estadistica/share.h				\
 		$(LIBALX_INC_DIR)/libalx/base/compiler/size.h		\
-		$(LIBALX_INC_DIR)/libalx/base/errno/perror.h
+		$(LIBALX_INC_DIR)/libalx/base/errno/perror.h		\
+		$(LIBALX_INC_DIR)/libalx/base/stdio/printf/sbprintf.h
 SHARE_SRC	=							\
 		$(SRC_DIR)/share.c
 
