@@ -14,7 +14,8 @@
 #include <stdlib.h>
 
 #include "libalx/base/errno/perror.h"
-#include "libalx/base/stddef/size.h"
+#include "libalx/base/compiler/size.h"
+#include "libalx/base/stdio/printf/sbprintf.h"
 
 
 /******************************************************************************
@@ -101,7 +102,7 @@ void	print_share_file	(int file)
 		break;
 	}
 
-	if (snprintf(cmd, sizeof(cmd), "less %s", fname)  >=  SSIZEOF(cmd))
+	if (alx_sbprintf(cmd, NULL, "less %s", fname))
 		goto err;
 	if (system(cmd))
 		goto err;

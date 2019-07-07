@@ -120,7 +120,7 @@ export	SZ
 
 ################################################################################
 # cflags
-CFLAGS_STD	= -std=c17
+CFLAGS_STD	= -std=gnu17
 
 CFLAGS_OPT	= -O3
 CFLAGS_OPT     += -march=native
