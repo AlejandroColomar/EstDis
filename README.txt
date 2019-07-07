@@ -41,5 +41,5 @@ compiling on linux:
 installing on linux:
 	# make install
 
-running on linux:
+running:
 	$ estadistica3
