@@ -22,6 +22,7 @@ OBJ		=							\
 
 DIST_INC	=							\
 		$(INC_DIR)/estadistica/dist.h				\
+		$(LIBALX_INC_DIR)/libalx/base/compiler/unused.h		\
 		$(LIBALX_INC_DIR)/libalx/base/stdio/get.h		\
 		$(LIBALX_INC_DIR)/libalx/base/stdio/printf/sbprintf.h	\
 		$(LIBALX_INC_DIR)/libalx/extra/gsl/distributions/binomial.h \
