@@ -9,6 +9,7 @@
  ******************************************************************************/
 #include "estadistica/share.h"
 
+#include <errno.h>
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,7 +22,6 @@
 /******************************************************************************
  ******* macros ***************************************************************
  ******************************************************************************/
-#define PROG_NAME	"estadistica"
 #define PROG_YEAR	"2015"
 
 #define SHARE_DIR			"" INSTALL_SHARE_DIR "/estadistica/"
@@ -115,7 +115,7 @@ err:
 void	print_version		(void)
 {
 
-	printf("%s %s\n\n", PROG_NAME, PROG_VERSION);
+	printf("%s %s\n\n", program_invocation_short_name, PROG_VERSION);
 }
 
 

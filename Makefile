@@ -75,19 +75,12 @@ export	PROGRAMVERSION
 
 MAIN_DIR	= $(CURDIR)
 
-LIBALX_DIR	= $(CURDIR)/libalx/
-LIBALX_INC_DIR	= $(LIBALX_DIR)/inc/
-LIBALX_LIB_DIR	= $(LIBALX_DIR)/lib/libalx/
-
 BIN_DIR		= $(CURDIR)/bin/
 INC_DIR		= $(CURDIR)/inc/
 SRC_DIR		= $(CURDIR)/src/
 TMP_DIR		= $(CURDIR)/tmp/
 
 export	MAIN_DIR
-export	LIBALX_DIR
-export	LIBALX_INC_DIR
-export	LIBALX_LIB_DIR
 export	BIN_DIR
 export	INC_DIR
 export	SRC_DIR
@@ -132,7 +125,10 @@ CFLAGS_W       += -Wstrict-prototypes
 CFLAGS_W       += -Werror
 
 CFLAGS_PKG	= `pkg-config --cflags ncurses`
-CFLAGS_PKG     += -I $(LIBALX_INC_DIR)
+CFLAGS_PKG     += `pkg-config --cflags gsl`
+CFLAGS_PKG     += `pkg-config --cflags libalx-gsl`
+CFLAGS_PKG     += `pkg-config --cflags libalx-ncurses`
+CFLAGS_PKG     += `pkg-config --cflags libalx-base`
 
 CFLAGS_D	= -D _GNU_SOURCE
 CFLAGS_D       += -D _POSIX_C_SOURCE=200809L
@@ -156,7 +152,10 @@ LIBS_OPT       += -flto
 LIBS_OPT       += -fuse-linker-plugin
 
 LIBS_PKG	= `pkg-config --libs ncurses`
-LIBS_PKG       += -l gsl -l cblas -l atlas
+LIBS_PKG       += `pkg-config --libs gsl`
+LIBS_PKG       += `pkg-config --libs libalx-gsl`
+LIBS_PKG       += `pkg-config --libs libalx-ncurses`
+LIBS_PKG       += `pkg-config --libs libalx-base`
 
 LIBS_STD	= -l m
 
@@ -182,14 +181,6 @@ PHONY := all
 all: bin
 
 
-PHONY += libalx
-libalx:
-	@echo	"	MAKE	$@"
-	$(Q)$(MAKE) base	-C $(LIBALX_DIR)
-	$(Q)$(MAKE) gsl		-C $(LIBALX_DIR)
-	$(Q)$(MAKE) ncurses	-C $(LIBALX_DIR)
-	@echo
-
 PHONY += tmp
 tmp:
 	@echo	"	MAKE	$@"
@@ -197,7 +188,7 @@ tmp:
 	@echo
 
 PHONY += bin
-bin: tmp libalx
+bin: tmp
 	@echo	"	MAKE	$@"
 	$(Q)$(MAKE)	-C $(BIN_DIR)
 	@echo
@@ -233,12 +224,6 @@ clean:
 	$(Q)find $(TMP_DIR) -type f -name '*.s' -exec rm '{}' '+'
 	$(Q)find $(BIN_DIR) -type f -name '*$(BIN_NAME)' -exec rm '{}' '+'
 
-PHONY += distclean
-distclean: clean
-	@echo	'	CLEAN	libalx'
-	$(Q)$(MAKE) clean	-C $(LIBALX_DIR)
-	@echo
-
 PHONY += help
 help:
 	@echo  'Cleaning targets:'
@@ -247,7 +232,6 @@ help:
 	@echo
 	@echo  'Other generic targets:'
 	@echo  '  all		  - Build all targets marked with [*]'
-	@echo  '* libalx	  - Build the libalx library'
 	@echo  '* tmp		  - Compile all files'
 	@echo  '* bin		  - Build the binary'
 	@echo  '  install	  - Install the program into the filesystem'

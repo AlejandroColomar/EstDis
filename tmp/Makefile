@@ -21,21 +21,11 @@ OBJ		=							\
 		start.o
 
 DIST_INC	=							\
-		$(INC_DIR)/estadistica/dist.h				\
-		$(LIBALX_INC_DIR)/libalx/base/compiler/unused.h		\
-		$(LIBALX_INC_DIR)/libalx/base/stdio/get.h		\
-		$(LIBALX_INC_DIR)/libalx/base/stdio/printf/sbprintf.h	\
-		$(LIBALX_INC_DIR)/libalx/extra/gsl/distributions/binomial.h \
-		$(LIBALX_INC_DIR)/libalx/extra/gsl/distributions/exponential.h \
-		$(LIBALX_INC_DIR)/libalx/extra/gsl/distributions/geometric.h \
-		$(LIBALX_INC_DIR)/libalx/extra/gsl/distributions/normal.h \
-		$(LIBALX_INC_DIR)/libalx/extra/gsl/distributions/poisson.h \
-		$(LIBALX_INC_DIR)/libalx/extra/gsl/distributions/uniform.h
+		$(INC_DIR)/estadistica/dist.h
 DIST_SRC	=							\
 		$(SRC_DIR)/dist.c
 
 MAIN_INC	=							\
-		$(LIBALX_INC_DIR)/libalx/extra/ncurses/common.h		\
 		$(INC_DIR)/estadistica/menus.h				\
 		$(INC_DIR)/estadistica/parse.h				\
 		$(INC_DIR)/estadistica/share.h
@@ -44,10 +34,6 @@ MAIN_SRC	=							\
 
 MENUS_INC	=							\
 		$(INC_DIR)/estadistica/menus.h				\
-		$(LIBALX_INC_DIR)/libalx/base/compiler/size.h		\
-		$(LIBALX_INC_DIR)/libalx/base/stdio/seekc.h		\
-		$(LIBALX_INC_DIR)/libalx/extra/ncurses/common.h		\
-		$(LIBALX_INC_DIR)/libalx/extra/ncurses/menu.h		\
 		$(INC_DIR)/estadistica/share.h				\
 		$(INC_DIR)/estadistica/start.h
 MENUS_SRC	=							\
@@ -55,7 +41,6 @@ MENUS_SRC	=							\
 
 PARSE_INC	=							\
 		$(INC_DIR)/estadistica/parse.h				\
-		$(LIBALX_INC_DIR)/libalx/base/stdio/sscan.h		\
 		$(INC_DIR)/estadistica/menus.h				\
 		$(INC_DIR)/estadistica/share.h				\
 		$(INC_DIR)/estadistica/start.h
@@ -63,10 +48,7 @@ PARSE_SRC	=							\
 		$(SRC_DIR)/parse.c
 
 SHARE_INC	=							\
-		$(INC_DIR)/estadistica/share.h				\
-		$(LIBALX_INC_DIR)/libalx/base/compiler/size.h		\
-		$(LIBALX_INC_DIR)/libalx/base/errno/error.h		\
-		$(LIBALX_INC_DIR)/libalx/base/stdio/printf/sbprintf.h
+		$(INC_DIR)/estadistica/share.h
 SHARE_SRC	=							\
 		$(SRC_DIR)/share.c
 

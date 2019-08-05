@@ -11,19 +11,8 @@ OBJS		=							\
 		$(TMP_DIR)/parse.o					\
 		$(TMP_DIR)/share.o					\
 		$(TMP_DIR)/start.o
-DEPS_LIBS	= 							\
-		$(LIBALX_LIB_DIR)/libalx-ncurses.a			\
-		$(LIBALX_LIB_DIR)/libalx-gsl.a				\
-		$(LIBALX_LIB_DIR)/libalx-base.a
 
 ALL	= $(BIN_NAME) size
-
-# static libs
-
-STATIC_LIBS	= -L $(LIBALX_LIB_DIR)					\
-		-l alx-ncurses						\
-		-l alx-gsl						\
-		-l alx-base
 
 
 # target: dependencies
@@ -33,7 +22,7 @@ PHONY := all
 all: $(ALL)
 
 
-$(BIN_NAME): $(OBJS) $(DEPS_LIBS)
+$(BIN_NAME): $(OBJS)
 	@echo	"	CC	$@"
 	$(Q)$(CC) $(OBJS) -o $@ $(STATIC_LIBS) $(LIBS)
 
