@@ -14,7 +14,7 @@
 
 #include <getopt.h>
 
-#include "libalx/base/stdio/sscan.h"
+#include <libalx/base/stdio/sscan.h>
 
 #include "estadistica/menus.h"
 #include "estadistica/share.h"

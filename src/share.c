@@ -14,9 +14,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "libalx/base/compiler/size.h"
-#include "libalx/base/errno/error.h"
-#include "libalx/base/stdio/printf/sbprintf.h"
+#include <libalx/base/compiler/size.h>
+#include <libalx/base/errno/error.h>
+#include <libalx/base/stdio/printf/sbprintf.h>
 
 
 /******************************************************************************

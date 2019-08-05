@@ -19,15 +19,15 @@
 #include <gsl/gsl_randist.h>
 #include <gsl/gsl_statistics_double.h>
 
-#include "libalx/base/compiler/unused.h"
-#include "libalx/base/stdio/get.h"
-#include "libalx/base/stdio/printf/sbprintf.h"
-#include "libalx/extra/gsl/distributions/binomial.h"
-#include "libalx/extra/gsl/distributions/exponential.h"
-#include "libalx/extra/gsl/distributions/geometric.h"
-#include "libalx/extra/gsl/distributions/normal.h"
-#include "libalx/extra/gsl/distributions/poisson.h"
-#include "libalx/extra/gsl/distributions/uniform.h"
+#include <libalx/base/compiler/unused.h>
+#include <libalx/base/stdio/get.h>
+#include <libalx/base/stdio/printf/sbprintf.h>
+#include <libalx/extra/gsl/distributions/binomial.h>
+#include <libalx/extra/gsl/distributions/exponential.h>
+#include <libalx/extra/gsl/distributions/geometric.h>
+#include <libalx/extra/gsl/distributions/normal.h>
+#include <libalx/extra/gsl/distributions/poisson.h>
+#include <libalx/extra/gsl/distributions/uniform.h>
 
 
 /******************************************************************************
