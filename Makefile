@@ -1,9 +1,9 @@
 #! /usr/bin/make -f
 
 VERSION		= 4
-PATCHLEVEL	= 0
-SUBLEVEL	= 0
-EXTRAVERSION	= ~a2
+PATCHLEVEL	=
+SUBLEVEL	=
+EXTRAVERSION	= ~b1
 NAME		=
 
 export	VERSION
