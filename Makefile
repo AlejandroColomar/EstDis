@@ -32,10 +32,11 @@ export	SUBLEVEL
 #	$(Q)some command here
 #
 # If BUILD_VERBOSE equals 0 then the above command will be hidden.
-# If BUILD_VERBOSE equals 1 then the above command is displayed.
+# If BUILD_VERBOSE equals 2 then the above command is displayed.
 #
 # To put more focus on warnings, be less verbose as default
-# Use 'make V=1' to see the full commands
+# Use 'make V=1' to see some verbose output
+# Use 'make V=2' to see the full commands
 
 ifeq ("$(origin V)","command line")
   BUILD_VERBOSE = $(V)
@@ -44,10 +45,15 @@ ifndef BUILD_VERBOSE
   BUILD_VERBOSE = 0
 endif
 
-ifeq ($(BUILD_VERBOSE), 1)
+ifeq ($(BUILD_VERBOSE), 2)
   Q =
+  v = -v
+else ifeq ($(BUILD_VERBOSE), 1)
+  Q = @
+  v = -v
 else
   Q = @
+  v =
 endif
 
 # If the user is running make -s (silent mode), suppress echoing of
@@ -55,6 +61,7 @@ endif
 
 ifneq ($(findstring s,$(filter-out --%,$(MAKEFLAGS))),)
   Q = @
+  v =
 endif
 
 export	Q
@@ -126,9 +133,9 @@ CFLAGS_W       += -Werror
 
 CFLAGS_PKG	= `pkg-config --cflags ncurses`
 CFLAGS_PKG     += `pkg-config --cflags gsl`
+CFLAGS_PKG     += `pkg-config --cflags libalx-base`
 CFLAGS_PKG     += `pkg-config --cflags libalx-gsl`
 CFLAGS_PKG     += `pkg-config --cflags libalx-ncurses`
-CFLAGS_PKG     += `pkg-config --cflags libalx-base`
 
 CFLAGS_D	= -D _GNU_SOURCE
 CFLAGS_D       += -D _POSIX_C_SOURCE=200809L
@@ -151,11 +158,11 @@ LIBS_OPT       += -march=native
 LIBS_OPT       += -flto
 LIBS_OPT       += -fuse-linker-plugin
 
-LIBS_PKG	= `pkg-config --libs ncurses`
-LIBS_PKG       += `pkg-config --libs gsl`
+LIBS_PKG	= `pkg-config --libs libalx-ncurses`
 LIBS_PKG       += `pkg-config --libs libalx-gsl`
-LIBS_PKG       += `pkg-config --libs libalx-ncurses`
 LIBS_PKG       += `pkg-config --libs libalx-base`
+LIBS_PKG       += `pkg-config --libs ncurses`
+LIBS_PKG       += `pkg-config --libs gsl`
 
 LIBS_STD	= -l m
 
@@ -168,7 +175,7 @@ export	LIBS
 ################################################################################
 # executables
 
-BIN_NAME	= estadistica3
+BIN_NAME	= estadistica
 
 export	BIN_NAME
 
@@ -194,16 +201,17 @@ bin: tmp
 	@echo
 
 PHONY += install
-install: uninstall
+install:
 	@echo	"	Install:"
+	@echo
 	@echo	"	MKDIR	$(DESTDIR)/$(INSTALL_BIN_DIR)/"
 	$(Q)mkdir -p		$(DESTDIR)/$(INSTALL_BIN_DIR)/
 	@echo	"	CP	$(BIN_NAME)"
-	$(Q)cp -v		$(BIN_DIR)/$(BIN_NAME)	$(DESTDIR)/$(INSTALL_BIN_DIR)/
+	$(Q)cp -f $(v)		$(BIN_DIR)/$(BIN_NAME)	$(DESTDIR)/$(INSTALL_BIN_DIR)/
 	@echo	"	MKDIR	$(DESTDIR)/$(INSTALL_SHARE_DIR)/estadistica/"
 	$(Q)mkdir -p		$(DESTDIR)/$(INSTALL_SHARE_DIR)/estadistica/
 	@echo	"	CP -r	share/estadistica/*"
-	$(Q)cp -r -v		./share/estadistica/*	$(DESTDIR)/$(INSTALL_SHARE_DIR)/estadistica/
+	$(Q)cp -rf $(v)		./share/estadistica/*	$(DESTDIR)/$(INSTALL_SHARE_DIR)/estadistica/
 	@echo	"	Done"
 	@echo
 
