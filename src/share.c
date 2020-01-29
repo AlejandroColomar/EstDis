@@ -104,13 +104,11 @@ void	print_share_file	(int file)
 	}
 
 	if (sbprintf(cmd, NULL, "less %s", fname))
-		goto err;
+		perrorx(fname);
 	if (system(cmd))
-		goto err;
+		perrorx(cmd);
 
 	return;
-err:
-	perrorx(cmd);
 }
 
 void	print_version		(void)
