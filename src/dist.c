@@ -434,7 +434,7 @@ static	double	dist_binomial_P		(ptrdiff_t c, uint32_t n, double p)
 
 	if (c) {
 		for (ptrdiff_t i = 0; i < c; i++) {
-			UNUSED(sbprintf(txt, NULL, "x_%ti:", i));
+			ALX_UNUSED(sbprintf(txt, NULL, "x_%ti:", i));
 			x[i]	= alx_get_u32(0, 0, n, txt, NULL, 3);
 		}
 	} else {
@@ -469,7 +469,7 @@ static	double	dist_poisson_P		(ptrdiff_t c, double l)
 
 	if (c) {
 		for (ptrdiff_t i = 0; i < c; i++) {
-			UNUSED(sbprintf(txt, NULL, "x_%ti:", i));
+			ALX_UNUSED(sbprintf(txt, NULL, "x_%ti:", i));
 			x[i]	= alx_get_u32(0, i, UINT32_MAX, txt, NULL, 3);
 		}
 	} else {
@@ -504,7 +504,7 @@ static	double	dist_geometric_P	(ptrdiff_t c, double p)
 
 	if (c) {
 		for (ptrdiff_t i = 0; i < c; i++) {
-			UNUSED(sbprintf(txt, NULL, "x_%ti:", i));
+			ALX_UNUSED(sbprintf(txt, NULL, "x_%ti:", i));
 			x[i] = alx_get_u32(0, 0, UINT32_MAX, txt, NULL, 3);
 		}
 	} else {
