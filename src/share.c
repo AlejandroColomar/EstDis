@@ -16,7 +16,7 @@
 
 #define ALX_NO_PREFIX
 #include <libalx/base/compiler/size.h>
-#include <libalx/base/errno/error.h>
+#include <libalx/base/errno/perror.h>
 #include <libalx/base/stdio/printf/sbprintf.h>
 
 
@@ -104,9 +104,9 @@ void	print_share_file	(int file)
 	}
 
 	if (sbprintf(cmd, NULL, "less %s", fname))
-		perrorx(fname);
+		perrorx("%s", fname);
 	if (system(cmd))
-		perrorx(cmd);
+		perrorx("%s", cmd);
 
 	return;
 }
