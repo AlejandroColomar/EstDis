@@ -9,7 +9,7 @@
  ******************************************************************************/
 #include <stdio.h>
 
-#include <libalx/extra/ncurses/common.h>
+#include <libalx/extra/ncurses/ncurses.h>
 
 #include "estadistica/share.h"
 #include "estadistica/menus.h"
