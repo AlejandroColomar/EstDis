@@ -187,8 +187,8 @@ void	dist_binomial	(void)
 	n	= alx_get_u32(1, 1, UINT32_MAX, "n:", NULL, 3);
 	p	= alx_get_dbl(0.0, 0.5, 1.0, "p:", NULL, 3);
 
-	E	= alx_gsl_dist_binomial_E(n, p);
-	Var	= alx_gsl_dist_binomial_Var(n, p);
+	E	= alx_gsl_distr_binomial_E(n, p);
+	Var	= alx_gsl_distr_binomial_Var(n, p);
 
 	if (((n * p) > 5)  &&  ((n * (1 - p)) > 5)) {
 		printf("\n");
@@ -227,8 +227,8 @@ void	dist_poisson	(void)
 	c	= alx_get_pdif(0, 1, UINT32_MAX, "c:", NULL, 3);
 
 	P	= dist_poisson_P(c, l);
-	E	= alx_gsl_dist_poisson_E(l);
-	Var	= alx_gsl_dist_poisson_Var(l);
+	E	= alx_gsl_distr_poisson_E(l);
+	Var	= alx_gsl_distr_poisson_Var(l);
 
 	printf("\n");
 	printf("P{X}	= %e\n", P);
@@ -256,8 +256,8 @@ void	dist_geometric	(void)
 	c	= alx_get_pdif(0, 1, UINT32_MAX, "c:", NULL, 3);
 
 	P	= dist_geometric_P(c, p);
-	E	= alx_gsl_dist_geometric_E(p);
-	Var	= alx_gsl_dist_geometric_Var(p);
+	E	= alx_gsl_distr_geom_E(p);
+	Var	= alx_gsl_distr_geom_Var(p);
 
 	printf("\n");
 	printf("P{X=x}	= %e\n", P);
@@ -289,8 +289,8 @@ void	dist_uniform	(void)
 	x2	= alx_get_dbl(x1, x1, b, "x2:", NULL, 3);
 
 	P	= gsl_cdf_flat_P(x2, a, b) - gsl_cdf_flat_P(x1, a, b);
-	E	= alx_gsl_dist_uniform_E(a, b);
-	Var	= alx_gsl_dist_uniform_Var(a, b);
+	E	= alx_gsl_distr_uniform_E(a, b);
+	Var	= alx_gsl_distr_uniform_Var(a, b);
 
 	printf("\n");
 	printf("P{x1<X<x2}	= %e\n", P);
@@ -322,8 +322,8 @@ void	dist_exponential(void)
 
 	mu	= 1.0 / b;
 	P	= gsl_cdf_exponential_P(x2, mu) - gsl_cdf_exponential_P(x1, mu);
-	E	= alx_gsl_dist_exponential_E(b);
-	Var	= alx_gsl_dist_exponential_Var(b);
+	E	= alx_gsl_distr_exp_E(b);
+	Var	= alx_gsl_distr_exp_Var(b);
 
 	printf("\n");
 	printf("P{x1<X<x2}	= %e\n", P);
@@ -356,8 +356,8 @@ void	dist_normal	(void)
 	o2	= alx_get_dbl(0.0, 1.0, INFINITY, "o2:", NULL, 3);
 
 	o	= sqrt(o2);
-	a	= alx_gsl_dist_normal_A(o);
-	b	= alx_gsl_dist_normal_B(u, o);
+	a	= alx_gsl_distr_gauss_A(o);
+	b	= alx_gsl_distr_gauss_B(u, o);
 
 	printf("\n");
 	printf("a	= %e\n", a);
@@ -404,7 +404,7 @@ static	void	dist_normal_x2z		(double a, double b)
 
 	printf("Z = %e * X + %e\n", a, b);
 	x	= alx_get_dbl(-INFINITY, 1.0, INFINITY, "x:", NULL, 3);
-	z	= alx_gsl_dist_normal_X2Z(a, b, x);
+	z	= alx_gsl_distr_gauss_X2Z(a, b, x);
 	printf("\nz = %e\n", z);
 }
 
@@ -415,7 +415,7 @@ static	void	dist_normal_z2x		(double a, double b)
 
 	printf("X = (Z - %e) / %e\n", b, a);
 	z	= alx_get_dbl(-INFINITY, 1.0, INFINITY, "z:", NULL, 3);
-	x	= alx_gsl_dist_normal_Z2X(a, b, z);
+	x	= alx_gsl_distr_gauss_Z2X(a, b, z);
 	printf("\nx = %e\n", x);
 }
 

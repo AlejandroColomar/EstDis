@@ -24,7 +24,7 @@ all: $(ALL)
 
 $(BIN_NAME): $(OBJS)
 	@echo	"	CC	$@"
-	$(Q)$(CC) $(OBJS) -o $@ $(STATIC_LIBS) $(LIBS)
+	$(Q)$(CC) $(OBJS) -o $@ $(LIBS)
 
 PHONY += size
 size: $(BIN_NAME)
