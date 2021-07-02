@@ -3,7 +3,7 @@
 VERSION		= 4
 PATCHLEVEL	=
 SUBLEVEL	=
-EXTRAVERSION	= ~b1
+EXTRAVERSION	= ~b2
 NAME		=
 
 export	VERSION
@@ -120,7 +120,7 @@ export	SZ
 
 ################################################################################
 # cflags
-CFLAGS_STD	= -std=gnu17
+CFLAGS_STD	= -std=c2x
 
 CFLAGS_OPT	= -O3
 CFLAGS_OPT     += -march=native
@@ -128,6 +128,8 @@ CFLAGS_OPT     += -flto
 
 CFLAGS_W	= -Wall
 CFLAGS_W       += -Wextra
+CFLAGS_W       += -Wpedantic
+CFLAGS_W       += -pedantic-errors
 CFLAGS_W       += -Wstrict-prototypes
 CFLAGS_W       += -Werror
 
@@ -135,7 +137,7 @@ CFLAGS_PKG	= `pkg-config --cflags ncurses`
 CFLAGS_PKG     += `pkg-config --cflags gsl`
 CFLAGS_PKG     += `pkg-config --cflags libalx-base`
 CFLAGS_PKG     += `pkg-config --cflags libalx-gsl`
-CFLAGS_PKG     += `pkg-config --cflags libalx-ncurses`
+CFLAGS_PKG     += `pkg-config --cflags libalx-curses`
 
 CFLAGS_D	= -D _GNU_SOURCE
 CFLAGS_D       += -D _POSIX_C_SOURCE=200809L
@@ -158,7 +160,7 @@ LIBS_OPT       += -march=native
 LIBS_OPT       += -flto
 LIBS_OPT       += -fuse-linker-plugin
 
-LIBS_PKG	= `pkg-config --libs libalx-ncurses`
+LIBS_PKG	= `pkg-config --libs libalx-curses`
 LIBS_PKG       += `pkg-config --libs libalx-gsl`
 LIBS_PKG       += `pkg-config --libs libalx-base`
 LIBS_PKG       += `pkg-config --libs ncurses`

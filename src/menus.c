@@ -37,9 +37,9 @@
 
 #include <ncurses.h>
 
-#include <libalx/base/compiler.h>
-#include <libalx/base/stdio.h>
-#include <libalx/extra/ncurses/ncurses.h>
+#include <alx/base/compiler.h>
+#include <alx/base/stdio.h>
+#include <alx/curses/curses.h>
 
 #include "estadistica/share.h"
 #include "estadistica/start.h"
@@ -88,7 +88,7 @@ void	menu_main		(void)
 	h	= 23;
 	w	= 80;
 
-	const struct Alx_Ncurses_Menu	mnu[]	= {
+	const struct Alx_Curses_Menu	mnu[]	= {
 		{8, 4, "[0]	Exit program"},
 		{2, 4, "[1]	Continue"},
 		{4, 4, "[2]	Disclaimer of warranty"},
@@ -97,7 +97,7 @@ void	menu_main		(void)
 
 	wh	= true;
 	while (wh) {
-		sw	= alx_ncurses_menu(h, w, ARRAY_SIZE(mnu), mnu, "MENU:");
+		sw	= alx_curses_menu(h, w, ARRAY_SIZE(mnu), mnu, "MENU:");
 
 		switch (sw) {
 		case 0:
@@ -107,14 +107,14 @@ void	menu_main		(void)
 			menu_continue();
 			break;
 		case 2:
-			alx_ncurses_pause();
+			alx_curses_pause();
 			print_share_file(SHARE_DISCLAIMER);
-			alx_ncurses_resume();
+			alx_curses_resume();
 			break;
 		case 3:
-			alx_ncurses_pause();
+			alx_curses_pause();
 			print_share_file(SHARE_LICENSE);
-			alx_ncurses_resume();
+			alx_curses_resume();
 			break;
 		}
 	}
@@ -133,7 +133,7 @@ static	void	menu_continue	(void)
 	h	= 23;
 	w	= 80;
 
-	const struct Alx_Ncurses_Menu	mnu[]	= {
+	const struct Alx_Curses_Menu	mnu[]	= {
 		{7, 4, "[0]	Back"},
 		{2, 4, "[1]	Run"},
 		{3, 4, "[2]	Help"},
@@ -143,7 +143,7 @@ static	void	menu_continue	(void)
 
 	wh	= true;
 	while (wh) {
-		sw = alx_ncurses_menu(h, w, ARRAY_SIZE(mnu), mnu, "CONTINUE:");
+		sw = alx_curses_menu(h, w, ARRAY_SIZE(mnu), mnu, "CONTINUE:");
 
 		switch (sw) {
 		case 0:
@@ -151,19 +151,19 @@ static	void	menu_continue	(void)
 			break;
 
 		case 1:
-			alx_ncurses_pause();
+			alx_curses_pause();
 			start_switch();
 			printf("Press ENTER to continue");
 			alx_wait4enter();
-			alx_ncurses_resume();
+			alx_curses_resume();
 			break;
 
 		case 2:
-			alx_ncurses_pause();
+			alx_curses_pause();
 			help_switch();
 			printf("Press ENTER to continue");
 			alx_wait4enter();
-			alx_ncurses_resume();
+			alx_curses_resume();
 			break;
 
 		case 3:
@@ -185,7 +185,7 @@ static	void	menu_select	(void)
 	h	= 23;
 	w	= 80;
 
-	const struct Alx_Ncurses_Menu	mnu[]	= {
+	const struct Alx_Curses_Menu	mnu[]	= {
 		{13, 4, "[0]	Back"},
 		{2, 4, "[1]	1 Variable"},
 		{3, 4, "[2]	2 Variables"},
@@ -198,7 +198,7 @@ static	void	menu_select	(void)
 		{11, 4, "[9]	Gauss(Normal)"}
 	};
 
-	opt	= alx_ncurses_menu(h, w, ARRAY_SIZE(mnu), mnu, "SELECT:");
+	opt	= alx_curses_menu(h, w, ARRAY_SIZE(mnu), mnu, "SELECT:");
 	if (opt)
 		start_mode	= opt;
 }
@@ -210,7 +210,7 @@ static	void	menu_verbose	(void)
 	h	= 23;
 	w	= 80;
 
-	const struct Alx_Ncurses_Menu	mnu[]	= {
+	const struct Alx_Curses_Menu	mnu[]	= {
 		{7, 4, "[0]	Show NOTHING"},
 		{2, 4, "[1]	Show only solution"},
 		{3, 4, "[2]	Show short help"},
@@ -222,7 +222,7 @@ static	void	menu_verbose	(void)
 # endif
 	};
 
-	flag_verbose = alx_ncurses_menu(h, w, ARRAY_SIZE(mnu), mnu, "VERBOSE:");
+	flag_verbose = alx_curses_menu(h, w, ARRAY_SIZE(mnu), mnu, "VERBOSE:");
 }
 
 

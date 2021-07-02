@@ -9,7 +9,7 @@
  ******************************************************************************/
 #include <stdio.h>
 
-#include <libalx/extra/ncurses/ncurses.h>
+#include <alx/curses/curses.h>
 
 #include "estadistica/share.h"
 #include "estadistica/menus.h"
@@ -53,9 +53,9 @@ int	main	(int argc, char *argv[])
 
 	print_share_file(SHARE_COPYRIGHT);
 
-	alx_ncurses_resume();
+	alx_curses_resume();
 	menu_main();
-	alx_ncurses_pause();
+	alx_curses_pause();
 
 	cleanup();
 
@@ -69,8 +69,8 @@ int	main	(int argc, char *argv[])
 static	void	init_all	(int argc, char *argv[])
 {
 
-	alx_ncurses_init();
-	alx_ncurses_pause();
+	alx_curses_init();
+	alx_curses_pause();
 
 	parser(argc, argv);
 }
@@ -78,8 +78,8 @@ static	void	init_all	(int argc, char *argv[])
 static	void	cleanup		(void)
 {
 
-	alx_ncurses_resume();
-	alx_ncurses_deinit();
+	alx_curses_resume();
+	alx_curses_deinit();
 }
 
 

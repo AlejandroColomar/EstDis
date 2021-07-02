@@ -20,9 +20,9 @@
 #include <gsl/gsl_statistics_double.h>
 
 #define ALX_NO_PREFIX
-#include <libalx/base/compiler.h>
-#include <libalx/base/stdio.h>
-#include <libalx/extra/gsl/gsl.h>
+#include <alx/base/compiler.h>
+#include <alx/base/stdio.h>
+#include <alx/gsl/gsl.h>
 
 
 /******************************************************************************

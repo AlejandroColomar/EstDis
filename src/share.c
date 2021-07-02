@@ -15,9 +15,9 @@
 #include <stdlib.h>
 
 #define ALX_NO_PREFIX
-#include <libalx/base/compiler.h>
-#include <libalx/base/errno.h>
-#include <libalx/base/stdio.h>
+#include <alx/base/compiler.h>
+#include <alx/base/errno.h>
+#include <alx/base/stdio.h>
 
 
 /******************************************************************************
